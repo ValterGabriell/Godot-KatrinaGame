@@ -22,6 +22,13 @@ namespace PrototipoKatrina
             }
         }
 
+        public void ReduzEquilibrio(float delta)
+        {
+            
+            Equilibrio -= 30f * delta;
+            Equilibrio = Mathf.Max(Equilibrio, 0);
+        }
+
         public EnumMove GetCurrentPlayerMovement()
         {
             return this.CurrentPlayerMovement;

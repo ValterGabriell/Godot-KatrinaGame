@@ -14,16 +14,29 @@ public partial class Katrina : CharacterBody2D
     [Export] public float Gravity = 700.0f;
     [Export] public Sprite2D Sprite;
     private EnumMove CurrentPlayerMovement;
+    private bool movimentoBloqueado = false;
+
+
 
     public override void _PhysicsProcess(double delta)
     {
+        if (movimentoBloqueado)
+        {
+            // Não processa input quando bloqueado
+            return;
+        }
+
+
         // Chama a função para processar a entrada do jogador.
         GetInput((float)delta);
 
         // Aplica a gravidade se o jogador não estiver no chão.
         if (!IsOnFloor())
-        {
             Velocity = new Vector2(Velocity.X, Velocity.Y + Gravity * (float)delta);
+
+       if(Velocity == Vector2.Zero)
+        {
+            CurrentPlayerMovement = EnumMove.IDLE;
         }
 
         // Aplica o movimento.
@@ -34,6 +47,10 @@ public partial class Katrina : CharacterBody2D
 
     }
 
+    public void SetMovimentoBloqueado(bool bloqueado)
+    {
+        movimentoBloqueado = bloqueado;
+    }
 
     // Processa a entrada do jogador.
     public void GetInput(float delta)

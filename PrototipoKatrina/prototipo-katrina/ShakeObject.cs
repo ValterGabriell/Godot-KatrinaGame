@@ -42,8 +42,7 @@ public partial class ShakeObject : StaticBody2D
             var currentPlayerMovement = player.GetCurrentPlayerMovement();
             if (isPlayerOnObject)
             {
-
-                player.DiminuiVelocidadeKatrina();
+                Vector2 deltaPlataforma = Vector2.Zero;
                 if (currentPlayerMovement == EnumMove.RIGHT)
                 {
                     direction = 1;
@@ -56,6 +55,11 @@ public partial class ShakeObject : StaticBody2D
                     direction = -1;
                     this.RotationDegrees += RotationSpeed * direction * (float)delta;
                     player.AfetaEquilibrio(RotationDegrees * direction * (float)delta);
+                }
+
+                if(currentPlayerMovement == EnumMove.IDLE)
+                {
+                    player.ReduzEquilibrio((float)delta );
                 }
             }
 
