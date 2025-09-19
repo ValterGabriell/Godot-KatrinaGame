@@ -7,7 +7,7 @@ public partial class Katrina : CharacterBody2D
     // Use [Export] para definir variáveis no Inspector do Godot.
     // Convenção C# usa PascalCase para nomes de variáveis públicas.
     [Export] public RayCast2D PushRaycast;
-    [Export] public RayCast2D Ground;
+    [Export] public RayCast2D GroundRaycast;
     [Export] public float Speed = 200.0f;
     [Export] public float RunSpeed = 350.0f;
     private float JumpVelocity = -400.0f;
@@ -20,13 +20,6 @@ public partial class Katrina : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (movimentoBloqueado)
-        {
-            // Não processa input quando bloqueado
-            return;
-        }
-
-
         // Chama a função para processar a entrada do jogador.
         GetInput((float)delta);
 
@@ -47,7 +40,7 @@ public partial class Katrina : CharacterBody2D
 
     }
 
-    public void SetMovimentoBloqueado(bool bloqueado)
+    public void SetPlayerMovementBlocked(bool bloqueado)
     {
         movimentoBloqueado = bloqueado;
     }
@@ -58,13 +51,13 @@ public partial class Katrina : CharacterBody2D
         Vector2 inputVector = Vector2.Zero;
 
         // Obtém o input horizontal.
-        if (Input.IsActionPressed("ui_right"))
+        if (Input.IsActionPressed("ui_right") && !movimentoBloqueado)
         {
             inputVector.X += 1;
             CurrentPlayerMovement = EnumMove.RIGHT;
         }
            
-        if (Input.IsActionPressed("ui_left"))
+        if (Input.IsActionPressed("ui_left") && !movimentoBloqueado)
         {
             inputVector.X -= 1;
             CurrentPlayerMovement = EnumMove.LEFT;
@@ -106,6 +99,7 @@ public partial class Katrina : CharacterBody2D
         // Lógica de pulo (só pula ao pressionar, não ao segurar)
         if (Input.IsActionJustPressed("ui_accept") && IsOnFloor()) // ui_accept = espaço por padrão
         {
+            this.SetPlayerMovementBlocked(bloqueado: false);
             Velocity = new Vector2(Velocity.X, JumpVelocity);
         }
 
