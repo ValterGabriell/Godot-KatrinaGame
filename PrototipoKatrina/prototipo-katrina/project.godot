@@ -12,7 +12,7 @@ config_version=5
 
 config/name="PrototipoKatrina"
 run/main_scene="uid://b1gnb8slestvs"
-config/features=PackedStringArray("4.5", "Mobile")
+config/features=PackedStringArray("4.5", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [dotnet]
@@ -22,12 +22,14 @@ project/assembly_name="PrototipoKatrina"
 [global_group]
 
 player=""
+pushable=""
 
 [layer_names]
 
 2d_physics/layer_1="floor"
 2d_physics/layer_2="player"
-2d_physics/layer_3="pushable_obj_katrina"
+2d_physics/layer_3="pushable_obj"
+2d_physics/layer_4="rotable_obj"
 
 [rendering]
 

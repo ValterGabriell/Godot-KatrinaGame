@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://ca7v8keyvqa11"]
+
+[ext_resource type="Script" uid="uid://bniaiqx80iqh0" path="res://ShakeObject.cs" id="1_ita71"]
+[ext_resource type="Texture2D" uid="uid://wrmfp7c278p7" path="res://Dec/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (32).png" id="1_j165c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j165c"]
+radius = 14.035668
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ita71"]
+radius = 30.016663
+
+[node name="Shake" type="StaticBody2D" node_paths=PackedStringArray("AreaDetectPlayer")]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_ita71")
+AreaDetectPlayer = NodePath("AreaPlayerShake")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -1)
+scale = Vector2(0.5, 0.56666666)
+texture = ExtResource("1_j165c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_j165c")
+debug_color = Color(0, 0, 0, 0.41960785)
+
+[node name="AreaPlayerShake" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaPlayerShake"]
+position = Vector2(1, -3)
+shape = SubResource("CircleShape2D_ita71")
