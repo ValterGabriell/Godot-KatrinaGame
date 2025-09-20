@@ -64,7 +64,7 @@ public partial class ShakeObject : StaticBody2D
 
     private void OnPlayerBalanceZero()
     {
-        player.GlobalPosition = this.GlobalPosition + new Vector2(150, -130);
+        player.MovePlayerToFallPosition(new Vector2(35, 35));
         ResetPlayerState();
     }
 

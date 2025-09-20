@@ -43,6 +43,11 @@ namespace PrototipoKatrina
             EmitSignal(nameof(BalanceZero));
         }
 
+        public void MovePlayerToFallPosition(Vector2 positionToGo)
+        {
+            this.GlobalPosition = this.GlobalPosition + positionToGo;
+        }
+
         public void DecreaseBallance(float delta)
         {            
             if(Equilibrio < BallanceMax)

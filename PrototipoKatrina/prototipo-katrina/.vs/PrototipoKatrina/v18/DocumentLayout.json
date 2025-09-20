@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\katrinavariables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:katrinavariables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\katrinapush.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:katrinapush.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\katrina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:katrina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\katrinaequilibrio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:katrinaequilibrio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\moveplataform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:moveplataform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\playerdeath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:playerdeath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\katrinapush.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:katrinapush.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\enumgroups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:enumgroups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\katrinavariables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:katrinavariables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\katrinaequilibrio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|solutionrelative:katrinaequilibrio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5FEC46A2-3CDF-4C23-893F-B57C17083681}|PrototipoKatrina.csproj|c:\\users\\vgabr\\documents\\godot\\katrinagame\\prototipokatrina\\prototipo-katrina\\shakeobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,8 +46,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 361,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 11,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MovePlataform.cs",
+              "DocumentMoniker": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\MovePlataform.cs",
+              "RelativeDocumentMoniker": "MovePlataform.cs",
+              "ToolTip": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\MovePlataform.cs",
+              "RelativeToolTip": "MovePlataform.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-20T17:37:20.224Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "EnumGroups.cs",
+              "DocumentMoniker": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\EnumGroups.cs",
+              "RelativeDocumentMoniker": "EnumGroups.cs",
+              "ToolTip": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\EnumGroups.cs",
+              "RelativeToolTip": "EnumGroups.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-20T17:34:22.99Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -70,13 +104,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "KatrinaVariables.cs",
               "DocumentMoniker": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\KatrinaVariables.cs",
               "RelativeDocumentMoniker": "KatrinaVariables.cs",
-              "ToolTip": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\KatrinaVariables.cs*",
-              "RelativeToolTip": "KatrinaVariables.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\KatrinaVariables.cs",
+              "RelativeToolTip": "KatrinaVariables.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAYwBYAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-20T17:18:31.779Z",
               "EditorCaption": ""
@@ -89,20 +123,20 @@
               "RelativeDocumentMoniker": "Katrina.cs",
               "ToolTip": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\Katrina.cs",
               "RelativeToolTip": "Katrina.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAAAA4AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-20T17:18:01.417Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "KatrinaPush.cs",
               "DocumentMoniker": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\KatrinaPush.cs",
               "RelativeDocumentMoniker": "KatrinaPush.cs",
               "ToolTip": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\KatrinaPush.cs",
               "RelativeToolTip": "KatrinaPush.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-20T17:17:24.745Z",
               "EditorCaption": ""
@@ -115,14 +149,14 @@
               "RelativeDocumentMoniker": "PlayerDeath.cs",
               "ToolTip": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\PlayerDeath.cs",
               "RelativeToolTip": "PlayerDeath.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-20T17:17:19.549Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "KatrinaEquilibrio.cs",
               "DocumentMoniker": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\KatrinaEquilibrio.cs",
               "RelativeDocumentMoniker": "KatrinaEquilibrio.cs",
@@ -135,7 +169,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "PushableObject.cs",
               "DocumentMoniker": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\PushableObject.cs",
               "RelativeDocumentMoniker": "PushableObject.cs",
@@ -148,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "ShakeObject.cs",
               "DocumentMoniker": "C:\\Users\\vgabr\\Documents\\Godot\\KatrinaGame\\PrototipoKatrina\\prototipo-katrina\\ShakeObject.cs",
               "RelativeDocumentMoniker": "ShakeObject.cs",

@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://biflyf7p04r1c"]
+
+[ext_resource type="Script" uid="uid://btxg5fvs1417l" path="res://SteamObstacle.cs" id="1_sa7cg"]
+
+[node name="SteamObstacle" type="Node2D" node_paths=PackedStringArray("RaycastOfSteamToDetectPlayer", "Timer")]
+script = ExtResource("1_sa7cg")
+RaycastOfSteamToDetectPlayer = NodePath("RayCast2D")
+Timer = NodePath("Timer")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collision_mask = 2
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
