@@ -9,7 +9,7 @@ namespace PrototipoKatrina
 {
     public partial class Katrina : CharacterBody2D
     {
-        private const float INITAL_MAX_BALLANCE = 25.0f;
+        private const float INITAL_MAX_BALLANCE = 100.0f;
         private float Equilibrio = INITAL_MAX_BALLANCE;
         private float BallanceZero = 0.0f;
         private float BallanceMax = INITAL_MAX_BALLANCE;

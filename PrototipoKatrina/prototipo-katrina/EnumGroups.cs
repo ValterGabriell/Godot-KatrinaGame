@@ -10,6 +10,7 @@ namespace PrototipoKatrina
     {
         player,
         PUSHABLE,
-        SHAKABLE
+        SHAKABLE,
+        death_water_area
     }
 }

@@ -4,20 +4,7 @@ using Godot;
 namespace PrototipoKatrina;
 public partial class Katrina : CharacterBody2D
 {
-    // Use [Export] para definir variáveis no Inspector do Godot.
-    // Convenção C# usa PascalCase para nomes de variáveis públicas.
-    [Export] public RayCast2D PushRaycast;
-    [Export] public RayCast2D GroundRaycast;
-    [Export] public float Speed = 200.0f;
-    [Export] public float RunSpeed = 350.0f;
-    private float JumpVelocity = -400.0f;
-    [Export] public float Gravity = 700.0f;
-    [Export] public Sprite2D Sprite;
-    private EnumMove CurrentPlayerMovement;
-    private bool movimentoBloqueado = false;
-
-
-
+  
     public override void _PhysicsProcess(double delta)
     {
         // Chama a função para processar a entrada do jogador.
@@ -42,7 +29,7 @@ public partial class Katrina : CharacterBody2D
 
     public void SetPlayerMovementBlocked(bool bloqueado)
     {
-        movimentoBloqueado = bloqueado;
+        IsMovementBlocked = bloqueado;
     }
 
     // Processa a entrada do jogador.
@@ -51,13 +38,13 @@ public partial class Katrina : CharacterBody2D
         Vector2 inputVector = Vector2.Zero;
 
         // Obtém o input horizontal.
-        if (Input.IsActionPressed("ui_right") && !movimentoBloqueado)
+        if (Input.IsActionPressed("ui_right") && !IsMovementBlocked)
         {
             inputVector.X += 1;
             CurrentPlayerMovement = EnumMove.RIGHT;
         }
            
-        if (Input.IsActionPressed("ui_left") && !movimentoBloqueado)
+        if (Input.IsActionPressed("ui_left") && !IsMovementBlocked)
         {
             inputVector.X -= 1;
             CurrentPlayerMovement = EnumMove.LEFT;
