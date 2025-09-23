@@ -36,6 +36,7 @@ death_water_area=""
 2d_physics/layer_7="player_death_area"
 2d_physics/layer_8="seesaw_base"
 2d_physics/layer_9="seesaw"
+2d_physics/layer_10="rat_enemy"
 
 [rendering]
 

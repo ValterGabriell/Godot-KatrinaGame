@@ -1,0 +1,19 @@
+using Godot;
+using System;
+
+public partial class EnemyResources : Resource
+{
+
+
+    [Export]
+    public int MaxHealth = 100;
+
+    [Export]
+    public int Damage = 10;
+
+    [Export]
+    public float MoveSpeed = 100f;
+
+
+
+}

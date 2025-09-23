@@ -1,8 +1,10 @@
-[gd_scene load_steps=17 format=4 uid="uid://b1gnb8slestvs"]
+[gd_scene load_steps=19 format=4 uid="uid://b1gnb8slestvs"]
 
 [ext_resource type="Texture2D" uid="uid://dxbgy8smm2fwo" path="res://Map/DEV/Seasonal Tilesets/Seasonal Tilesets/1 - Grassland/Terrain (16 x 16).png" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dw4s248phtymn" path="res://katrina.tscn" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://bvlixxmc0ky80" path="res://Map/DEV/Seasonal Tilesets/Seasonal Tilesets/3 - Tropics/Tropics_entities (16 x 16).png" id="2_lquwl"]
+[ext_resource type="Resource" uid="uid://hx1o1nvw3c7k" path="res://Resources/Enemies/EnemyBaseResource.tres" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://br6fihpua4yd3" path="res://Rat.tscn" id="5_lquwl"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_0xm2m"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -195,5 +197,9 @@ tile_map_data = PackedByteArray("AABBAAEAAQAMAAYAAABBAAAAAQAMAAUAAABCAAAAAQAMAAU
 tile_set = SubResource("TileSet_h2yge")
 
 [node name="Katrina" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(2041, -24)
+position = Vector2(26, -13)
 collision_mask = 37
+
+[node name="Rat" parent="." instance=ExtResource("5_lquwl")]
+position = Vector2(172, -5)
+EnemyResource = ExtResource("5_7mycd")
