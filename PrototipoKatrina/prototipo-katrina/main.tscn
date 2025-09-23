@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://b1gnb8slestvs"]
+[gd_scene load_steps=23 format=4 uid="uid://b1gnb8slestvs"]
 
 [ext_resource type="Texture2D" uid="uid://dxbgy8smm2fwo" path="res://Map/DEV/Seasonal Tilesets/Seasonal Tilesets/1 - Grassland/Terrain (16 x 16).png" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dw4s248phtymn" path="res://katrina.tscn" id="2_0xm2m"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ca7v8keyvqa11" path="res://shake.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c551nssba7gch" path="res://MovePlataform.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://biflyf7p04r1c" path="res://SteamObstacle.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://dkjvptu0s3lt2" path="res://Gangorra.tscn" id="8_5vw27"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_0xm2m"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -205,7 +206,7 @@ tile_map_data = PackedByteArray("AABBAAEAAQAMAAYAAABBAAAAAQAMAAUAAABCAAAAAQAMAAU
 tile_set = SubResource("TileSet_h2yge")
 
 [node name="Katrina" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(1810, -28)
+position = Vector2(2041, -24)
 collision_mask = 37
 
 [node name="StaticBody2D" parent="." instance=ExtResource("3_h2yge")]
@@ -223,3 +224,6 @@ curve = SubResource("Curve2D_7mycd")
 
 [node name="SteamObstacle" parent="." instance=ExtResource("7_272bh")]
 position = Vector2(1875, 15)
+
+[node name="GangorraPlataform" parent="." instance=ExtResource("8_5vw27")]
+position = Vector2(2142, -13)

@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://dkjvptu0s3lt2"]
+
+[ext_resource type="Script" uid="uid://bk33gxgaet0nu" path="res://Gangorra.cs" id="1_2gguk"]
+[ext_resource type="Texture2D" uid="uid://cjsxrgvpoclfh" path="res://Dec/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (14).png" id="1_rna6d"]
+[ext_resource type="Texture2D" uid="uid://ht01ily3fwig" path="res://Dec/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (16).png" id="2_ivbm4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ivbm4"]
+size = Vector2(32, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2gguk"]
+size = Vector2(117, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwtyn"]
+size = Vector2(125, 13)
+
+[node name="GangorraPlataform" type="StaticBody2D"]
+script = ExtResource("1_2gguk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.53125, 0.53125)
+texture = ExtResource("1_rna6d")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 128
+collision_mask = 19
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+position = Vector2(1, -25)
+texture = ExtResource("2_ivbm4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_ivbm4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -26)
+shape = SubResource("RectangleShape2D_2gguk")
+one_way_collision = true
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(1, 0)
+collision_layer = 256
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.5, -31.5)
+shape = SubResource("RectangleShape2D_hwtyn")
+debug_color = Color(0.5798684, 0.39931762, 0.96708137, 0.41960785)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

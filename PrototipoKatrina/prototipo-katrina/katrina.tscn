@@ -10,7 +10,7 @@ size = Vector2(20, 14)
 
 [node name="Katrina" type="CharacterBody2D" node_paths=PackedStringArray("PushRaycast", "Sprite") groups=["player"]]
 collision_layer = 2
-collision_mask = 5
+collision_mask = 261
 script = ExtResource("1_qo5v2")
 PushRaycast = NodePath("PushRaycast")
 Sprite = NodePath("Sprite2D")
