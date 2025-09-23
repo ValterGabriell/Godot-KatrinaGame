@@ -1,0 +1,152 @@
+[gd_scene load_steps=7 format=3 uid="uid://dkjhvr053vtls"]
+
+[ext_resource type="Texture2D" uid="uid://cjsxrgvpoclfh" path="res://Dec/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (14).png" id="1_rna6d"]
+[ext_resource type="Texture2D" uid="uid://ht01ily3fwig" path="res://Dec/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (16).png" id="2_ivbm4"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_ivbm4"]
+script/source = "using Godot;
+using System;
+
+// Define a classe Gangorra, que herda de StaticBody2D (um corpo estático na cena)
+public partial class Gangorra : StaticBody2D
+{
+    private CharacterBody2D player = null;
+
+    [Export] public float GangorraComprimento = 200.0f;
+
+    [Export] public float Gravidade = 2.0f;
+
+    [Export] public float LimiteAnguloGraus = 30.0f;
+
+
+    private float velocidade = 0.0f;
+
+    private float limiteAnguloRad => Mathf.DegToRad(LimiteAnguloGraus);
+    
+    public void _on_area_2d_body_entered(Node2D body)
+    {
+        if (body is CharacterBody2D)
+        {
+            player = body as CharacterBody2D;
+        }
+    }
+    
+    public void _on_area_2d_body_exited(Node2D body)
+    {
+        if (body is CharacterBody2D)
+        {
+            player = null;
+        }
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if (player == null)
+        {
+            GD.Print(\"Player não está na gangorra\");
+            // Se o player não está na gangorra, desacelera gradualmente (simula atrito)
+            velocidade *= 0.96f;
+              // Aplica a velocidade angular à rotação da gangorra
+            Rotation += velocidade * (float)delta;
+
+            // Limita a rotação para não passar do ângulo máximo para cada lado
+            if (Rotation > limiteAnguloRad)
+            {
+                Rotation = limiteAnguloRad;
+                velocidade = 0f;
+            }
+            else if (Rotation < -limiteAnguloRad)
+            {
+                Rotation = -limiteAnguloRad;
+                velocidade = 0f;
+            }
+            return;
+        }
+
+        // Converte a posição global do player para o sistema de coordenadas local da gangorra
+        Vector2 posPlayerLocal = ToLocal(player.GlobalPosition);
+        float direcao = 0.0f;
+
+   
+
+        // Verifica se o player está em cima da gangorra (dentro do comprimento e de uma altura limite)
+        if (Mathf.Abs(posPlayerLocal.X) < GangorraComprimento / 2 && Mathf.Abs(posPlayerLocal.Y) < 50)
+        {
+            // Se o player está à direita do centro, balança para a direita
+            if (posPlayerLocal.X > 10)
+                direcao = 1.0f;
+            // Se o player está à esquerda do centro, balança para a esquerda
+            else if (posPlayerLocal.X < -10)
+                direcao = -1.0f;
+
+            // Aumenta a velocidade angular conforme a direção e \"gravidade\"
+            velocidade += Gravidade * direcao * (float)delta;
+        }
+        else
+        {
+            // Se o player não está na gangorra, desacelera gradualmente (simula atrito)
+            velocidade *= 0.96f;
+        }
+
+        // Aplica a velocidade angular à rotação da gangorra
+        Rotation += velocidade * (float)delta;
+
+        // Limita a rotação para não passar do ângulo máximo para cada lado
+        if (Rotation > limiteAnguloRad)
+        {
+            Rotation = limiteAnguloRad;
+            velocidade = 0f;
+        }
+        else if (Rotation < -limiteAnguloRad)
+        {
+            Rotation = -limiteAnguloRad;
+            velocidade = 0f;
+        }
+    }
+}"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ivbm4"]
+size = Vector2(32, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2gguk"]
+size = Vector2(117, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwtyn"]
+size = Vector2(125, 13)
+
+[node name="GangorraPlataform" type="StaticBody2D"]
+script = SubResource("CSharpScript_ivbm4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.53125, 0.53125)
+texture = ExtResource("1_rna6d")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 128
+collision_mask = 19
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+position = Vector2(1, -25)
+texture = ExtResource("2_ivbm4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_ivbm4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -26)
+shape = SubResource("RectangleShape2D_2gguk")
+one_way_collision = true
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(1, 0)
+collision_layer = 256
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.5, -31.5)
+shape = SubResource("RectangleShape2D_hwtyn")
+debug_color = Color(0.5798684, 0.39931762, 0.96708137, 0.41960785)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

@@ -1,0 +1,42 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="PrototipoKatrinaMovimentacao"
+run/main_scene="uid://b1gnb8slestvs"
+config/features=PackedStringArray("4.5", "C#", "Mobile")
+config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="PrototipoKatrina"
+
+[global_group]
+
+player=""
+pushable=""
+death_water_area=""
+
+[layer_names]
+
+2d_physics/layer_1="floor"
+2d_physics/layer_2="player"
+2d_physics/layer_3="pushable_obj"
+2d_physics/layer_4="rotable_obj"
+2d_physics/layer_5="water_area"
+2d_physics/layer_6="move_plataform"
+2d_physics/layer_7="player_death_area"
+2d_physics/layer_8="seesaw_base"
+2d_physics/layer_9="seesaw"
+
+[rendering]
+
+renderer/rendering_method="mobile"
