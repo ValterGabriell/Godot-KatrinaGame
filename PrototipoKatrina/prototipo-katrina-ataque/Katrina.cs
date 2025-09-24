@@ -4,9 +4,19 @@ using Godot;
 namespace PrototipoKatrina;
 public partial class Katrina : CharacterBody2D
 {
-  
+    private static PlayerGlobal PlayerGlobalInstance = null;
+
+    override public void _Ready()
+    {
+        PlayerGlobalInstance = PlayerGlobal.GetPlayerGlobalInstance();
+    }
+    
+
     public override void _PhysicsProcess(double delta)
     {
+        
+        PlayerGlobalInstance.UpdatePlayerPosition(this.GlobalPosition);
+
         // Chama a função para processar a entrada do jogador.
         GetInput((float)delta);
 
@@ -14,7 +24,7 @@ public partial class Katrina : CharacterBody2D
         if (!IsOnFloor())
             Velocity = new Vector2(Velocity.X, Velocity.Y + Gravity * (float)delta);
 
-       if(Velocity == Vector2.Zero)
+        if (Velocity == Vector2.Zero)
         {
             CurrentPlayerMovement = EnumMove.IDLE;
         }

@@ -1,27 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://br6fihpua4yd3"]
+[gd_scene load_steps=5 format=3 uid="uid://br6fihpua4yd3"]
 
 [ext_resource type="Texture2D" uid="uid://2obfjg3b1cgd" path="res://Rat/rat_uoaaaa.jpg" id="1_3qrag"]
-[ext_resource type="Script" uid="uid://j32fgdcihhgk" path="res://EnemyRat.cs" id="1_4ap6t"]
+[ext_resource type="Script" uid="uid://dnxpvfdmvwbgd" path="res://Enemy/Rat/EnemyRatBase.cs" id="1_4ap6t"]
+[ext_resource type="Resource" uid="uid://qldrvnpgyur5" path="res://Resources/Enemies/EnemyRatResource.tres" id="2_8ke84"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qrag"]
-size = Vector2(13.5, 12)
+size = Vector2(20.5, 20)
 
-[node name="Rat" type="CharacterBody2D" node_paths=PackedStringArray("DirectionTimer")]
+[node name="Rat" type="CharacterBody2D" node_paths=PackedStringArray("DirectionTimer", "RaycastDetectPlayer", "TimerToChasePlayer")]
 collision_layer = 512
 collision_mask = 3
 script = ExtResource("1_4ap6t")
 DirectionTimer = NodePath("DirectionTimer")
+RaycastDetectPlayer = NodePath("AttackArea/RayCastDetectPlayer")
+TimerToChasePlayer = NodePath("AttackArea/TimeToChasePlayer")
+EnemyResource = ExtResource("2_8ke84")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 4.7683716e-07)
-scale = Vector2(0.006966146, 0.0059244786)
+position = Vector2(3.828125, -4.671874)
+scale = Vector2(0.012679036, 0.011116537)
 texture = ExtResource("1_3qrag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.25, -1)
+position = Vector2(3.75, -5)
 shape = SubResource("RectangleShape2D_3qrag")
 
 [node name="DirectionTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="AttackArea" type="Node2D" parent="."]
+
+[node name="RayCastDetectPlayer" type="RayCast2D" parent="AttackArea"]
+position = Vector2(4, -4)
+target_position = Vector2(50, 0)
+collision_mask = 2
+
+[node name="TimeToChasePlayer" type="Timer" parent="AttackArea"]
+wait_time = 5.0
+
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
+[connection signal="timeout" from="AttackArea/TimeToChasePlayer" to="." method="_on_time_to_chase_player_timeout"]

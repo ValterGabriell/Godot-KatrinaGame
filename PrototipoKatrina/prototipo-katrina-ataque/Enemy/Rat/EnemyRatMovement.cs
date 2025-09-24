@@ -1,12 +1,13 @@
 using System;
 using Godot;
 
-namespace PrototipoKatrina;
+namespace PrototipoKatrina.Enemy;
 
-public partial class EnemyRat : CharacterBody2D
+public partial class EnemyRatBase 
 {
     public override void _Process(double delta)
     {
+   
         if (!IsOnFloor())
             this.Velocity += Vector2.Down * (float)delta * 1000;
 
@@ -16,10 +17,18 @@ public partial class EnemyRat : CharacterBody2D
 
     private void Move(float delta)
     {
-        if (CurrentState != State.Chase && CurrentState != State.Dead)
+        if (CurrentState == State.Roaming && MoveDirection != Vector2.Zero)
         {
             this.Velocity = MoveDirection * EnemyResource.MoveSpeed * delta;
             CurrentState = State.Roaming;
+        }
+        
+        if(CurrentState != State.Dead)
+            DetectPlayer();
+
+        if (CurrentState == State.Chase)
+        {
+            ChasePlayer(delta);
         }
 
         if (CurrentState == State.Dead)

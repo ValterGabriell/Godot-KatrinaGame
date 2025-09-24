@@ -3,8 +3,6 @@ using System;
 
 public partial class EnemyResources : Resource
 {
-
-
     [Export]
     public int MaxHealth = 100;
 
@@ -12,8 +10,9 @@ public partial class EnemyResources : Resource
     public int Damage = 10;
 
     [Export]
-    public float MoveSpeed = 100f;
+    public float MoveSpeed = 900f;
 
-
+    [Export]
+    public float ChaseSpeed = 100f;
 
 }
