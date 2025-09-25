@@ -36,7 +36,6 @@ target_position = Vector2(50, 0)
 collision_mask = 2
 
 [node name="TimeToChasePlayer" type="Timer" parent="AttackArea"]
-wait_time = 5.0
 
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
 [connection signal="timeout" from="AttackArea/TimeToChasePlayer" to="." method="_on_time_to_chase_player_timeout"]

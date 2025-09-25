@@ -206,7 +206,7 @@ tile_map_data = PackedByteArray("AABBAAEAAQAMAAYAAABBAAAAAQAMAAUAAABCAAAAAQAMAAU
 tile_set = SubResource("TileSet_h2yge")
 
 [node name="Katrina" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(2041, -24)
+position = Vector2(662, -27)
 collision_mask = 37
 
 [node name="StaticBody2D" parent="." instance=ExtResource("3_h2yge")]

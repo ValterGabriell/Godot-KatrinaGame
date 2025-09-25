@@ -17,9 +17,9 @@ public partial class EnemyRatBase
 
     private void Move(float delta)
     {
-        if (CurrentState == State.Roaming && MoveDirection != Vector2.Zero)
+        if (CurrentState == State.Roaming && GetMoveDirection() != Vector2.Zero)
         {
-            this.Velocity = MoveDirection * EnemyResource.MoveSpeed * delta;
+            this.Velocity = GetMoveDirection() * EnemyResource.MoveSpeed * delta;
             CurrentState = State.Roaming;
         }
         
@@ -45,7 +45,7 @@ public partial class EnemyRatBase
         if (CurrentState != State.Chase)
         {
             float dirX = Choose([Vector2.Right.X, Vector2.Left.X]);
-            MoveDirection = new Vector2(dirX, 0);
+            SetMoveDirection(new Vector2(dirX, 0));
             this.Velocity = Vector2.Zero;
         }
     }
