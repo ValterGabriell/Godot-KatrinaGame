@@ -18,6 +18,8 @@ public partial class EnemyRatBase : EnemyBase
 
     [Export] private RayCast2D RaycastDetectPlayer;
     [Export] private Timer TimerToChasePlayer;
+    [Export] private Area2D RangeAttackArea;
+    private CollisionShape2D RangeAttackAreaCollision;
 
     private PlayerGlobal playerGlobal;
 
@@ -25,7 +27,7 @@ public partial class EnemyRatBase : EnemyBase
     override public void _Ready()
     {
         playerGlobal = PlayerGlobal.GetPlayerGlobalInstance();
-        GD.Print("Enemy Rat Ready");
+        this.RangeAttackAreaCollision = RangeAttackArea.GetNode<CollisionShape2D>("CollisionShape2D");
     }
 
     protected Vector2 GetMoveDirection() => MoveDirection;
