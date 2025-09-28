@@ -50,7 +50,8 @@ public partial class EnemyRatBase
     {
         if(node2D is CharacterBody2D && node2D.IsInGroup(EnumGroups.player.ToString()))
         {
-            GD.Print("Player in range attack");
+           var player = node2D as Katrina;
+           player.ApplyDamage(this.EnemyResource.DamageAmount);
         }
     }
 }

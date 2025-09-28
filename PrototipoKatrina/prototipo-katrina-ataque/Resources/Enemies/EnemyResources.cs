@@ -7,7 +7,7 @@ public partial class EnemyResources : Resource
     public int MaxHealth = 100;
 
     [Export]
-    public int Damage = 10;
+    public int DamageAmount = 10;
 
     [Export]
     public float MoveSpeed = 900f;
