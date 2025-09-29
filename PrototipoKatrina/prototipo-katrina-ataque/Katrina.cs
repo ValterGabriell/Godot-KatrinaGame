@@ -37,6 +37,7 @@ public partial class Katrina : CharacterBody2D
 
     }
 
+
     public void SetPlayerMovementBlocked(bool bloqueado)
     {
         IsMovementBlocked = bloqueado;

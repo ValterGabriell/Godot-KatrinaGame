@@ -5,9 +5,10 @@ namespace PrototipoKatrina.Enemy;
 
 public partial class EnemyRatBase 
 {
+    private bool IsFacingRight = false;
     public override void _Process(double delta)
     {
-   
+
         if (!IsOnFloor())
             this.Velocity += Vector2.Down * (float)delta * 1000;
 
@@ -18,18 +19,15 @@ public partial class EnemyRatBase
     private void Move(float delta)
     {
         if (CurrentState == State.Roaming && GetMoveDirection() != Vector2.Zero)
-        {
             this.Velocity = GetMoveDirection() * EnemyResource.MoveSpeed * delta;
-            CurrentState = State.Roaming;
-        }
         
-        if(CurrentState != State.Dead)
+        
+        if (CurrentState != State.Dead)
             DetectPlayer();
 
         if (CurrentState == State.Chase)
-        {
             ChasePlayer(delta);
-        }
+        
 
         if (CurrentState == State.Dead)
             this.Velocity = Vector2.Zero;
@@ -39,16 +37,22 @@ public partial class EnemyRatBase
 
     public void _on_direction_timer_timeout()
     {
-
         DirectionTimer.WaitTime = Choose([5f, 10f]);
-
         if (CurrentState != State.Chase)
         {
-            float dirX = Choose([Vector2.Right.X, Vector2.Left.X]);
-            SetMoveDirection(new Vector2(dirX, 0));
-            this.Velocity = Vector2.Zero;
+            float enemyMovementDirectionX = Choose([Vector2.Right.X, Vector2.Left.X]);
+            SetMoveDirection(new Vector2(enemyMovementDirectionX, 0));
+            FlipEnemy(enemyMovementDirectionX);
         }
     }
+
+    private void FlipEnemy(float enemyMovementDirectionX)
+    {
+        this.IsFacingRight = enemyMovementDirectionX > 0;
+        this._Sprite.FlipH = enemyMovementDirectionX < 0;
+        this._RaycastDetectPlayer.TargetPosition = new Vector2(50 * enemyMovementDirectionX, 0);
+    }
+
 
     private float Choose(float[] array)
     {

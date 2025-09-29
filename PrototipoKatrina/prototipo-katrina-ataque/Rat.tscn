@@ -4,20 +4,20 @@
 [ext_resource type="Script" uid="uid://dnxpvfdmvwbgd" path="res://Enemy/Rat/EnemyRatBase.cs" id="1_4ap6t"]
 [ext_resource type="Resource" uid="uid://qldrvnpgyur5" path="res://Resources/Enemies/EnemyRatResource.tres" id="2_8ke84"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qrag"]
-size = Vector2(20.5, 20)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ke84"]
 size = Vector2(38.5, 8)
 
-[node name="Rat" type="CharacterBody2D" node_paths=PackedStringArray("DirectionTimer", "RaycastDetectPlayer", "TimerToChasePlayer", "RangeAttackArea")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qrag"]
+size = Vector2(20.5, 20)
+
+[node name="Rat" type="CharacterBody2D" node_paths=PackedStringArray("DirectionTimer", "_RaycastDetectPlayer", "TimerToChasePlayer", "RangeAttackArea")]
 collision_layer = 512
 collision_mask = 3
 script = ExtResource("1_4ap6t")
-DirectionTimer = NodePath("DirectionTimer")
-RaycastDetectPlayer = NodePath("AttackArea/RayCastDetectPlayer")
-TimerToChasePlayer = NodePath("AttackArea/TimeToChasePlayer")
-RangeAttackArea = NodePath("AttackArea/RangeAttackArea")
+DirectionTimer = NodePath("Sprite2D/DirectionTimer")
+_RaycastDetectPlayer = NodePath("Sprite2D/AttackArea/RayCastDetectPlayer")
+TimerToChasePlayer = NodePath("Sprite2D/AttackArea/TimeToChasePlayer")
+RangeAttackArea = NodePath("Sprite2D/AttackArea/RangeAttackArea")
 EnemyResource = ExtResource("2_8ke84")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -25,30 +25,35 @@ position = Vector2(0, 4.7683716e-07)
 scale = Vector2(0.012679036, 0.011116537)
 texture = ExtResource("1_3qrag")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_3qrag")
-
-[node name="DirectionTimer" type="Timer" parent="."]
+[node name="DirectionTimer" type="Timer" parent="Sprite2D"]
 autostart = true
 
-[node name="AttackArea" type="Node2D" parent="."]
+[node name="AttackArea" type="Node2D" parent="Sprite2D"]
+position = Vector2(0, -4.28944e-05)
+scale = Vector2(78.87035, 89.95608)
 
-[node name="RayCastDetectPlayer" type="RayCast2D" parent="AttackArea"]
+[node name="RayCastDetectPlayer" type="RayCast2D" parent="Sprite2D/AttackArea"]
 target_position = Vector2(50, 0)
 collision_mask = 2
 
-[node name="TimeToChasePlayer" type="Timer" parent="AttackArea"]
+[node name="TimeToChasePlayer" type="Timer" parent="Sprite2D/AttackArea"]
+wait_time = 10.0
 
-[node name="RangeAttackArea" type="Area2D" parent="AttackArea"]
+[node name="RangeAttackArea" type="Area2D" parent="Sprite2D/AttackArea"]
 collision_layer = 512
 collision_mask = 2
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea/RangeAttackArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/AttackArea/RangeAttackArea"]
 shape = SubResource("RectangleShape2D_8ke84")
 disabled = true
 debug_color = Color(0.64705884, 0, 0, 0.41960785)
 
-[connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
-[connection signal="timeout" from="AttackArea/TimeToChasePlayer" to="." method="_on_time_to_chase_player_timeout"]
-[connection signal="body_entered" from="AttackArea/RangeAttackArea" to="." method="_on_range_attack_area_body_entered"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5.684342e-14)
+scale = Vector2(1, 1.0000001)
+shape = SubResource("RectangleShape2D_3qrag")
+
+[connection signal="timeout" from="Sprite2D/DirectionTimer" to="." method="_on_direction_timer_timeout"]
+[connection signal="timeout" from="Sprite2D/AttackArea/TimeToChasePlayer" to="." method="_on_time_to_chase_player_timeout"]
+[connection signal="body_entered" from="Sprite2D/AttackArea/RangeAttackArea" to="." method="_on_range_attack_area_body_entered"]

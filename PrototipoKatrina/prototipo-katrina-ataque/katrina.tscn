@@ -31,11 +31,6 @@ zoom = Vector2(2, 2)
 target_position = Vector2(25, 0)
 collision_mask = 4
 
-[node name="Obsoleto_GroundRaycast" type="RayCast2D" parent="."]
-visible = false
-target_position = Vector2(0, 12)
-collision_mask = 17
-
 [node name="DeathCollision" type="Area2D" parent="."]
 collision_layer = 64
 collision_mask = 16

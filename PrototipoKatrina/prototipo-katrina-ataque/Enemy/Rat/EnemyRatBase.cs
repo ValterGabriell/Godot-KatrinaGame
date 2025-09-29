@@ -16,18 +16,22 @@ public partial class EnemyRatBase : EnemyBase
     /// </summary>
     private Vector2 MoveDirection = Vector2.Zero;
 
-    [Export] private RayCast2D RaycastDetectPlayer;
+    [Export] private RayCast2D _RaycastDetectPlayer;
     [Export] private Timer TimerToChasePlayer;
     [Export] private Area2D RangeAttackArea;
-    private CollisionShape2D RangeAttackAreaCollision;
 
-    private PlayerGlobal playerGlobal;
+    private CollisionShape2D _RangeAttackAreaCollision;
+
+    private PlayerGlobal _PlayerGlobal;
+    private Sprite2D _Sprite;
+
 
 
     override public void _Ready()
     {
-        playerGlobal = PlayerGlobal.GetPlayerGlobalInstance();
-        this.RangeAttackAreaCollision = RangeAttackArea.GetNode<CollisionShape2D>("CollisionShape2D");
+        _PlayerGlobal = PlayerGlobal.GetPlayerGlobalInstance();
+        this._RangeAttackAreaCollision = RangeAttackArea.GetNode<CollisionShape2D>("CollisionShape2D");
+        this._Sprite = GetNode<Sprite2D>("Sprite2D");
     }
 
     protected Vector2 GetMoveDirection() => MoveDirection;

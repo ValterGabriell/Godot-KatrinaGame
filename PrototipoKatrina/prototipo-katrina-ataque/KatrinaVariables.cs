@@ -13,7 +13,7 @@ namespace PrototipoKatrina
         // Convenção C# usa PascalCase para nomes de variáveis públicas.
         [Export] public RayCast2D PushRaycast;
 
-    
+        [Export] public float Health = 100.0f;
         [Export] public float Speed = 200.0f;
         [Export] public float RunSpeed = 350.0f;
         private float JumpVelocity = -400.0f;
