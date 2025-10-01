@@ -60,7 +60,7 @@ namespace PrototipoKatrina
 
         public EnumMove GetCurrentPlayerMovement()
         {
-            return this.CurrentPlayerMovement;
+            return this.CurrentPlayerDirectionMovement;
         }
 
         public void ResetBallance()

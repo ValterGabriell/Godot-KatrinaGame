@@ -28,7 +28,7 @@ public partial class Katrina : CharacterBody2D
 
         if (Velocity == Vector2.Zero)
         {
-            CurrentPlayerMovement = EnumMove.IDLE;
+            CurrentPlayerDirectionMovement = EnumMove.IDLE;
         }
 
         // Aplica o movimento.
@@ -48,8 +48,12 @@ public partial class Katrina : CharacterBody2D
     // Processa a entrada do jogador.
     public void GetInput(float delta)
     {
-        HandleAttack();
+        // HandleAttack();
 
+        if(Input.IsActionJustPressed("throw"))
+        {
+            ThrowBallToDistract(delta);
+        }
 
         Vector2 inputVector = Vector2.Zero;
 
@@ -57,13 +61,13 @@ public partial class Katrina : CharacterBody2D
         if (Input.IsActionPressed("ui_right") && !IsMovementBlocked)
         {
             inputVector.X += 1;
-            CurrentPlayerMovement = EnumMove.RIGHT;
+            CurrentPlayerDirectionMovement = EnumMove.RIGHT;
         }
 
         if (Input.IsActionPressed("ui_left") && !IsMovementBlocked)
         {
             inputVector.X -= 1;
-            CurrentPlayerMovement = EnumMove.LEFT;
+            CurrentPlayerDirectionMovement = EnumMove.LEFT;
         }
 
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dw4s248phtymn"]
+[gd_scene load_steps=7 format=3 uid="uid://dw4s248phtymn"]
 
 [ext_resource type="Script" uid="uid://dh6x1nswnwh1p" path="res://Katrina.cs" id="1_qo5v2"]
 [ext_resource type="Texture2D" uid="uid://bgebpt7e16wpu" path="res://Katrina/KatrinaImgPrototipo.jpg" id="2_6bmqd"]
+[ext_resource type="PackedScene" uid="uid://5gpknaaqn5ng" path="res://Itens/Distraction/LittleBall.tscn" id="2_hvuun"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
 
@@ -15,6 +16,7 @@ size = Vector2(31, 4)
 collision_layer = 2
 collision_mask = 261
 script = ExtResource("1_qo5v2")
+BallScene = ExtResource("2_hvuun")
 PushRaycast = NodePath("PushRaycast")
 AttackArea = NodePath("AttackArea")
 Sprite = NodePath("Sprite2D")

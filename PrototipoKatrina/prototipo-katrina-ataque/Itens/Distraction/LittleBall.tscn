@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://5gpknaaqn5ng"]
+
+[ext_resource type="Script" uid="uid://cop60gp1117ox" path="res://Itens/Distraction/LittleBall.cs" id="1_w1vo5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_w1vo5"]
+bounce = 0.5
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_6nop0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w1vo5"]
+size = Vector2(2, 2)
+
+[node name="LittleBall" type="RigidBody2D"]
+collision_layer = 1024
+mass = 0.5
+physics_material_override = SubResource("PhysicsMaterial_w1vo5")
+script = ExtResource("1_w1vo5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = SubResource("CanvasTexture_6nop0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w1vo5")
