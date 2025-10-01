@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw4s248phtymn"]
+[gd_scene load_steps=6 format=3 uid="uid://dw4s248phtymn"]
 
 [ext_resource type="Script" uid="uid://dh6x1nswnwh1p" path="res://Katrina.cs" id="1_qo5v2"]
 [ext_resource type="Texture2D" uid="uid://bgebpt7e16wpu" path="res://Katrina/KatrinaImgPrototipo.jpg" id="2_6bmqd"]
@@ -8,11 +8,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qo5v2"]
 size = Vector2(20, 14)
 
-[node name="Katrina" type="CharacterBody2D" node_paths=PackedStringArray("PushRaycast", "Sprite") groups=["player"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6bmqd"]
+size = Vector2(31, 4)
+
+[node name="Katrina" type="CharacterBody2D" node_paths=PackedStringArray("PushRaycast", "AttackArea", "Sprite") groups=["player"]]
 collision_layer = 2
 collision_mask = 261
 script = ExtResource("1_qo5v2")
 PushRaycast = NodePath("PushRaycast")
+AttackArea = NodePath("AttackArea")
 Sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -39,4 +43,16 @@ collision_mask = 16
 shape = SubResource("RectangleShape2D_qo5v2")
 debug_color = Color(0.6835048, 0, 0.08780732, 0.41960785)
 
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 512
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_6bmqd")
+disabled = true
+debug_color = Color(0, 0, 0, 0.41960785)
+
 [connection signal="body_entered" from="DeathCollision" to="." method="_on_death_collision_body_entered"]
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

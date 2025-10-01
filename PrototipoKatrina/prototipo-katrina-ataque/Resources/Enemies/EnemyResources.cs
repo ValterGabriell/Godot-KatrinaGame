@@ -3,7 +3,7 @@ using System;
 
 public partial class EnemyResources : Resource
 {
-    [Export] public int MaxHealth = 100;
+    [Export] public float Health = 100;
 
     [Export] public int DamageAmount = 10;
 

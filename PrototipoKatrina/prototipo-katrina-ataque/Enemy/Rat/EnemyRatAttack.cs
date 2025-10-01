@@ -10,7 +10,12 @@ public partial class EnemyRatBase
     protected void DetectPlayer()
     {
         if (IsPlayerDetected() && _RaycastDetectPlayer.GetCollider() is CharacterBody2D collider)
-            InitiateChase(collider); 
+            InitiateChase(collider);
+    }
+
+    public void SetCurrentPlayerPositionToChase(Vector2 position)
+    {
+        this.CurrentPlayerPositionToChase = position;
     }
 
     private void InitiateChase(GodotObject collider)
@@ -19,9 +24,20 @@ public partial class EnemyRatBase
         this.RangeAttackArea.Monitoring = true;
         this._RangeAttackAreaCollision.Disabled = false;
         this.CurrentState = State.Chase;
-        this.CurrentPlayerPositionToChase = (collider as CharacterBody2D).GlobalPosition;
+        SetCurrentPlayerPositionToChase((collider as CharacterBody2D).GlobalPosition);
         TimerToChasePlayer.Start();
     }
+
+    public void InitiateChase(Vector2 PlayerPosition)
+    {
+        //if the raycast is colliding with the player, start chasing again, if it is.
+        this.RangeAttackArea.Monitoring = true;
+        this._RangeAttackAreaCollision.Disabled = false;
+        this.CurrentState = State.Chase;
+        SetCurrentPlayerPositionToChase(PlayerPosition);
+        TimerToChasePlayer.Start();
+    }
+
 
 
     private bool IsPlayerDetected()
@@ -30,7 +46,7 @@ public partial class EnemyRatBase
     }
 
 
-    protected void ChasePlayer(float delta)
+    protected void ChasePlayer()
     {
         if (CurrentState == State.Chase && CurrentPlayerPositionToChase != Vector2.Zero)
         {
@@ -38,7 +54,7 @@ public partial class EnemyRatBase
             direction = direction.Normalized();
             direction.Y = 0;
             Velocity = direction * this.EnemyResource.ChaseSpeed;
-            FlipEnemy(direction.X); 
+            FlipEnemy(direction.X);
         }
     }
 
@@ -54,13 +70,13 @@ public partial class EnemyRatBase
 
     protected void _on_range_attack_area_body_entered(Node2D node2D)
     {
-        if(node2D is CharacterBody2D && node2D.IsInGroup(EnumGroups.player.ToString()))
+        if (node2D is CharacterBody2D && node2D.IsInGroup(EnumGroups.player.ToString()))
         {
-           var player = node2D as Katrina;
-           player.ApplyDamage(
-            damageAmount: this.EnemyResource.DamageAmount,
-            force: new Vector2(this.EnemyResource.ForcePushDamage * (this.IsFacingRight ? 1 : -1), -this.EnemyResource.ForcePushDamage / 2)
-           );
+            var player = node2D as Katrina;
+            player.ApplyDamage(
+             damageAmount: this.EnemyResource.DamageAmount,
+             force: new Vector2(this.EnemyResource.ForcePushDamage * (this.IsFacingRight ? 1 : -1), -this.EnemyResource.ForcePushDamage / 2)
+            );
         }
     }
 }

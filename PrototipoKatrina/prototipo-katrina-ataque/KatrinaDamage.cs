@@ -22,7 +22,6 @@ namespace PrototipoKatrina
                 //EMITIR UM SINAL DE MORTE AQUI, QUEM VAI ASSINAR ESSE SINAL VAI SER O GAME MANAGER E O JOGO VAI REINICIAR,
                 //OU VAI CARREGAR A ULTIMA CHECKPOINT
             }
-
         }
         
     }

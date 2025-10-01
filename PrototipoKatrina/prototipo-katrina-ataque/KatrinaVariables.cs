@@ -14,6 +14,7 @@ namespace PrototipoKatrina
         [Export] public RayCast2D PushRaycast;
 
         [Export] public float Health = 100.0f;
+        [Export] public Area2D AttackArea;
         [Export] public float Speed = 200.0f;
         [Export] public float RunSpeed = 350.0f;
         private float JumpVelocity = -400.0f;
@@ -22,5 +23,7 @@ namespace PrototipoKatrina
         private EnumMove CurrentPlayerMovement;
         private bool IsMovementBlocked = false;
         private Vector2 LastSavePointPlayerPosition = Vector2.Zero;
+
+        private float Attack01Force = 20f;
     }
 }

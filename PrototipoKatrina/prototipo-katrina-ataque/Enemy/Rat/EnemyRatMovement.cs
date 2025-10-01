@@ -26,7 +26,7 @@ public partial class EnemyRatBase
             DetectPlayer();
 
         if (CurrentState == State.Chase)
-            ChasePlayer(delta);
+            ChasePlayer();
         
 
         if (CurrentState == State.Dead)

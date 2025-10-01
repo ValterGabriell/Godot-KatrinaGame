@@ -1,7 +1,9 @@
+using System;
 using Godot;
 
 
 namespace PrototipoKatrina;
+
 public partial class Katrina : CharacterBody2D
 {
     private static PlayerGlobal PlayerGlobalInstance = null;
@@ -10,11 +12,11 @@ public partial class Katrina : CharacterBody2D
     {
         PlayerGlobalInstance = PlayerGlobal.GetPlayerGlobalInstance();
     }
-    
+
 
     public override void _PhysicsProcess(double delta)
     {
-        
+
         PlayerGlobalInstance.UpdatePlayerPosition(this.GlobalPosition);
 
         // Chama a função para processar a entrada do jogador.
@@ -46,6 +48,9 @@ public partial class Katrina : CharacterBody2D
     // Processa a entrada do jogador.
     public void GetInput(float delta)
     {
+        HandleAttack();
+
+
         Vector2 inputVector = Vector2.Zero;
 
         // Obtém o input horizontal.
@@ -54,13 +59,13 @@ public partial class Katrina : CharacterBody2D
             inputVector.X += 1;
             CurrentPlayerMovement = EnumMove.RIGHT;
         }
-           
+
         if (Input.IsActionPressed("ui_left") && !IsMovementBlocked)
         {
             inputVector.X -= 1;
             CurrentPlayerMovement = EnumMove.LEFT;
         }
-            
+
 
         // Checa se a tecla SHIFT está pressionada.
         bool isRunning = Input.IsKeyPressed(Key.Shift);
@@ -104,4 +109,14 @@ public partial class Katrina : CharacterBody2D
         // NÃO zere Velocity.Y ao tocar o chão, deixe a física cuidar!
         // Só zere se estiver bugando grudando no chão, mas normalmente não precisa.
     }
+
+    private void HandleAttack()
+    {
+        if (Input.IsActionJustPressed("attack") && !IsMovementBlocked)
+            Attack();
+
+    }
+
+
+
 }
