@@ -54,6 +54,9 @@ position = Vector2(0, -5.684342e-14)
 scale = Vector2(1, 1.0000001)
 shape = SubResource("RectangleShape2D_3qrag")
 
+[node name="LookForPlayerInDetectedArea" type="Timer" parent="."]
+wait_time = 5.0
+
 [connection signal="timeout" from="Sprite2D/DirectionTimer" to="." method="_on_direction_timer_timeout"]
 [connection signal="timeout" from="Sprite2D/AttackArea/TimeToChasePlayer" to="." method="_on_time_to_chase_player_timeout"]
 [connection signal="body_entered" from="Sprite2D/AttackArea/RangeAttackArea" to="." method="_on_range_attack_area_body_entered"]

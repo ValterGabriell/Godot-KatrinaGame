@@ -15,7 +15,8 @@ public partial class EnemyBase : CharacterBody2D
         Roaming,
         Attack,
         Chase,
-        Dead
+        Dead,
+        LookingForPlayerInDistractedArea
     }
     
     protected State CurrentState = State.Roaming;

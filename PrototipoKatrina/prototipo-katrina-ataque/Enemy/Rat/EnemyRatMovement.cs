@@ -27,6 +27,9 @@ public partial class EnemyRatBase
 
         if (CurrentState == State.Chase)
             ChasePlayer();
+
+        if(CurrentState == State.LookingForPlayerInDistractedArea)
+            ChaseDistractedArea();
         
 
         if (CurrentState == State.Dead)

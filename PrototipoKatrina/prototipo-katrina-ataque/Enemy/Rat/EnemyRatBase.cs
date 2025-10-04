@@ -32,6 +32,7 @@ public partial class EnemyRatBase : EnemyBase
         _PlayerGlobal = PlayerGlobal.GetPlayerGlobalInstance();
         this._RangeAttackAreaCollision = RangeAttackArea.GetNode<CollisionShape2D>("CollisionShape2D");
         this._Sprite = GetNode<Sprite2D>("Sprite2D");
+        SignalManager.Instance.EnemyEnteredWarningArea += OnEnemyEnteredWarningArea;
     }
 
     protected Vector2 GetMoveDirection() => MoveDirection;

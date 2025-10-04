@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 PlayerGlobal="*res://Global/PlayerGlobal.cs"
+SignalManager="*res://SignalManager.cs"
 
 [dotnet]
 
@@ -29,6 +30,7 @@ player=""
 pushable=""
 death_water_area=""
 enemy=""
+terrain=""
 
 [input]
 
