@@ -9,7 +9,8 @@ public partial class EnemyRatBase
 
     protected void DetectPlayer()
     {
-        if (IsPlayerDetected() && _RaycastDetectPlayer.GetCollider() is CharacterBody2D collider)
+        if (IsPlayerDetected() && _RaycastDetectPlayer.GetCollider() is CharacterBody2D collider
+            && this.CurrentState != State.Dead && this.CurrentState != State.Chase)
             InitiateChase(collider);
     }
 

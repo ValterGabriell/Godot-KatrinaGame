@@ -48,7 +48,7 @@ public partial class Katrina : CharacterBody2D
     // Processa a entrada do jogador.
     public void GetInput(float delta)
     {
-        // HandleAttack();
+        HandleAttack();
 
         if(Input.IsActionJustPressed("throw"))
         {
@@ -58,13 +58,13 @@ public partial class Katrina : CharacterBody2D
         Vector2 inputVector = Vector2.Zero;
 
         // Obtém o input horizontal.
-        if (Input.IsActionPressed("ui_right") && !IsMovementBlocked)
+        if (Input.IsActionPressed("d") && !IsMovementBlocked)
         {
             inputVector.X += 1;
             CurrentPlayerDirectionMovement = EnumMove.RIGHT;
         }
 
-        if (Input.IsActionPressed("ui_left") && !IsMovementBlocked)
+        if (Input.IsActionPressed("a") && !IsMovementBlocked)
         {
             inputVector.X -= 1;
             CurrentPlayerDirectionMovement = EnumMove.LEFT;
@@ -84,12 +84,12 @@ public partial class Katrina : CharacterBody2D
             if (inputVector.X > 0)
             {
                 Sprite.FlipH = false;
-                PushRaycast.TargetPosition = new Vector2(Mathf.Abs(PushRaycast.TargetPosition.X), PushRaycast.TargetPosition.Y);
+                FlipRaycast(direction: 1);
             }
             else if (inputVector.X < 0)
             {
                 Sprite.FlipH = true;
-                PushRaycast.TargetPosition = new Vector2(-Mathf.Abs(PushRaycast.TargetPosition.X), PushRaycast.TargetPosition.Y);
+                FlipRaycast(direction: -1);
             }
         }
         else
@@ -112,6 +112,12 @@ public partial class Katrina : CharacterBody2D
 
         // NÃO zere Velocity.Y ao tocar o chão, deixe a física cuidar!
         // Só zere se estiver bugando grudando no chão, mas normalmente não precisa.
+    }
+
+    private void FlipRaycast(float direction)
+    {
+        PushRaycast.TargetPosition = new Vector2(direction * Mathf.Abs(PushRaycast.TargetPosition.X), PushRaycast.TargetPosition.Y);
+        AttackRaycast.TargetPosition = new Vector2(direction * Mathf.Abs(AttackRaycast.TargetPosition.X), AttackRaycast.TargetPosition.Y);
     }
 
     private void HandleAttack()

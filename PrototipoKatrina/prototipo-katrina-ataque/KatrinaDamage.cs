@@ -19,6 +19,9 @@ namespace PrototipoKatrina
             {
                 GD.Print("Katrina morreu");
                 this.Health = 0;
+                this.IsMovementBlocked = true;
+                this.Velocity = Vector2.Zero;
+                //ANIMACAO DE MORTE AQUI
                 //EMITIR UM SINAL DE MORTE AQUI, QUEM VAI ASSINAR ESSE SINAL VAI SER O GAME MANAGER E O JOGO VAI REINICIAR,
                 //OU VAI CARREGAR A ULTIMA CHECKPOINT
             }

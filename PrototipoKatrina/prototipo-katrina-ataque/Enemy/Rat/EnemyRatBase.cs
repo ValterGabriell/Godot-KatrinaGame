@@ -8,6 +8,7 @@ namespace PrototipoKatrina.Enemy;
 public partial class EnemyRatBase : EnemyBase
 {
     [Export] protected Timer DirectionTimer;
+    [Export] protected Timer LookForPlayerTimer;
 
     /// <summary>
     /// Direção do movimento do rato, usado para patrulhar o cenário, ou seja, andar para frente e para trás.

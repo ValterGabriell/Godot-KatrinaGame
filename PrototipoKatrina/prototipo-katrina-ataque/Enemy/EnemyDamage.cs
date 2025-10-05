@@ -16,6 +16,10 @@ public partial class EnemyBase : CharacterBody2D
         {
             GD.Print("Inimigo morreu");
             this.EnemyResource.Health = 0;
+            this.CurrentState = State.Dead;
+        
+            //Animacao inimigo morto
+
 
             //EMITIR UM SINAL DE MORTE AQUI
         }
