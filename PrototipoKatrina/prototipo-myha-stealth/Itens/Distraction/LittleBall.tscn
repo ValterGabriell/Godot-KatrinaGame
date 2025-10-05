@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://5gpknaaqn5ng"]
+
+[ext_resource type="Script" uid="uid://cop60gp1117ox" path="res://Itens/Distraction/LittleBall.cs" id="1_w1vo5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_w1vo5"]
+bounce = 0.5
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_6nop0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w1vo5"]
+size = Vector2(2, 2)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w1vo5"]
+radius = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1swc4"]
+radius = 154.0
+
+[node name="LittleBall" type="RigidBody2D" node_paths=PackedStringArray("EmitWarningArea")]
+collision_layer = 1024
+mass = 0.5
+physics_material_override = SubResource("PhysicsMaterial_w1vo5")
+script = ExtResource("1_w1vo5")
+EmitWarningArea = NodePath("EmitWarningArea")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = SubResource("CanvasTexture_6nop0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w1vo5")
+
+[node name="FloorCollisionArea" type="Area2D" parent="."]
+position = Vector2(-1, 0)
+collision_layer = 1024
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorCollisionArea"]
+shape = SubResource("CircleShape2D_w1vo5")
+
+[node name="EmitWarningArea" type="Area2D" parent="."]
+position = Vector2(1, 0)
+collision_layer = 1024
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EmitWarningArea"]
+shape = SubResource("CircleShape2D_1swc4")
+
+[connection signal="body_entered" from="FloorCollisionArea" to="." method="_SignalWhenTouchFloor"]
