@@ -1,13 +1,14 @@
 using Godot;
+using PrototipoMyha;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrototipoKatrina
+namespace PrototipoMyha
 {
-    public partial class Katrina : CharacterBody2D
+    public partial class Myha_2 : CharacterBody2D
     {
         private const float INITAL_MAX_BALLANCE = 100.0f;
         private float Equilibrio = INITAL_MAX_BALLANCE;

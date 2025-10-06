@@ -2,9 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Godot;
 
-namespace PrototipoKatrina;
+namespace PrototipoMyha;
 
-public partial class Katrina : CharacterBody2D
+public partial class Myha_2 : CharacterBody2D
 {
     public void Attack()
     {

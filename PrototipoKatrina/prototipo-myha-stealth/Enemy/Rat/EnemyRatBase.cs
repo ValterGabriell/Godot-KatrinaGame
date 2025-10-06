@@ -1,9 +1,9 @@
 using Godot;
-using PrototipoKatrina.Enemy;
+
 using System;
 using System.Collections.Generic;
 
-namespace PrototipoKatrina.Enemy;
+namespace PrototipoMyha.Enemy;
 
 public partial class EnemyRatBase : EnemyBase
 {

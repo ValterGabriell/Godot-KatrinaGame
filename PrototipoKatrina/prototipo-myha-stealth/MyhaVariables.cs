@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrototipoKatrina
+namespace PrototipoMyha
 {
-    public sealed partial class Katrina
+    public sealed partial class Myha_2
     {
         // Use [Export] para definir variáveis no Inspector do Godot.
         // Convenção C# usa PascalCase para nomes de variáveis públicas.

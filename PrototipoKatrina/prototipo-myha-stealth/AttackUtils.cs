@@ -1,7 +1,7 @@
 
 using Godot;
 
-namespace PrototipoKatrina;
+namespace PrototipoMyha;
 
 public static class AttackUtils
 {

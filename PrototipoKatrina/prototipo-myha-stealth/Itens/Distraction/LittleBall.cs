@@ -1,5 +1,6 @@
 using Godot;
-using PrototipoKatrina;
+
+using PrototipoMyha;
 using System;
 
 public partial class LittleBall : RigidBody2D

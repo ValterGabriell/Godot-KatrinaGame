@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace PrototipoKatrina.Enemy;
+namespace PrototipoMyha.Enemy;
 
 
 public partial class EnemyRatBase
@@ -73,7 +73,7 @@ public partial class EnemyRatBase
     {
         if (node2D is CharacterBody2D && node2D.IsInGroup(EnumGroups.player.ToString()))
         {
-            var player = node2D as Katrina;
+            var player = node2D as Myha_2;
             player.ApplyDamage(
              damageAmount: this.EnemyResource.DamageAmount,
              force: new Vector2(this.EnemyResource.ForcePushDamage * (this.IsFacingRight ? 1 : -1), -this.EnemyResource.ForcePushDamage / 2)

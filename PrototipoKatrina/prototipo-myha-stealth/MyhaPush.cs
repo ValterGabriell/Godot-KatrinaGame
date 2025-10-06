@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrototipoKatrina
+namespace PrototipoMyha
 {
-    public partial class Katrina
+    public partial class Myha_2
     {   
         private bool isPressingKeyToPush = false;
 

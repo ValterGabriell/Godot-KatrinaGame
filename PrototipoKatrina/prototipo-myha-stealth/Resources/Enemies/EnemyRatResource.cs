@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace PrototipoKatrina.Resources.Enemies;
+namespace PrototipoMyha.Resources.Enemies;
 
 public partial class EnemyRatResource: EnemyResources
 {

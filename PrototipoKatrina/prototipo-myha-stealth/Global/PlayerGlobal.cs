@@ -1,5 +1,5 @@
 using Godot;
-using PrototipoKatrina;
+
 using System;
 
 public partial class PlayerGlobal : Node

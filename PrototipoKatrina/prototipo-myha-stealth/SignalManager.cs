@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace PrototipoKatrina;
+namespace PrototipoMyha;
 
 public partial class SignalManager : Node
 {

@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace PrototipoKatrina.Enemy;
+namespace PrototipoMyha.Enemy;
 
 public partial class EnemyRatBase : EnemyBase
 {
