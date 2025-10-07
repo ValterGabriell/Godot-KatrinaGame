@@ -1,4 +1,5 @@
 using Godot;
+using PrototipoMyha.Enemy.Components.Impl.Strategies.PatrolHandler;
 using PrototipoMyha.Enemy.Components.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,4 +15,5 @@ public partial class EnemyResources : Resource
 
     [Export] public float ChaseSpeed = 100f;
     [Export] public float ForcePushDamage = 200f;
+    [Export] public PatrolType PatrolStyle = PatrolType.XAxis;
 }

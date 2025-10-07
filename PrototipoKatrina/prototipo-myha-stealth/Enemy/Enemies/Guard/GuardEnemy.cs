@@ -14,7 +14,8 @@ public partial class GuardEnemy : EnemyBase
 
     protected override void InstanciateComponents()
     {
-        GD.Print("AAA");
-        AddComponent(new EnemyMovementComponent());
+        var enemyMovement = new EnemyMovementComponent();
+
+        AddComponent(enemyMovement);
     }
 }

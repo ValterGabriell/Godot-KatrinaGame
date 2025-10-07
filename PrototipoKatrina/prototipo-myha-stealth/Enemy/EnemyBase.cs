@@ -9,9 +9,17 @@ public abstract partial class EnemyBase : CharacterBody2D
 {
     [Export] public EnemyResources EnemyResource;
 
-    protected Vector2 CurrentPlayerPositionToChase = Vector2.Zero;
+    public Vector2 CurrentPlayerPositionToChase { get; private set; } = Vector2.Zero;
 
     protected Dictionary<string, IEnemyBaseComponents> Components = new();
+
+    public EnemyState CurrentEnemyState { get; private set; }  = EnemyState.Roaming;
+
+
+    public void SetState(EnemyState newState)
+    {
+        CurrentEnemyState = newState;
+    }
 
     public void AddComponent<T>(T component) where T : IEnemyBaseComponents
     {

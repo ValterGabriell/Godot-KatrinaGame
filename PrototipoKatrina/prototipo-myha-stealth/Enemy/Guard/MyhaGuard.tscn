@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://wsd5sf8i5cv1" path="res://Enemy/Enemies/Guard/GuardEnemy.cs" id="1_1r440"]
 [ext_resource type="Texture2D" uid="uid://dhf2sia1w35xr" path="res://Enemy/Guard/Guard.jpg" id="1_smwxp"]
-[ext_resource type="Resource" uid="uid://qldrvnpgyur5" path="res://Resources/Enemies/EnemyRatResource.tres" id="2_5bxr6"]
+[ext_resource type="Resource" uid="uid://del5rykr45twu" path="res://Resources/Enemies/Guard/Guard.tres" id="2_5bxr6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
 size = Vector2(17.5, 16)
