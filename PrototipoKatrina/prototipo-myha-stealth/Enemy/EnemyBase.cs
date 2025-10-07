@@ -1,25 +1,58 @@
-using System;
 using Godot;
+using PrototipoMyha.Enemy.Components.Interfaces;
+using PrototipoMyha.Enemy.States;
+using System.Collections.Generic;
 
 namespace PrototipoMyha.Enemy;
 
-public partial class EnemyBase : CharacterBody2D
+public abstract partial class EnemyBase : CharacterBody2D
 {
-    [Export] protected EnemyResources EnemyResource;
+    [Export] public EnemyResources EnemyResource;
 
     protected Vector2 CurrentPlayerPositionToChase = Vector2.Zero;
 
-    protected enum State
+    protected Dictionary<string, IEnemyBaseComponents> Components = new();
+
+    public void AddComponent<T>(T component) where T : IEnemyBaseComponents
     {
-        Idle,
-        Roaming,
-        Attack,
-        Chase,
-        Dead,
-        LookingForPlayerInDistractedArea
+        Components[component.GetType().ToString()] = component;
+        AddChild(component as Node);
     }
-    
-    protected State CurrentState = State.Roaming;
 
+    public void RemoveComponent<T>(T component) where T : IEnemyBaseComponents
+    {
+        Components.Remove(component.GetType().ToString());
+        RemoveChild(component as Node);
+        (component as Node).QueueFree();
+    }
+    protected abstract void InstanciateComponents();
 
+    public override void _Ready()
+    {
+        InstanciateComponents();
+
+        foreach (var component in Components.Values)
+        {
+            component.Initialize(this);
+        }
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        foreach (var component in Components.Values)
+        {
+            component.PhysicsProcess(delta);
+        }
+        MoveAndSlide();
+    }
+
+    public override void _Process(double delta)
+    {
+        foreach (var component in Components.Values)
+        {
+            component.Process(delta);
+        }
+    }
+
+    protected EnemyState CurrentState = EnemyState.Roaming;
 }

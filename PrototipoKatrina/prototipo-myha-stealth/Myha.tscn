@@ -1,22 +1,33 @@
-[gd_scene load_steps=6 format=3 uid="uid://dw4s248phtymn"]
+[gd_scene load_steps=8 format=3 uid="uid://dw4s248phtymn"]
 
-[ext_resource type="Script" uid="uid://bxvik1geyggn" path="res://Myha_2.cs" id="1_igtom"]
+[ext_resource type="Script" uid="uid://cuqh1qqpdp4lm" path="res://Player/Myha/MyhaPlayer.cs" id="1_gp1ay"]
 [ext_resource type="Texture2D" uid="uid://dus27gf002pcu" path="res://Myha/Myha.jpeg" id="2_6bmqd"]
 [ext_resource type="PackedScene" uid="uid://5gpknaaqn5ng" path="res://Itens/Distraction/LittleBall.tscn" id="2_hvuun"]
+[ext_resource type="Script" uid="uid://bwloiaka7u1si" path="res://Player/Components/Impl/MovementComponent.cs" id="2_p0f4f"]
+[ext_resource type="Script" uid="uid://cnw638mboe3yj" path="res://Player/Components/Impl/HealthComponent.cs" id="3_u2uw6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qo5v2"]
 size = Vector2(20, 14)
 
-[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("PushRaycast", "AttackRaycast", "Sprite") groups=["player"]]
+[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "Sprite") groups=["player"]]
 collision_layer = 2
 collision_mask = 261
-script = ExtResource("1_igtom")
+script = ExtResource("1_gp1ay")
+AttackRaycast = NodePath("AttackRaycast")
 PushRaycast = NodePath("PushRaycast")
 BallScene = ExtResource("2_hvuun")
-AttackRaycast = NodePath("AttackRaycast")
+PlayerName = "Myha"
 Sprite = NodePath("Sprite2D")
+
+[node name="PlayerComponents" type="Node" parent="."]
+
+[node name="MovementComponent" type="Node" parent="PlayerComponents"]
+script = ExtResource("2_p0f4f")
+
+[node name="HealthComponent" type="Node" parent="PlayerComponents"]
+script = ExtResource("3_u2uw6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0.25000095, 5.9604645e-08)
@@ -45,5 +56,7 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathCollision"]
 shape = SubResource("RectangleShape2D_qo5v2")
 debug_color = Color(0.6835048, 0, 0.08780732, 0.41960785)
+
+[node name="StateMachine" type="Node" parent="."]
 
 [connection signal="body_entered" from="DeathCollision" to="." method="_on_death_collision_body_entered"]

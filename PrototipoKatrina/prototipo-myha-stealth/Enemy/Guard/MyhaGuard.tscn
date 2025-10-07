@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyb3c5aecsw5r"]
+
+[ext_resource type="Script" uid="uid://wsd5sf8i5cv1" path="res://Enemy/Enemies/Guard/GuardEnemy.cs" id="1_1r440"]
+[ext_resource type="Texture2D" uid="uid://dhf2sia1w35xr" path="res://Enemy/Guard/Guard.jpg" id="1_smwxp"]
+[ext_resource type="Resource" uid="uid://qldrvnpgyur5" path="res://Resources/Enemies/EnemyRatResource.tres" id="2_5bxr6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(17.5, 16)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_1r440")
+EnemyResource = ExtResource("2_5bxr6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.3841858e-07, 0)
+scale = Vector2(0.008854166, 0.015046309)
+texture = ExtResource("1_smwxp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.25, 0)
+shape = SubResource("RectangleShape2D_7mycd")
