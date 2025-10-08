@@ -19,7 +19,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.Strategies.StatesHandler
           float InMaxWaitTime,
           Action SetNewRandomTarget)
         {
-            GD.Print("Waiting... Time left: " + InWaitTime);
+
             InWaitTime -= (float)delta;
             InEnemy.Velocity = Vector2.Zero;
 

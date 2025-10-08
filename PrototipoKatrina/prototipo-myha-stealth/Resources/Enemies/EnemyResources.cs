@@ -15,5 +15,12 @@ public partial class EnemyResources : Resource
 
     [Export] public float ChaseSpeed = 100f;
     [Export] public float ForcePushDamage = 200f;
+    [Export] public float Gravity = 20f;
+
+
+    [ExportGroup("Detection")]
     [Export] public PatrolType PatrolStyle = PatrolType.XAxis;
+
+
+
 }

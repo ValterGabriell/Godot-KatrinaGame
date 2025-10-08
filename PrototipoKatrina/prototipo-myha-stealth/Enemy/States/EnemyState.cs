@@ -11,7 +11,7 @@ namespace PrototipoMyha.Enemy.States
         Idle,
         Roaming,
         Attack,
-        Chase,
+        Chasing,
         Dead,
         LookingForPlayerInDistractedArea,
         Patrolling, Waiting, Investigating

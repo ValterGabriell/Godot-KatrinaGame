@@ -11,7 +11,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.Strategies.StatesHandler
             {
                 EnemyState.Roaming => new EnemyStateRoamingHandler(),
                 EnemyState.Waiting => new EnemyStateWaitingHandler(),
-                EnemyState.Chase => new EnemyStateChasingHandler(),
+                EnemyState.Chasing => new EnemyStateChasingHandler(),
                 _ => throw new NotImplementedException($"State handler for {state} is not implemented."),
             };
         }

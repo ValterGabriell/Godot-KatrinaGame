@@ -1,6 +1,7 @@
 using Godot;
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Enemy.States;
+using System;
 using System.Collections.Generic;
 
 namespace PrototipoMyha.Enemy;
@@ -9,17 +10,44 @@ public abstract partial class EnemyBase : CharacterBody2D
 {
     [Export] public EnemyResources EnemyResource;
 
-    public Vector2 CurrentPlayerPositionToChase { get; private set; } = Vector2.Zero;
+    [ExportGroup("Detection")]
+    [Export] public RayCast2D RayCast2DDetection = null;
+    [Export] public CircleShape2D CircleAreaDetection = null;
+
+    [ExportGroup("Chasing")]
+    [Export] public Timer TimerToChase = null;
+
 
     protected Dictionary<string, IEnemyBaseComponents> Components = new();
 
     public EnemyState CurrentEnemyState { get; private set; }  = EnemyState.Roaming;
 
 
+    public override void _Ready()
+    {
+
+        InstanciateComponents();
+
+        TimerToChase.Timeout += OnTimerToChaseTimeout;
+     
+
+        foreach (var component in Components.Values)
+        {
+            component.Initialize(this);
+        }
+    }
+
+    private void OnTimerToChaseTimeout()
+    {
+        if(this.CurrentEnemyState == EnemyState.Chasing)
+            SetState(EnemyState.Waiting);
+    }
+
     public void SetState(EnemyState newState)
     {
         CurrentEnemyState = newState;
     }
+
 
     public void AddComponent<T>(T component) where T : IEnemyBaseComponents
     {
@@ -35,21 +63,17 @@ public abstract partial class EnemyBase : CharacterBody2D
     }
     protected abstract void InstanciateComponents();
 
-    public override void _Ready()
-    {
-        InstanciateComponents();
-
-        foreach (var component in Components.Values)
-        {
-            component.Initialize(this);
-        }
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         foreach (var component in Components.Values)
         {
             component.PhysicsProcess(delta);
+        }
+
+        if (!IsOnFloor())
+        {
+    
+            this.Velocity += new Vector2(0, EnemyResource.Gravity) * (float)delta;
         }
         MoveAndSlide();
     }

@@ -26,7 +26,7 @@ namespace KatrinaGame.Core
         [Signal]
         public delegate void PlayerDamagedEventHandler(float damage);
 
-        public void ChangeState(PlayerState newState)
+        public void SetState(PlayerState newState)
         {
             CurrentPlayerState = newState;
         }

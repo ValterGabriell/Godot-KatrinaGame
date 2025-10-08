@@ -2,6 +2,9 @@ using Godot;
 using KatrinaGame.Components;
 using KatrinaGame.Core;
 using KatrinaGame.Core.Interfaces;
+using PrototipoMyha;
+using PrototipoMyha.Player.StateManager;
+using System;
 
 namespace KatrinaGame.Players
 {
@@ -28,6 +31,13 @@ namespace KatrinaGame.Players
             AddChild(GetComponent<IHealthComponent>() as Node);
             AddChild(GetComponent<IMovementComponent>() as Node);
             AddChild(GetComponent<IAttackComponent>() as Node);
+
+            SignalManager.Instance.PlayerStateChanged += PlayerStateChanged;
+        }
+
+        private void PlayerStateChanged(PlayerState NewState)
+        {
+            this.SetState(NewState);
         }
 
         protected override void HandleInput(double delta)

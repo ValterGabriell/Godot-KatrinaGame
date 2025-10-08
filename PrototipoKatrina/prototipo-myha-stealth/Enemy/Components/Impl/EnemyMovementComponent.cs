@@ -30,14 +30,15 @@ namespace PrototipoMyha.Enemy.Components.Impl
         {
 
             IEnemyStateHandler enemyStateHandler = GetEnemyStateHandler.GetStateHandler(_Enemy.CurrentEnemyState);
+
             _waitTimer = enemyStateHandler.ExecuteState(
-                delta,
-                _Enemy,
-                _targetPosition,
-                _random,
-                _waitTimer,
-                _maxWaitTime,
-                SetNewRandomTarget);
+                delta: delta,
+                InEnemy: _Enemy,
+                InTargetPosition: _targetPosition,
+                InRandom: _random,
+                InWaitTime: _waitTimer,
+                InMaxWaitTime: _maxWaitTime,
+                SetNewRandomTarget: SetNewRandomTarget);
         }
        
 

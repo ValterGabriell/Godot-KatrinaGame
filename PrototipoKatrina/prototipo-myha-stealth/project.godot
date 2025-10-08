@@ -94,6 +94,8 @@ run={
 2d_physics/layer_10="rat_enemy"
 2d_physics/layer_11="distraction_ball"
 2d_physics/layer_12="shadowArea"
+2d_physics/layer_13="enemy"
+2d_physics/layer_14="guardEnemy"
 
 [rendering]
 

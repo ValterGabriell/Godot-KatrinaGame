@@ -7,22 +7,20 @@ public partial class ShadowArea : Area2D
 {
     [Export] private CollisionShape2D ShadowCollisionShape2D;
     [Export] private Vector2 CollisionShadowScale;
-    private SignalManager _Instance;
+
 
 
 
     public override void _Ready()
     {
         ShadowCollisionShape2D.Scale = CollisionShadowScale;
-        _Instance = SignalManager.Instance;
     }
 
     public void _on_body_entered(Node2D node2D)
     {
         if (node2D.IsInGroup(EnumGroups.player.ToString()))
         {
-            GD.Print("Player entered shadow area");
-            _Instance.EmitSignal(nameof(SignalManager.StateChanged), (int)PlayerState.HIDDEN);
+            SignalManager.Instance.EmitSignal(nameof(SignalManager.PlayerStateChanged), (int)PlayerState.HIDDEN);
         }
     }
 
@@ -30,8 +28,7 @@ public partial class ShadowArea : Area2D
     {
         if (node2D.IsInGroup(EnumGroups.player.ToString()))
         {
-            GD.Print("Player exited shadow area");
-            _Instance.EmitSignal(nameof(SignalManager.StateChanged), (int)PlayerState.APPEAR);
+            SignalManager.Instance.EmitSignal(nameof(SignalManager.PlayerStateChanged), (int)PlayerState.APPEAR);
         }
     }
 }
