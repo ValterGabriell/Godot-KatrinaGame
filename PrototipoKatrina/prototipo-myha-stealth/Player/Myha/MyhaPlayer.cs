@@ -15,6 +15,7 @@ namespace KatrinaGame.Players
         [Export] public RayCast2D PushRaycast { get; set; }
         [Export] public PackedScene BallScene { get; set; }
         [Export] public Area2D SoundAreaWalkingComponent { get; set; }
+        [Export] public CollisionShape2D SoundAreaWalkingColiisonComponent { get; set; }
 
         private IMovementComponent MovementComponent;
 

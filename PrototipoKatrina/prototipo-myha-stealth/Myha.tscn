@@ -10,9 +10,9 @@
 size = Vector2(20, 14)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3bx22"]
-radius = 33.0
+radius = 111.07205
 
-[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "SoundAreaWalkingComponent") groups=["player"]]
+[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "SoundAreaWalkingComponent", "SoundAreaWalkingColiisonComponent") groups=["player"]]
 collision_layer = 2
 collision_mask = 261
 script = ExtResource("1_gp1ay")
@@ -20,6 +20,7 @@ AttackRaycast = NodePath("AttackRaycast")
 PushRaycast = NodePath("PushRaycast")
 BallScene = ExtResource("2_hvuun")
 SoundAreaWalkingComponent = NodePath("SoundArea")
+SoundAreaWalkingColiisonComponent = NodePath("SoundArea/CollisionShape2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0.25000095, 5.9604645e-08)
@@ -53,7 +54,7 @@ debug_color = Color(0.6835048, 0, 0.08780732, 0.41960785)
 
 [node name="SoundArea" type="Area2D" parent="."]
 collision_layer = 16386
-collision_mask = 0
+collision_mask = 4096
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SoundArea"]
 shape = SubResource("CircleShape2D_3bx22")

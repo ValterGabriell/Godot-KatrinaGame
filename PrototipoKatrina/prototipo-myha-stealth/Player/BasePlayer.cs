@@ -69,7 +69,6 @@ namespace KatrinaGame.Core
         public void AddComponent<T>(T component) where T : IPlayerBaseComponent
         {
             Components[typeof(T).ToString()] = component;
-            GD.Print("Recebi isso: " + typeof(T).ToString());
             AddChild(component as Node);
             
         }
@@ -77,7 +76,6 @@ namespace KatrinaGame.Core
         public T GetComponent<T>() where T : IPlayerBaseComponent
         {
             Components.TryGetValue(typeof(T).ToString(), out var component);
-            GD.Print("Busquei isso: " + typeof(T).ToString());
             return (T)component;
         }
 

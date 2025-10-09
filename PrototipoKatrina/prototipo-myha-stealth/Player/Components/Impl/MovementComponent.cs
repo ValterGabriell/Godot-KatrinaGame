@@ -32,7 +32,7 @@ namespace KatrinaGame.Components
 
         public void Move(Vector2 direction, bool isRunning = false)
         {
-
+            PlayerGlobal.GetPlayerGlobalInstance().UpdatePlayerPosition(_player.GlobalPosition);
             if (IsMovementBlocked) return;
 
             float currentSpeed = isRunning ? RunSpeed : Speed;

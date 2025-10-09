@@ -14,6 +14,9 @@ namespace PrototipoMyha.Enemy.States
         Chasing,
         Dead,
         LookingForPlayerInDistractedArea,
-        Patrolling, Waiting, Investigating
+        Patrolling,
+        Waiting,
+        Investigating,
+        Alerted
     }
 }

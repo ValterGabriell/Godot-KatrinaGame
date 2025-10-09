@@ -1,6 +1,7 @@
 using Godot;
 using KatrinaGame.Core;
 using KatrinaGame.Players;
+using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Interfaces;
 using PrototipoMyha.Enemy.States;
 using PrototipoMyha.Utilidades;
 using System;
@@ -12,16 +13,21 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
     {
         [Signal] public delegate void ChasePlayerEventHandler();
 
+        private Random InRandom = new Random();
+        private float InWaitTime;
+        private float InMaxWaitTime;
+
+        public EnemyStateRoamingHandler(float inWaitTime, float inMaxWaitTime)
+        {
+            InWaitTime = inWaitTime;
+            InMaxWaitTime = inMaxWaitTime;
+        }
+
         public float ExecuteState(
             double delta,
-            EnemyBase InEnemy,
-            Vector2 InTargetPosition,
-            Random InRandom,
-            float InWaitTime,
-            float InMaxWaitTime,
-            Action _)
+            EnemyBase InEnemy, Vector2? InTargetPosition = null)
         {
-            float distanceToTarget = InEnemy.GlobalPosition.DistanceTo(InTargetPosition);
+            float distanceToTarget = InEnemy.GlobalPosition.DistanceTo(InTargetPosition.Value);
 
             if (distanceToTarget < 20f) // Chegou perto do target
             {
@@ -32,7 +38,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             }
             else
             {
-                Vector2 direction = (InTargetPosition - InEnemy.GlobalPosition).Normalized();
+                Vector2 direction = (InTargetPosition.Value - InEnemy.GlobalPosition).Normalized();
 
                 if (InEnemy.RayCast2DDetection != null)
                 {

@@ -1,4 +1,5 @@
 using Godot;
+using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Interfaces;
 using PrototipoMyha.Enemy.States;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,20 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 {
     public class EnemyStateWaitingHandler : IEnemyStateHandler
     {
+        private float InWaitTime;
+        private Action SetNewRandomTarget;
+
+        public EnemyStateWaitingHandler(float inWaitTime, Action setNewRandomTarget)
+        {
+            GD.Print("EnemyStateWaitingHandler initialized.");
+            InWaitTime = inWaitTime;
+            SetNewRandomTarget = setNewRandomTarget;
+        }
+
         public float ExecuteState(
           double delta,
-          EnemyBase InEnemy,
-          Vector2 InTargetPosition,
-          Random InRandom,
-          float InWaitTime,
-          float InMaxWaitTime,
-          Action SetNewRandomTarget)
+          EnemyBase InEnemy, Vector2? InPositionToChase = null)
         {
-
             InWaitTime -= (float)delta;
             InEnemy.Velocity = Vector2.Zero;
 
@@ -30,5 +35,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             }
             return InWaitTime;
         }
+
+
     }
 }

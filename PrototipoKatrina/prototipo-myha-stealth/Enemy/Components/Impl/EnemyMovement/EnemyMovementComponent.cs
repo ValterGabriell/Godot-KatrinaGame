@@ -1,7 +1,9 @@
 using Godot;
 using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.PatrolHandler;
 using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler;
+using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Interfaces;
 using PrototipoMyha.Enemy.Components.Interfaces;
+using PrototipoMyha.Enemy.States;
 using System;
 
 namespace PrototipoMyha.Enemy.Components.Impl
@@ -15,7 +17,8 @@ namespace PrototipoMyha.Enemy.Components.Impl
         private float _maxWaitTime = 3f;
         private float _patrolRadius = 200f; // Raio de patrulhamento
         private Vector2 _initialPosition;
-
+        private EnemyState? LastEnemyState = null;
+        private IEnemyStateHandler enemyStateHandler;
         public void Initialize(EnemyBase enemyBase)
         {
             this._Enemy = enemyBase;
@@ -28,17 +31,28 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         public void Process(double delta)
         {
+            if (LastEnemyState != this._Enemy.CurrentEnemyState || LastEnemyState == null)
+            {
+                LastEnemyState = this._Enemy.CurrentEnemyState;
+                enemyStateHandler = GetEnemyStateHandler.GetStateHandler(
+                    state: _Enemy.CurrentEnemyState,
+                    WaitTime: _waitTimer,
+                    MaxWaitTime: _maxWaitTime,
+                    SetNewWaitTimeWhenWaiting: SetNewRandomTarget
+                    );
 
-            IEnemyStateHandler enemyStateHandler = GetEnemyStateHandler.GetStateHandler(_Enemy.CurrentEnemyState);
+            }
 
-            _waitTimer = enemyStateHandler.ExecuteState(
-                delta: delta,
-                InEnemy: _Enemy,
-                InTargetPosition: _targetPosition,
-                InRandom: _random,
-                InWaitTime: _waitTimer,
-                InMaxWaitTime: _maxWaitTime,
-                SetNewRandomTarget: SetNewRandomTarget);
+            if(enemyStateHandler != null)
+            {
+                if(this._Enemy.CurrentEnemyState == EnemyState.Chasing)
+                    _targetPosition = PlayerGlobal.GetPlayerGlobalInstance().GetPlayerPosition();
+                _waitTimer = enemyStateHandler.ExecuteState(
+                        delta: delta,
+                        InEnemy: _Enemy,
+                        InTargetPosition: _targetPosition);
+            }
+           
         }
        
 
