@@ -14,6 +14,7 @@ namespace KatrinaGame.Components
 
         private BasePlayer _player;
         private float _inertiaDeceleration = 20f;
+        public bool IsPlayerWalking { get; private set; } =  false;
 
         public void Initialize(BasePlayer player)
         {
@@ -31,16 +32,19 @@ namespace KatrinaGame.Components
 
         public void Move(Vector2 direction, bool isRunning = false)
         {
+
             if (IsMovementBlocked) return;
 
             float currentSpeed = isRunning ? RunSpeed : Speed;
 
             if (direction != Vector2.Zero)
             {
+                IsPlayerWalking = true;
                 _player.Velocity = new Vector2(direction.Normalized().X * currentSpeed, _player.Velocity.Y);
             }
             else
             {
+                IsPlayerWalking = false;
                 // Aplica inércia
                 _player.Velocity = new Vector2(
                     Mathf.MoveToward(_player.Velocity.X, 0, _inertiaDeceleration),

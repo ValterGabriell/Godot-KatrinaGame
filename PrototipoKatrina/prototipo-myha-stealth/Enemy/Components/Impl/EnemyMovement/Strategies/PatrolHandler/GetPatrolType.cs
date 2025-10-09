@@ -1,6 +1,6 @@
 using System;
 
-namespace PrototipoMyha.Enemy.Components.Impl.Strategies.PatrolHandler
+namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.PatrolHandler
 {
     public class GetPatrolType
     {

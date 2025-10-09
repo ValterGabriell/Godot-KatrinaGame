@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrototipoMyha.Enemy.Components.Impl.Strategies.PatrolHandler
+namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.PatrolHandler
 {
     public enum PatrolType
     {

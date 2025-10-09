@@ -17,6 +17,8 @@ public abstract partial class EnemyBase : CharacterBody2D
     [ExportGroup("Chasing")]
     [Export] public Timer TimerToChase = null;
 
+    
+
 
     protected Dictionary<string, IEnemyBaseComponents> Components = new();
 
@@ -25,12 +27,9 @@ public abstract partial class EnemyBase : CharacterBody2D
 
     public override void _Ready()
     {
-
-        InstanciateComponents();
-
+        InstanciateSpecificComponents();
         TimerToChase.Timeout += OnTimerToChaseTimeout;
-     
-
+    
         foreach (var component in Components.Values)
         {
             component.Initialize(this);
@@ -61,7 +60,7 @@ public abstract partial class EnemyBase : CharacterBody2D
         RemoveChild(component as Node);
         (component as Node).QueueFree();
     }
-    protected abstract void InstanciateComponents();
+    protected abstract void InstanciateSpecificComponents();
 
     public override void _PhysicsProcess(double delta)
     {

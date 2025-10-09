@@ -1,5 +1,6 @@
 using Godot;
 using KatrinaGame.Core.Interfaces;
+using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Player.Components.Interfaces;
 using PrototipoMyha.Player.StateManager;
 using System.Collections.Generic;
@@ -8,33 +9,17 @@ namespace KatrinaGame.Core
 {
     public abstract partial class BasePlayer : CharacterBody2D
     {
-        [Export] public string PlayerName { get; set; }
-        [Export] public Sprite2D Sprite { get; set; }
+        public PlayerState CurrentPlayerState { get; private set; } = PlayerState.IDLE;
 
-        public PlayerState CurrentPlayerState { get; private set; } = new();
-
-        protected Dictionary<System.Type, IPlayerComponent> Components = new();
-
-        // Componentes principais
-        public IHealthComponent HealthComponent => GetComponent<IHealthComponent>();
-        public IMovementComponent MovementComponent => GetComponent<IMovementComponent>();
-        public IAttackComponent AttackComponent => GetComponent<IAttackComponent>();
-
-        [Signal]
-        public delegate void PlayerDeathEventHandler();
-
-        [Signal]
-        public delegate void PlayerDamagedEventHandler(float damage);
-
-        public void SetState(PlayerState newState)
-        {
-            CurrentPlayerState = newState;
-        }
+        protected Dictionary<string, IPlayerBaseComponent> Components = new();
 
         public override void _Ready()
         {
-            InitializeComponents();
-            SetupSignals();
+            InstanciateComponents();
+            foreach (var component in Components.Values)
+            {
+                component.Initialize(this);
+            }
         }
 
         public override void _Process(double delta)
@@ -57,6 +42,11 @@ namespace KatrinaGame.Core
             MoveAndSlide();
         }
 
+        public void SetState(PlayerState newState)
+        {
+            CurrentPlayerState = newState;
+        }
+
         protected void FlipRaycast(float direction, List<RayCast2D> Rasycast)
         {
             foreach (var current in Rasycast)
@@ -73,25 +63,21 @@ namespace KatrinaGame.Core
             }
         }
 
-        protected abstract void InitializeComponents();
+        protected abstract void InstanciateComponents();
 
-        protected virtual void SetupSignals()
+
+        public void AddComponent<T>(T component) where T : IPlayerBaseComponent
         {
-            if (HealthComponent != null)
-            {
-                // Conectar sinais de saúde se necessário
-            }
+            Components[typeof(T).ToString()] = component;
+            GD.Print("Recebi isso: " + typeof(T).ToString());
+            AddChild(component as Node);
+            
         }
 
-        public void AddComponent<T>(T component) where T : IPlayerComponent
+        public T GetComponent<T>() where T : IPlayerBaseComponent
         {
-            Components[typeof(T)] = component;
-            component.Initialize(this);
-        }
-
-        public T GetComponent<T>() where T : IPlayerComponent
-        {
-            Components.TryGetValue(typeof(T), out var component);
+            Components.TryGetValue(typeof(T).ToString(), out var component);
+            GD.Print("Busquei isso: " + typeof(T).ToString());
             return (T)component;
         }
 

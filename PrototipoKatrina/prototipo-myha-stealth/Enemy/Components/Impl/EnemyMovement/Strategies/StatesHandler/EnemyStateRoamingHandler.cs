@@ -6,7 +6,7 @@ using PrototipoMyha.Utilidades;
 using System;
 
 
-namespace PrototipoMyha.Enemy.Components.Impl.Strategies.StatesHandler
+namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler
 {
     public class EnemyStateRoamingHandler : IEnemyStateHandler
     {

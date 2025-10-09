@@ -5,7 +5,7 @@ using PrototipoMyha.Utilidades;
 using System;
 using static Godot.TextServer;
 
-namespace PrototipoMyha.Enemy.Components.Impl.Strategies.StatesHandler
+namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler
 {
     public class EnemyStateChasingHandler : IEnemyStateHandler
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrototipoMyha.Enemy.Components.Impl.Strategies.StatesHandler
+namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler
 {
     public interface IEnemyStateHandler
     {

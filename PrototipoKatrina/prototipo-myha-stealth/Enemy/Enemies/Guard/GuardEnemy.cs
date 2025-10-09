@@ -11,11 +11,11 @@ using System.Linq;
 
 public partial class GuardEnemy : EnemyBase
 {
-
-    protected override void InstanciateComponents()
+    [ExportGroup("Soundable")]
+    [Export] public Area2D AreaDetectPlayerSound = null;
+    protected override void InstanciateSpecificComponents()
     {
-        var enemyMovement = new EnemyMovementComponent();
-
-        AddComponent(enemyMovement);
+        AddComponent(new EnemyMovementComponent());
+        AddComponent(new SoundDetectionMovementComponent(AreaDetectPlayerSound));
     }
 }

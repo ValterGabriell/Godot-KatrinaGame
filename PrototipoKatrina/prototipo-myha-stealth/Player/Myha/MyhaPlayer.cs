@@ -3,6 +3,7 @@ using KatrinaGame.Components;
 using KatrinaGame.Core;
 using KatrinaGame.Core.Interfaces;
 using PrototipoMyha;
+using PrototipoMyha.Player.Components.Impl;
 using PrototipoMyha.Player.StateManager;
 using System;
 
@@ -13,25 +14,18 @@ namespace KatrinaGame.Players
         [Export] public RayCast2D AttackRaycast { get; set; }
         [Export] public RayCast2D PushRaycast { get; set; }
         [Export] public PackedScene BallScene { get; set; }
+        [Export] public Area2D SoundAreaWalkingComponent { get; set; }
 
-        
+        private IMovementComponent MovementComponent;
 
 
-        protected override void InitializeComponents()
+        protected override void InstanciateComponents()
         {
-            // Componentes básicos
-            AddComponent<IHealthComponent>(new HealthComponent());
             AddComponent<IMovementComponent>(new MovementComponent());
+            AddComponent<IMakeSoundWhileWalkComponent>(new MakeSoundWhileWalkComponent(this));
 
-            var attackComponent = new AttackComponent();
-            attackComponent.AttackRaycast = AttackRaycast;
-            AddComponent<IAttackComponent>(attackComponent);
 
-            // Adicionar como filhos para que funcionem no Godot
-            AddChild(GetComponent<IHealthComponent>() as Node);
-            AddChild(GetComponent<IMovementComponent>() as Node);
-            AddChild(GetComponent<IAttackComponent>() as Node);
-
+            MovementComponent = GetComponent<IMovementComponent>();
             SignalManager.Instance.PlayerStateChanged += PlayerStateChanged;
         }
 
@@ -42,16 +36,6 @@ namespace KatrinaGame.Players
 
         protected override void HandleInput(double delta)
         {
-            if (!HealthComponent.IsAlive) return;
-
-            // Input de ataque
-            if (Input.IsActionJustPressed("attack"))
-            {
-                AttackComponent.Attack();
-            }
-
-
-
             // Input de movimento
             Vector2 inputVector = Vector2.Zero;
 

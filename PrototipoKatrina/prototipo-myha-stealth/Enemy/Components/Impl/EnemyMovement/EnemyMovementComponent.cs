@@ -1,6 +1,6 @@
 using Godot;
-using PrototipoMyha.Enemy.Components.Impl.Strategies.PatrolHandler;
-using PrototipoMyha.Enemy.Components.Impl.Strategies.StatesHandler;
+using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.PatrolHandler;
+using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler;
 using PrototipoMyha.Enemy.Components.Interfaces;
 using System;
 

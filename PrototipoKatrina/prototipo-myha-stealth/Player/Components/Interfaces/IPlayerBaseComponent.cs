@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace PrototipoMyha.Player.Components.Interfaces
 {
-    public interface IPlayerComponent
+    public interface IPlayerBaseComponent
     {
         void Initialize(BasePlayer player);
         void Process(double delta);
         void PhysicsProcess(double delta);
         void HandleInput(double delta);
-        void Cleanup();
     }
 }
