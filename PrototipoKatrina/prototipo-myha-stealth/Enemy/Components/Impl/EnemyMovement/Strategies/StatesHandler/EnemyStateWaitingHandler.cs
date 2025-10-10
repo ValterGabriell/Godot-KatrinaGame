@@ -1,6 +1,7 @@
 using Godot;
 using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Interfaces;
 using PrototipoMyha.Enemy.States;
+using PrototipoMyha.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         public EnemyStateWaitingHandler(float inWaitTime, Action setNewRandomTarget)
         {
-            GD.Print("EnemyStateWaitingHandler initialized.");
+            GDLogger.PrintDebug("Entering Waiting State");
             InWaitTime = inWaitTime;
             SetNewRandomTarget = setNewRandomTarget;
         }
@@ -25,6 +26,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
           double delta,
           EnemyBase InEnemy, Vector2? InPositionToChase = null)
         {
+            GDLogger.PrintDebug($"Exectugin wait... {InWaitTime}");
             InWaitTime -= (float)delta;
             InEnemy.Velocity = Vector2.Zero;
 

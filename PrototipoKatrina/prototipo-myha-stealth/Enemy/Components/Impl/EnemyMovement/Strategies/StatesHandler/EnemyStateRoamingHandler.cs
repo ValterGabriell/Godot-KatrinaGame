@@ -19,6 +19,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         public EnemyStateRoamingHandler(float inWaitTime, float inMaxWaitTime)
         {
+            GDLogger.PrintDebug("Entering Roaming State");
             InWaitTime = inWaitTime;
             InMaxWaitTime = inMaxWaitTime;
         }

@@ -13,6 +13,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
     public class EnemyStateChaseAlertedBase : IEnemyStateHandler
     {
         private Vector2 InTargetMovement;
+        private bool IsInvestigatingArea = false;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -36,6 +37,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             float horizontalVelocity = directionToPlayer.X * InEnemy.EnemyResource.ChaseSpeed;
             InEnemy.Velocity = new Vector2(horizontalVelocity, InEnemy.Velocity.Y);
 
+            float distanceToTarget = InEnemy.GlobalPosition.DistanceTo(InTargetMovement);
+
             if (InEnemy.RayCast2DDetection != null)
             {
                 (BasePlayer playerDetected, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
@@ -46,6 +49,13 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
                 if (isColliding)
                     InEnemy.TimerToChase.Start();
+
+
+                if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted && distanceToTarget < 20f && !IsInvestigatingArea)
+                {
+                    IsInvestigatingArea = true;
+                    InEnemy.TimerToStayAlert.Start();
+                }
  
             }
 
