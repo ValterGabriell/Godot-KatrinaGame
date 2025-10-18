@@ -8,7 +8,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private float alertWaitDuration = 2.0f; 
         public EnemyStateAlertedHandler(Vector2 lastKnownPlayerPosition) : base(lastKnownPlayerPosition)
         {
-            GDLogger.PrintDebug("Entering Alerted State");
+
         }
 
         public override float ExecuteState(

@@ -13,5 +13,6 @@ public enum PlayerState
     DEAD,
     SNEAK,
     HIDDEN,
-    APPEAR
+    APPEAR,
+    JUMPING
 }

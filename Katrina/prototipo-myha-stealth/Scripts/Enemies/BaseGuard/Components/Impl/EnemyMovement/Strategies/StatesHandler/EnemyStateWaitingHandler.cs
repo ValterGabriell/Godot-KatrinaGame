@@ -17,7 +17,6 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         public EnemyStateWaitingHandler(float inWaitTime, Action setNewRandomTarget)
         {
-            GDLogger.PrintDebug("Entering Waiting State");
             InWaitTime = inWaitTime;
             SetNewRandomTarget = setNewRandomTarget;
         }
@@ -26,7 +25,6 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
           double delta,
           EnemyBase InEnemy, Vector2? InPositionToChase = null)
         {
-            GDLogger.PrintDebug($"Exectugin wait... {InWaitTime}");
             InWaitTime -= (float)delta;
             InEnemy.Velocity = Vector2.Zero;
 

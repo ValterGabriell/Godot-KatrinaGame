@@ -5,6 +5,7 @@ using KatrinaGame.Core.Interfaces;
 using PrototipoMyha;
 using PrototipoMyha.Player.Components.Impl;
 using PrototipoMyha.Player.StateManager;
+using PrototipoMyha.Scripts.Characters.Myha.Components.Impl;
 using System;
 
 namespace KatrinaGame.Players
@@ -24,6 +25,7 @@ namespace KatrinaGame.Players
         {
             AddComponent<IMovementComponent>(new MovementComponent());
             AddComponent<IMakeSoundWhileWalkComponent>(new MakeSoundWhileWalkComponent(this));
+            AddComponent<IAnimationComponents>(new AnimationComponents(this));
 
 
             MovementComponent = GetComponent<IMovementComponent>();
@@ -62,6 +64,7 @@ namespace KatrinaGame.Players
 
             if (Input.IsActionJustPressed("jump"))
             {
+                inputVector.Y -= 1;
                 MovementComponent.Jump();
             }
 

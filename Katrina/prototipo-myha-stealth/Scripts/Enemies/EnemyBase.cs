@@ -18,9 +18,9 @@ public abstract partial class EnemyBase : CharacterBody2D
 
     [ExportGroup("Chasing")]
     [Export] public Timer TimerToChase = null;
-    
+    [Export] public AnimatedSprite2D AnimatedSprite2DEnemy = null;
 
-    
+
 
 
     protected Dictionary<string, IEnemyBaseComponents> Components = new();

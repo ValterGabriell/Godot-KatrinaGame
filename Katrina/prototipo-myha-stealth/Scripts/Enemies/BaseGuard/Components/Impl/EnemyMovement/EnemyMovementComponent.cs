@@ -31,6 +31,7 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         public void Process(double delta)
         {
+            
             if (LastEnemyState != this._Enemy.CurrentEnemyState || LastEnemyState == null)
             {
                 LastEnemyState = this._Enemy.CurrentEnemyState;
@@ -51,10 +52,25 @@ namespace PrototipoMyha.Enemy.Components.Impl
                         delta: delta,
                         InEnemy: _Enemy,
                         InTargetPosition: _targetPosition);
+                UpdateSpriteDirection();
             }
            
         }
-       
+
+        // NOVO MÉTODO: Determina e atualiza a direção do sprite
+        private void UpdateSpriteDirection()
+        {
+            // Calcula a direção do movimento comparando posição atual com destino
+            Vector2 direction = (_targetPosition - _Enemy.GlobalPosition).Normalized();
+
+            // Se há movimento horizontal significativo
+            if (Mathf.Abs(direction.X) > 0.1f)
+            {
+                // Se direction.X > 0, está indo para a direita; se < 0, para a esquerda
+                _Enemy.AnimatedSprite2DEnemy.FlipH = direction.X < 0;
+            }
+        }
+
 
         private void SetNewRandomTarget()
         {

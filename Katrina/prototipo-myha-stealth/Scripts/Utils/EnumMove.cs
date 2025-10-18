@@ -12,4 +12,13 @@ namespace PrototipoMyha
         LEFT,
         IDLE
     }
+
+    public enum EnumGuardMove
+    {
+        end_warning,
+        roaming,
+        shoot,
+        start_warning,
+        walk_alert
+    }
 }

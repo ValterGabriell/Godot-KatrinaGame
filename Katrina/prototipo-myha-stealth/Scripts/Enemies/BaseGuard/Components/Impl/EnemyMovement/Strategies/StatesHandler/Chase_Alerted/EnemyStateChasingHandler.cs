@@ -11,7 +11,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
     {
         public EnemyStateChasingHandler(Vector2 inTargetMovement) : base(inTargetMovement)
         {
-            GDLogger.PrintDebug("Entering Chase State");
+
         }
 
         public override float ExecuteState(double delta, EnemyBase InEnemy, Vector2? InPositionToChase = null)

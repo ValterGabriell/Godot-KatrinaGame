@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dw4s248phtymn"]
+[gd_scene load_steps=27 format=3 uid="uid://dw4s248phtymn"]
 
 [ext_resource type="Script" uid="uid://dk8egln53p1ft" path="res://Scripts/Characters/Myha/MyhaPlayer.cs" id="1_gp1ay"]
 [ext_resource type="PackedScene" uid="uid://dkjhvr053vtls" path="res://Scenes/Items/Gangorra.tscn" id="2_hntan"]
@@ -9,10 +9,6 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v2aao"]
 atlas = ExtResource("3_xyvna")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oxiyw"]
-atlas = ExtResource("3_tpfg6")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_anu3w"]
@@ -86,9 +82,6 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_oxiyw")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_anu3w")
 }],
