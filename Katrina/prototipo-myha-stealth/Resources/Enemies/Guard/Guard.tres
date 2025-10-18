@@ -1,6 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://del5rykr45twu"]
-
-[ext_resource type="Script" uid="uid://btlrp1oaqdxbf" path="res://Resources/Enemies/GuardResource.cs" id="1_tbq1f"]
-
-[resource]
-script = ExtResource("1_tbq1f")

@@ -1,6 +1,7 @@
 using Godot;
 using KatrinaGame.Core;
 using KatrinaGame.Core.Interfaces;
+using KatrinaGame.Scripts.Utils;
 
 namespace KatrinaGame.Components
 {
@@ -12,6 +13,7 @@ namespace KatrinaGame.Components
         [Export] public float Gravity { get; set; } = 700f;
         [Export] public bool IsMovementBlocked { get; set; } = false;
 
+
         private BasePlayer _player;
         private float _inertiaDeceleration = 20f;
         public bool IsPlayerWalking { get; private set; } =  false;
@@ -19,6 +21,7 @@ namespace KatrinaGame.Components
         public void Initialize(BasePlayer player)
         {
             _player = player;
+            this._player.AnimatedSprite2D = _player.GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         }
 
         public void Process(double delta) { }
@@ -32,6 +35,7 @@ namespace KatrinaGame.Components
 
         public void Move(Vector2 direction, bool isRunning = false)
         {
+            this._player.AnimatedSprite2D.Play(EnumAnimations.run.ToString());
             PlayerManager.GetPlayerGlobalInstance().UpdatePlayerPosition(_player.GlobalPosition);
             if (IsMovementBlocked) return;
 

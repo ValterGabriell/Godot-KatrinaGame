@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-PlayerGlobal="*res://Global/PlayerGlobal.cs"
-SignalManager="*res://Global/SignalManager/SignalManager.cs"
+PlayerManager="*res://Scripts/Managers/PlayerManager.cs"
+SignalManager="*res://Scripts/Managers/SignalManager.cs"
 
 [dotnet]
 

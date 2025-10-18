@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyb3c5aecsw5r"]
+
+[ext_resource type="Script" uid="uid://dx0dresfbg0ix" path="res://Scripts/Enemies/BaseGuard/GuardEnemy.cs" id="1_ib5uv"]
+[ext_resource type="Texture2D" uid="uid://bkoynd5qwodwr" path="res://Assets/Sprites/Enemies/BaseGuard/BaseGuard.jpg" id="2_ib5uv"]
+[ext_resource type="Resource" uid="uid://hx1o1nvw3c7k" path="res://Resources/Player/EnemyResource.tres" id="2_n2d1g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(17.5, 16)
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("RayCast2DDetection", "TimerToStayAlert", "TimerToChase")]
+collision_layer = 12288
+collision_mask = 3
+script = ExtResource("1_ib5uv")
+EnemyResource = ExtResource("2_n2d1g")
+RayCast2DDetection = NodePath("RayCast2DDetectionPlayer")
+TimerToStayAlert = NodePath("TimerToStayAlert")
+TimerToChase = NodePath("TimerToChase")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.3841858e-07, 0)
+scale = Vector2(0.008854166, 0.015046309)
+texture = ExtResource("2_ib5uv")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7mycd")
+metadata/_edit_lock_ = true
+
+[node name="RayCast2DDetectionPlayer" type="RayCast2D" parent="."]
+target_position = Vector2(45, 0)
+collision_mask = 2
+metadata/_edit_lock_ = true
+
+[node name="TimerToChase" type="Timer" parent="."]
+wait_time = 7.0
+one_shot = true
+
+[node name="TimerToStayAlert" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true

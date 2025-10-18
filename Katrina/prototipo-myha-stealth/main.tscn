@@ -1,10 +1,10 @@
 [gd_scene load_steps=19 format=4 uid="uid://b1gnb8slestvs"]
 
-[ext_resource type="Texture2D" uid="uid://dxbgy8smm2fwo" path="res://Map/DEV/Seasonal Tilesets/Seasonal Tilesets/1 - Grassland/Terrain (16 x 16).png" id="1_ig7tw"]
-[ext_resource type="PackedScene" uid="uid://dw4s248phtymn" path="res://Myha.tscn" id="2_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://bvlixxmc0ky80" path="res://Map/DEV/Seasonal Tilesets/Seasonal Tilesets/3 - Tropics/Tropics_entities (16 x 16).png" id="2_lquwl"]
-[ext_resource type="PackedScene" uid="uid://ce8dcph8wdnvb" path="res://Itens/ShadowArea/ShadowAreaScene.tscn" id="5_7mycd"]
-[ext_resource type="PackedScene" uid="uid://dyb3c5aecsw5r" path="res://Enemy/Guard/MyhaGuard.tscn" id="6_7mycd"]
+[ext_resource type="Texture2D" uid="uid://dxbgy8smm2fwo" path="res://Assets/Tilesets/Seasonal Tilesets/1 - Grassland/Terrain (16 x 16).png" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://dw4s248phtymn" path="res://Scenes/Characters/Myha.tscn" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://bvlixxmc0ky80" path="res://Assets/Tilesets/Seasonal Tilesets/3 - Tropics/Tropics_entities (16 x 16).png" id="2_lquwl"]
+[ext_resource type="PackedScene" uid="uid://ce8dcph8wdnvb" path="res://Scripts/Items/ShadowArea/ShadowAreaScene.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://dyb3c5aecsw5r" path="res://Scenes/Enemies/BaseGuard.tscn" id="6_7mycd"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_0xm2m"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -198,7 +198,7 @@ tile_map_data = PackedByteArray("AABBAAEAAQAMAAYAAABBAAAAAQAMAAUAAABCAAAAAQAMAAU
 tile_set = SubResource("TileSet_h2yge")
 
 [node name="Myha" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(502, -19)
+position = Vector2(502, -10)
 collision_mask = 37
 
 [node name="ShadowArea" parent="." instance=ExtResource("5_7mycd")]
