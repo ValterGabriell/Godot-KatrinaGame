@@ -1,7 +1,9 @@
 using Godot;
 using PrototipoMyha.Enemy;
 using PrototipoMyha.Enemy.Components.Interfaces;
+using PrototipoMyha.Utilidades;
 using System;
+using static PrototipoMyha.SignalManager;
 
 namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
 {
@@ -17,7 +19,6 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
             this.SignalManager.EnemySpottedPlayer += OnEnemySpottedPlayer;
         }
 
-  
 
         public void PhysicsProcess(double delta)
         {
@@ -35,6 +36,7 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
                 Enemy.States.EnemyState.Roaming => EnumGuardMove.roaming.ToString(),
                 Enemy.States.EnemyState.Alerted => EnumGuardMove.start_warning.ToString(),
                 Enemy.States.EnemyState.Waiting => EnumGuardMove.end_warning.ToString(),
+                Enemy.States.EnemyState.Investigating => EnumGuardMove.end_warning.ToString(),
                 Enemy.States.EnemyState.Chasing => EnumGuardMove.shoot.ToString(),
                 _ => EnumGuardMove.roaming.ToString(),
             };

@@ -3,6 +3,7 @@ using KatrinaGame.Core;
 using KatrinaGame.Players;
 using PrototipoMyha.Enemy.States;
 using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
+using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
 using System;
 
@@ -36,16 +37,18 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 // Para e espera um pouco
                 InWaitTime = InRandom.Next(1, (int)InMaxWaitTime);
                 InEnemy.Velocity = new Vector2(0, InEnemy.Velocity.Y);
+                InEnemy.SetState(EnemyState.Waiting);
             }
             else
             {
                 Vector2 direction = (InTargetPosition.Value - InEnemy.GlobalPosition).Normalized();
-
+                int directionSign = direction.X > 0 ? 1 : -1;
                 if (InEnemy.RayCast2DDetection != null)
                 {
-                    float raycastDirection = direction.X > 0 ? 1 : -1;
-                    RaycastUtils.FlipRaycast(raycastDirection, [InEnemy.RayCast2DDetection]);
+                    float raycastDirection = directionSign;
+                    RaycastUtils.FlipRaycast(raycastDirection, [InEnemy.RayCast2DDetection]);  
                 }
+                SpriteUtils.FlipSprite(directionSign, InEnemy.AnimatedSprite2DEnemy);
 
                 float horizontalVelocity = direction.X * InEnemy.EnemyResource.MoveSpeed * (float)delta;
                 InEnemy.Velocity = new Vector2(horizontalVelocity, InEnemy.Velocity.Y);

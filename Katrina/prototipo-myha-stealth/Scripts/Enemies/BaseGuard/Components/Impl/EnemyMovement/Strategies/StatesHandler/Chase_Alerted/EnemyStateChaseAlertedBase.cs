@@ -1,6 +1,7 @@
 using Godot;
 using KatrinaGame.Core;
 using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
+using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
     {
         private Vector2 InTargetMovement;
         private bool IsInvestigatingArea = false;
+        /// <summary>
+        /// foi criado porque havia um bug que o raycast ficava doido quando o inimigo chegava proximo do local, mudando
+        /// rapidamente de 1 pra -1
+        /// </summary>
+        private float RaycastDirectionWhenStartToAlert = 0f;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -43,25 +49,44 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             {
                 (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
 
-                float raycastDirection = directionToPlayer.X > 0 ? 1 : -1;
-                RaycastUtils.FlipRaycast(raycastDirection, [InEnemy.RayCast2DDetection]);
+                float direction = directionToPlayer.X > 0 ? 1 : -1;
+
+                ///por padrao true
+                if (IsRaycastDirectionNotInitialized())
+                {
+                    RaycastUtils.FlipRaycast(direction, [InEnemy.RayCast2DDetection]);
+                    SpriteUtils.FlipSprite(direction, InEnemy.AnimatedSprite2DEnemy);
+                }
+
 
 
                 if (isColliding)
                     InEnemy.TimerToChase.Start();
 
 
-                if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted 
+                if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted
                     && distanceToTarget < 20f && !IsInvestigatingArea)
                 {
-                    IsInvestigatingArea = true;
-                    InEnemy.TimerToStayAlert.Start();
+                    ToggleRaycastDirectionOnAlert(direction);
+                    InEnemy.SetState(States.EnemyState.Waiting);
                 }
- 
+
             }
 
             return 3;
         }
 
+        private bool IsRaycastDirectionNotInitialized()
+        {
+            return RaycastDirectionWhenStartToAlert == 0;
+        }
+
+        private void ToggleRaycastDirectionOnAlert(float raycastDirection)
+        {
+            if (RaycastDirectionWhenStartToAlert == 0)
+                RaycastDirectionWhenStartToAlert = raycastDirection;
+            else
+                RaycastDirectionWhenStartToAlert = 0f;
+        }
     }
 }

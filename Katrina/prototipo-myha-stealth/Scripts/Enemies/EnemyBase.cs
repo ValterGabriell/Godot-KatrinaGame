@@ -14,7 +14,6 @@ public abstract partial class EnemyBase : CharacterBody2D
     [ExportGroup("Detection")]
     [Export] public RayCast2D RayCast2DDetection = null;
     [Export] public CircleShape2D CircleAreaDetection = null;
-    [Export] public Timer TimerToStayAlert = null;
 
     [ExportGroup("Chasing")]
     [Export] public Timer TimerToChase = null;
@@ -32,7 +31,7 @@ public abstract partial class EnemyBase : CharacterBody2D
     {
         InstanciateSpecificComponents();
         TimerToChase.Timeout += OnTimerToChaseTimeout;
-        TimerToStayAlert.Timeout += OnTimerToStayAlertTimeout;
+
     
         foreach (var component in Components.Values)
         {
@@ -42,7 +41,6 @@ public abstract partial class EnemyBase : CharacterBody2D
 
     private void OnTimerToStayAlertTimeout()
     {
-        GDLogger.PrintDebug("Timer to stay alert timeout");
         if (this.CurrentEnemyState == EnemyState.Alerted)
             SetState(EnemyState.Waiting);
     }

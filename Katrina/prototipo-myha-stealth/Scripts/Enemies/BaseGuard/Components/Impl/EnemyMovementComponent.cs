@@ -4,6 +4,7 @@ using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Enemy.States;
 using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
+using PrototipoMyha.Utilidades;
 using System;
 
 namespace PrototipoMyha.Enemy.Components.Impl
@@ -31,8 +32,8 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         public void Process(double delta)
         {
-            
-            if (LastEnemyState != this._Enemy.CurrentEnemyState || LastEnemyState == null)
+
+            if (HasEnemyStateChanged())
             {
                 LastEnemyState = this._Enemy.CurrentEnemyState;
                 enemyStateHandler = GetEnemyStateHandler.GetStateHandler(
@@ -44,42 +45,35 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
             }
 
-            if(enemyStateHandler != null)
+            if (enemyStateHandler != null)
             {
-                if(this._Enemy.CurrentEnemyState == EnemyState.Chasing)
+                if (this._Enemy.CurrentEnemyState == EnemyState.Chasing)
                     _targetPosition = PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition();
 
                 _waitTimer = enemyStateHandler.ExecuteState(
                         delta: delta,
                         InEnemy: _Enemy,
                         InTargetPosition: _targetPosition);
-                UpdateSpriteDirection();
+
             }
-           
+
         }
 
-        // NOVO MÉTODO: Determina e atualiza a direção do sprite
-        private void UpdateSpriteDirection()
+        private bool HasEnemyStateChanged()
         {
-            // Calcula a direção do movimento comparando posição atual com destino
-            Vector2 direction = (_targetPosition - _Enemy.GlobalPosition).Normalized();
-
-            // Se há movimento horizontal significativo
-            if (Mathf.Abs(direction.X) > 0.1f)
-            {
-                // Se direction.X > 0, está indo para a direita; se < 0, para a esquerda
-                _Enemy.AnimatedSprite2DEnemy.FlipH = direction.X < 0;
-            }
+            return LastEnemyState != this._Enemy.CurrentEnemyState || LastEnemyState == null;
         }
+
+
 
 
         private void SetNewRandomTarget()
         {
-            GD.Print("Definindo novo alvo de patrulha aleatório.");
+
             IPatrolTypeHandler patrolStrategyHandler = GetPatrolType.GetHandler(this._Enemy.EnemyResource.PatrolStyle);
             Vector2 randomOffset = patrolStrategyHandler.GetPatrolTarget(_patrolRadius, _random);
             _targetPosition = _initialPosition + randomOffset;
-            GD.Print("Novo alvo definido em: " + _targetPosition);
+
         }
     }
 }

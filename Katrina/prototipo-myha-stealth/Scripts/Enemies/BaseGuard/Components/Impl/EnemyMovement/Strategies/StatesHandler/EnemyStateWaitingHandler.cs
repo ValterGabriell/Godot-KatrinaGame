@@ -25,10 +25,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
           double delta,
           EnemyBase InEnemy, Vector2? InPositionToChase = null)
         {
-            InEnemy.SetState(EnemyState.Waiting);
             InWaitTime -= (float)delta;
             InEnemy.Velocity = Vector2.Zero;
-
             if (InWaitTime <= 0f)
             {
                 InEnemy.SetState(EnemyState.Roaming);

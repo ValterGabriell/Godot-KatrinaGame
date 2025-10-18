@@ -11,6 +11,7 @@ public partial class SignalManager : Node
     [Signal] public delegate void PlayerStateChangedEventHandler(PlayerState NewState);
     [Signal] public delegate void EnemySpottedPlayerEventHandler();
 
+
     public static SignalManager Instance { get; private set; }
 
 

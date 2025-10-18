@@ -23,6 +23,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
                 EnemyState.Chasing => new EnemyStateChasingHandler(Vector2.Zero),
                 EnemyState.Alerted => new EnemyStateAlertedHandler(PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition()),
+                EnemyState.Investigating => null,
                 _ => throw new NotImplementedException($"State handler for {state} is not implemented."),
             };
         }
