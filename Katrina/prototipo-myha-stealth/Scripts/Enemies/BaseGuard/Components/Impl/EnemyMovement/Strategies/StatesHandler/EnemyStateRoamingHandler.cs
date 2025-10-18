@@ -1,8 +1,8 @@
 using Godot;
 using KatrinaGame.Core;
 using KatrinaGame.Players;
-using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Interfaces;
 using PrototipoMyha.Enemy.States;
+using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
 using PrototipoMyha.Utilidades;
 using System;
 
@@ -21,18 +21,19 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         {
             InWaitTime = inWaitTime;
             InMaxWaitTime = inMaxWaitTime;
+           
         }
 
         public float ExecuteState(
             double delta,
             EnemyBase InEnemy, Vector2? InTargetPosition = null)
         {
+            InEnemy.SetState(EnemyState.Roaming);
             float distanceToTarget = InEnemy.GlobalPosition.DistanceTo(InTargetPosition.Value);
 
             if (distanceToTarget < 20f) // Chegou perto do target
             {
                 // Para e espera um pouco
-                InEnemy.SetState(EnemyState.Waiting);
                 InWaitTime = InRandom.Next(1, (int)InMaxWaitTime);
                 InEnemy.Velocity = new Vector2(0, InEnemy.Velocity.Y);
             }
@@ -62,7 +63,6 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 && playerDetected is MyhaPlayer myha 
                 && myha.CurrentPlayerState != Player.StateManager.PlayerState.HIDDEN)
             {
-                InEnemy.SetState(EnemyState.Chasing);
                 InEnemy.TimerToChase.Start();
             }
         }

@@ -1,9 +1,9 @@
 using Godot;
 using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.PatrolHandler;
 using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler;
-using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Interfaces;
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Enemy.States;
+using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
 using System;
 
 namespace PrototipoMyha.Enemy.Components.Impl
@@ -48,6 +48,7 @@ namespace PrototipoMyha.Enemy.Components.Impl
             {
                 if(this._Enemy.CurrentEnemyState == EnemyState.Chasing)
                     _targetPosition = PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition();
+
                 _waitTimer = enemyStateHandler.ExecuteState(
                         delta: delta,
                         InEnemy: _Enemy,
@@ -74,9 +75,11 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         private void SetNewRandomTarget()
         {
+            GD.Print("Definindo novo alvo de patrulha aleatório.");
             IPatrolTypeHandler patrolStrategyHandler = GetPatrolType.GetHandler(this._Enemy.EnemyResource.PatrolStyle);
             Vector2 randomOffset = patrolStrategyHandler.GetPatrolTarget(_patrolRadius, _random);
             _targetPosition = _initialPosition + randomOffset;
+            GD.Print("Novo alvo definido em: " + _targetPosition);
         }
     }
 }

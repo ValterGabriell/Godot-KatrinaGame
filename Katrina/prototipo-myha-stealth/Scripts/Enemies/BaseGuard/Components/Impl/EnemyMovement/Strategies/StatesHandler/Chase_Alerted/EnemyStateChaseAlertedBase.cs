@@ -1,6 +1,6 @@
 using Godot;
 using KatrinaGame.Core;
-using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Interfaces;
+using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
 using PrototipoMyha.Utilidades;
 using System;
 using System.Collections.Generic;
@@ -41,7 +41,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
             if (InEnemy.RayCast2DDetection != null)
             {
-                (BasePlayer playerDetected, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
+                (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
 
                 float raycastDirection = directionToPlayer.X > 0 ? 1 : -1;
                 RaycastUtils.FlipRaycast(raycastDirection, [InEnemy.RayCast2DDetection]);
@@ -51,7 +51,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                     InEnemy.TimerToChase.Start();
 
 
-                if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted && distanceToTarget < 20f && !IsInvestigatingArea)
+                if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted 
+                    && distanceToTarget < 20f && !IsInvestigatingArea)
                 {
                     IsInvestigatingArea = true;
                     InEnemy.TimerToStayAlert.Start();

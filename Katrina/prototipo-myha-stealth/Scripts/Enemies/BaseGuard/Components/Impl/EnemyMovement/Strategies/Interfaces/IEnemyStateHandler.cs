@@ -1,11 +1,12 @@
 using Godot;
+using PrototipoMyha.Enemy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Interfaces
+namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces
 {
     public interface IEnemyStateHandler
     {

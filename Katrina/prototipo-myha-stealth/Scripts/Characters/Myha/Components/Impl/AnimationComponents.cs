@@ -41,7 +41,7 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
 
         public void Process(double delta)
         {
-            GD.Print(_player.CurrentPlayerState);
+
             // Só muda para animação de corrida se não estiver pulando
             if (_player.CurrentPlayerState == Player.StateManager.PlayerState.RUN)
             {
@@ -56,7 +56,6 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
             // Só muda para idle se estiver no chão
             if (_player.CurrentPlayerState == Player.StateManager.PlayerState.JUMPING)
             {
-                GDLogger.Print("Trocando para animação de pulo");
                 this._player.AnimatedSprite2D.Play(EnumAnimations.jump_up.ToString());
             }
         }

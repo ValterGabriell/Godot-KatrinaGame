@@ -10,13 +10,22 @@ namespace PrototipoMyha.Enemy.States
     {
         Idle,
         Roaming,
+
         Attack,
+
         Chasing,
+
         Dead,
+
         LookingForPlayerInDistractedArea,
+
         Patrolling,
+
         Waiting,
+
         Investigating,
-        Alerted
+
+        Alerted,
+        WalkWarning
     }
 }
