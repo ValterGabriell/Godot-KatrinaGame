@@ -4,6 +4,7 @@ using KatrinaGame.Core.Interfaces;
 using KatrinaGame.Players;
 using PrototipoMyha.Enemy;
 using PrototipoMyha.Player.Components.Interfaces;
+using PrototipoMyha.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace PrototipoMyha.Player.Components.Impl
     public partial class MakeSoundWhileWalkComponent : Node, IMakeSoundWhileWalkComponent
     {
         private MyhaPlayer MyhaPlayer;
-        private IMovementComponent MovementComponent;
+        private SignalManager SignalManager = SignalManager.Instance;
 
         public MakeSoundWhileWalkComponent(MyhaPlayer BasePlayer)
         {
@@ -32,8 +33,13 @@ namespace PrototipoMyha.Player.Components.Impl
 
         public void Initialize(BasePlayer player)
         {
-            this.MovementComponent = this.MyhaPlayer.GetComponent<IMovementComponent>();
             this.MyhaPlayer.SoundAreaWalkingComponent.BodyEntered += OnBodyEntered;
+            this.SignalManager.MyhaIsMoving += OnMyhaIsMoving;
+        }
+
+        private void OnMyhaIsMoving(float NoiseValue)
+        {
+            GDLogger.PrintInfo("MakeSoundWhileWalkComponent - OnMyhaIsMoving - NoiseValue: " + NoiseValue);
         }
 
         private void OnBodyEntered(Node2D area)
@@ -48,36 +54,9 @@ namespace PrototipoMyha.Player.Components.Impl
 
         public void Process(double delta)
         {
-            if (ShouldDisableWalkingSoundArea())
-            {
-                this.MyhaPlayer.SoundAreaWalkingComponent.Monitoring = false;
-                this.MyhaPlayer.SoundAreaWalkingColiisonComponent.Disabled = true;
-            }
 
-            if (ShouldEnableWalkingSoundArea())
-            {
-                this.MyhaPlayer.SoundAreaWalkingComponent.Monitoring = true;
-                this.MyhaPlayer.SoundAreaWalkingColiisonComponent.Disabled = false;
-            }
 
         }
-
-        private bool ShouldEnableWalkingSoundArea()
-        {
-            return this.MovementComponent.IsPlayerWalking
-                            && this.MyhaPlayer.SoundAreaWalkingComponent.Monitoring == false
-                            && this.MyhaPlayer.SoundAreaWalkingColiisonComponent.Disabled == true;
-        }
-
-        private bool ShouldDisableWalkingSoundArea()
-        {
-            return !this.MovementComponent.IsPlayerWalking
-                            && this.MyhaPlayer.SoundAreaWalkingComponent.Monitoring == true
-                            && this.MyhaPlayer.SoundAreaWalkingColiisonComponent.Disabled == false;
-        }
-
-
-
 
         public void PhysicsProcess(double delta)
         {

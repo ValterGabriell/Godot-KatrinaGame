@@ -15,7 +15,7 @@ public partial class GuardEnemy : EnemyBase
 
     protected override void InstanciateSpecificComponents()
     {
-        AddComponent(new EnemyMovementComponent());
-        AddComponent(new EnemyAnimationComponent());
+        AddComponent(new EnemyMovementComponent(this));
+        AddComponent(new EnemyAnimationComponent(this));
     }
 }

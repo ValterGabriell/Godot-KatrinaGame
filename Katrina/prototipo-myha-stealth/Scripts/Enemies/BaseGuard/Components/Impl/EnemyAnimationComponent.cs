@@ -12,9 +12,14 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
         private EnemyBase _Enemy;
         private bool IsWalkingToAlert = false;
         private SignalManager SignalManager;
-        public void Initialize(EnemyBase enemyBase)
+
+        public EnemyAnimationComponent(EnemyBase enemy)
         {
-            this._Enemy = enemyBase;
+            _Enemy = enemy;
+        }
+
+        public void Initialize()
+        {
             this.SignalManager = SignalManager.Instance;
             this.SignalManager.EnemySpottedPlayer += OnEnemySpottedPlayer;
         }
@@ -27,8 +32,8 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
 
         public void Process(double delta)
         {
-         
-            if(this._Enemy.CurrentEnemyState != Enemy.States.EnemyState.Alerted)
+
+            if (this._Enemy.CurrentEnemyState != Enemy.States.EnemyState.Alerted)
                 IsWalkingToAlert = false;
 
             var currentAnimation = this._Enemy.CurrentEnemyState switch

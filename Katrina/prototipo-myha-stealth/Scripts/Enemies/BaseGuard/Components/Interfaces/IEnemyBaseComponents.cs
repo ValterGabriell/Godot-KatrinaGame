@@ -9,7 +9,7 @@ namespace PrototipoMyha.Enemy.Components.Interfaces
 
     public interface IEnemyBaseComponents
     {
-        public void Initialize(EnemyBase enemyBase);
+        public void Initialize();
         public void Process(double delta);
         public void PhysicsProcess(double delta);
         

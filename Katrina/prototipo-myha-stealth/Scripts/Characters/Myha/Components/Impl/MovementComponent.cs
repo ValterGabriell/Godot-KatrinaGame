@@ -2,6 +2,7 @@ using Godot;
 using KatrinaGame.Core;
 using KatrinaGame.Core.Interfaces;
 using KatrinaGame.Scripts.Utils;
+using PrototipoMyha;
 using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Utilidades;
 
@@ -22,6 +23,8 @@ namespace KatrinaGame.Components
 
         //usando no walk sound area
         public bool IsPlayerWalking { get; private set; } = false;
+
+        public SignalManager SignalManager { get; private set; } = SignalManager.Instance;
 
         public void Initialize(BasePlayer player)
         {
@@ -50,6 +53,7 @@ namespace KatrinaGame.Components
                 if (this._player.IsOnFloor() && this._player.CurrentPlayerState != PlayerState.JUMPING)
                 {
                     this._player.SetState(PlayerState.RUN);
+                    SignalManager.EmitSignal(nameof(SignalManager.MyhaIsMoving), PlayerManager.RunNoiseRadius);
                 }
 
                 IsPlayerWalking = true;
@@ -86,6 +90,7 @@ namespace KatrinaGame.Components
 
             this._player.SetState(PlayerState.JUMPING);
             _player.Velocity = new Vector2(_player.Velocity.X, JumpVelocity);
+            SignalManager.EmitSignal(nameof(SignalManager.MyhaIsMoving), PlayerManager.JumpNoiseRadius);
         }
 
         // Adicionar este método para detectar quando o jogador pousa

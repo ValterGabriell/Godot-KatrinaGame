@@ -10,6 +10,7 @@ public partial class SignalManager : Node
     [Signal] public delegate void EnemyRatStopLookForPlayerEventHandler(Vector2 InPositionToGo);
     [Signal] public delegate void PlayerStateChangedEventHandler(PlayerState NewState);
     [Signal] public delegate void EnemySpottedPlayerEventHandler();
+    [Signal] public delegate void MyhaIsMovingEventHandler(float NoiseValue);
 
 
     public static SignalManager Instance { get; private set; }

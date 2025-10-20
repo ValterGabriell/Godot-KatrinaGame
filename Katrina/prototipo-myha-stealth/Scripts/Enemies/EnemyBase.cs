@@ -32,10 +32,9 @@ public abstract partial class EnemyBase : CharacterBody2D
         InstanciateSpecificComponents();
         TimerToChase.Timeout += OnTimerToChaseTimeout;
 
-    
         foreach (var component in Components.Values)
         {
-            component.Initialize(this);
+            component.Initialize();
         }
     }
 
