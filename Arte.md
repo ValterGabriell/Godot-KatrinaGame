@@ -4,6 +4,8 @@ Documentação de design da paleta de cores para garantir consistência visual e
 
 ---
 
+
+
 ## 1. Paleta de Cores Base (8 Cores Fixas)
 
 A paleta foi desenhada para garantir máximo contraste entre personagens e ambientes, essencial para a clareza visual e o gameplay de stealth.
