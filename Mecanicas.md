@@ -1,6 +1,4 @@
-Aqui está um documento detalhado de todas as mecânicas do seu jogo, incluindo o funcionamento de cada sistema, comportamento dos inimigos, itens e interações:
 
-***
 
 # Documento Detalhado de Mecânicas – Myha Escapa da Prisão
 
