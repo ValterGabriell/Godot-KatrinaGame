@@ -1,132 +1,57 @@
-Detalhes do “Traje” da Myha
-Pelagem: Cinza escuro uniforme, com outline preto profundo para reforçar o contraste nas sombras.
+# Projeto Stealth Pixel Art: Myha e o Conflito Felino-Hacker
 
-Olhos: Verde ácido brilhante, que funcionam como “marcação de estado” (brilham nas sombras, destacam-se na luz).
+Este documento detalha o design visual e a paleta de cores para os principais personagens (aliados e inimigos) de um projeto de pixel art com foco em furtividade (stealth). O objetivo é garantir **máxima clareza visual** e **diferenciação de silhueta** em um ambiente de jogo 2D.
 
-Orelhas: Triangulares e pontiagudas, sempre visíveis, reforçando a silhueta furtiva.
+---
 
-Cauda: Longa e fina, com animação fluida, ajudando a transmitir movimento e tensão.
+## 1. Protagonista (Stealth)
 
-Highlights: Pequenos detalhes em cinza claro nas orelhas e focinho, simulando “reflexos” como se fossem partes de um traje tático.
+### Myha (A Gata Furtiva)
 
-Coleira: Opcional, em cinza claro ou verde ácido, pode ser usada para reforçar o vínculo com Katrina (dona/hacker).
+O design de Myha foca em agilidade, contraste e visibilidade dinâmica.
 
-Patas: Pequenas, com 4 pontos de apoio bem definidos, sugerindo agilidade e prontidão.
+| Característica | Detalhe | Função Tática / Visual |
+| :--- | :--- | :--- |
+| **Pelagem** | Cinza escuro uniforme. **Outline Preto Profundo.** | Reforço do *Stealth* e contraste máximo em sombras. |
+| **Olhos** | **Verde Ácido Brilhante** | **Marcação de Estado:** Brilham no escuro, destacam-se na luz. |
+| **Silhueta** | Orelhas triangulares e pontiagudas, cauda longa e fina. | Furtividade e dinamismo. |
+| **Visual nas Sombras** | Apenas **outline preto** e **olhos verdes** visíveis. | Camuflagem total. |
+| **Estado de Alerta** | Orelhas eretas, cauda rígida, olhos mais abertos. |
 
-Visual nas Sombras
-Apenas outline preto e olhos verdes visíveis, simulando “camuflagem” total.
+---
 
-Visual na Luz
-Pelagem cinza escuro iluminada por amarelo prisão, olhos verdes menos brilhantes, postura mais tensa.
+## 2. Aliados
 
-Estado de Alerta
-Orelhas mais eretas, cauda rígida, olhos mais abertos. 
+### Katrina (Humana - Hacker/Suporte)
 
-Katrina (Aliada Humana)
-Estilo: Visual minimalista, inspirado em hacker/cyberpunk.
+Katrina fornece o contraste humano e tecnológico, usando uma paleta que se conecta aos elementos de alerta e tática.
 
-Cores: Pele branco sujo (#E8E8D0), cabelo roxo escuro (#4A3A5C), roupa verde ácido (#6BAA75), detalhes cinza claro (#7A7A7A).
+| Elemento | Detalhe | Paleta de Cores (Hex) |
+| :--- | :--- | :--- |
+| **Estilo** | Minimalista, Cyberpunk. Foco em ação/suporte. | |
+| **Cabelo** | Curto, Roxo Escuro. | `#4A3A5C` |
+| **Roupa** | Jaqueta curta **Verde Ácido** (detalhes digitais), Calça Cinza Claro. | Jaqueta: `#6BAA75` |
+| **Acessórios** | Óculos *tech* pequenos (2x1px), *Tablet/Device* (1-2px verdes). | Reforça o papel de suporte/hacker. |
 
-Traje:
+### Didi (Felina - Sábia/Robusta)
 
-Jaqueta curta verde ácido, com detalhes de circuitos ou linhas digitais.
+Didi é o contraste físico de Myha: maior, mais robusta e menos furtiva.
 
-Calça cinza claro, corte reto, sem muitos detalhes para não poluir o sprite.
+| Característica | Detalhe | Função / Contraste |
+| :--- | :--- | :--- |
+| **Pelagem** | Cinza Claro (`#7A7A7A`). | Contraste com Myha (Cinza Escuro). |
+| **Olhos** | **Amarelo Prisão** (`#E5D68A`). | Contraste de cor direto com Myha (Verde Ácido). |
+| **Destaques** | Maior, orelhas arredondadas, coleira grossa (Cinza Claro c/ pingente Verde Ácido). | Sugere experiência e solidez. |
 
-Óculos tech pequenos (2x1 pixels cada lente), sempre visíveis.
+---
 
-Tablet ou device na mão (1-2 pixels verdes), reforçando o papel de suporte/hacker.
+## 3. Inimigos (Gatos de Segurança)
 
-Botas discretas, sem salto, para reforçar praticidade.
+Todos os inimigos utilizam **Olhos Laranja Alerta** (`#E85D3C`) como sinal universal de ameaça.
 
-Destaques: Cabelo curto roxo, expressão séria mas amigável, postura levemente inclinada para frente (foco em ação).
-
-Didi (Aliada Felina)
-Estilo: Gata mais velha, sábia, visual robusto.
-
-Cores: Pelagem cinza claro (#7A7A7A), olhos amarelo prisão (#E5D68A), marcas branco sujo (#E8E8D0).
-
-Traje:
-
-Não usa roupa tradicional, mas tem uma coleira grossa cinza claro, com pingente verde ácido (conexão com Katrina).
-
-Marcas brancas no rosto e corpo, sugerindo cicatrizes ou experiência.
-
-Orelhas arredondadas, postura confiante, cauda mais grossa.
-
-Destaques: Maior que Myha, olhos amarelos (contraste direto), silhueta mais robusta, postura menos furtiva.
-
-Inimigos
-Gato Guarda Básico
-Cores: Pelagem branco sujo (#E8E8D0), olhos laranja alerta (#E85D3C), uniforme cinza claro (#7A7A7A).
-
-Traje:
-
-Colete simples cinza claro, sem mangas.
-
-Crachá ou coleira metálica (1-2 pixels).
-
-Orelhas pequenas, formato retangular.
-
-Postura ereta, militar.
-
-Destaques: Olhos laranja sempre visíveis, silhueta quadrada, sem acessórios chamativos.
-
-Gato Patrulheiro
-Cores: Mesma base do guarda, mas com uniforme roxo escuro (#4A3A5C), olhos laranja alerta.
-
-Traje:
-
-Jaqueta ou colete roxo escuro, boina pequena roxa (3x2 pixels).
-
-Detalhes cinza claro nos ombros ou peito.
-
-Postura mais curvada, sugerindo atenção.
-
-Destaques: Uniforme roxo = elite, fácil de identificar.
-
-Gato Vigia (Estático)
-Cores: Pelagem cinza claro (#7A7A7A), equipamento branco sujo (#E8E8D0), olhos laranja alerta.
-
-Traje:
-
-Equipamento de visor branco (3x1 pixels), sugerindo tecnologia.
-
-Base/plataforma pequena (1 linha de pixels).
-
-Postura perfeitamente ereta, “robótica”.
-
-Destaques: Olhos grandes, visor branco, silhueta mais larga.
-
-Gato Líder/Boss
-Cores: Pelagem roxo escuro (#4A3A5C), uniforme laranja alerta (#E85D3C), olhos amarelo prisão (#E5D68A).
-
-Traje:
-
-Capa/manto roxo escuro, detalhes laranja.
-
-Colete ou armadura laranja, mais robusto.
-
-Outline duplo (2px), maior que todos.
-
-Olhos amarelos, postura imponente.
-
-Destaques: Silhueta dominante, combinação única de roxo e laranja, capa/manto.
-
-Resumo:
-
-Katrina: Jaqueta verde ácido, cabelo roxo, óculos tech, device na mão.
-
-Didi: Pelagem cinza claro, coleira cinza com pingente verde, marcas brancas, maior e robusta.
-
-Inimigos:
-
-Guarda: Branco sujo, colete cinza, olhos laranja.
-
-Patrulheiro: Uniforme roxo, boina, olhos laranja.
-
-Vigia: Cinza claro, visor branco, olhos grandes.
-
-Boss: Roxo escuro, capa/manto, armadura laranja, olhos amarelos.
-
-Cada personagem tem silhueta, cor e detalhes únicos para máxima clareza visual e diferenciação em gameplay stealth.
+| Tipo de Inimigo | Paleta Principal | Destaques Visuais / Função |
+| :--- | :--- | :--- |
+| **Guarda Básico** | Pelagem **Branco Sujo** (`#E8E8D0`), Colete Cinza Claro. | Silhueta **quadrada**, postura militar. O inimigo mais comum. |
+| **Patrulheiro** | Uniforme **Roxo Escuro** (`#4A3A5C`), Boina Roxa. | **Elite:** Roxo = nível superior, atenção curvada. |
+| **Vigia (Estático)** | Pelagem Cinza Claro, Equipamento **Visor Branco** (`#E8E8D0`). | Olhos grandes, postura **robótica**. Inimigo de detecção/sentinela. |
+| **Líder/Boss** | Pelagem **Roxo Escuro**, Armadura **Laranja Alerta**. | Silhueta **dominante** (Outline duplo), Capa/Manto. Olhos **Amarelo Prisão** (único no grupo inimigo). |
