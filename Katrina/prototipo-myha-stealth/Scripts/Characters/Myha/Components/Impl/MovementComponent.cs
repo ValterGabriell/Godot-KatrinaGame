@@ -4,16 +4,14 @@ using KatrinaGame.Core.Interfaces;
 using KatrinaGame.Scripts.Utils;
 using PrototipoMyha;
 using PrototipoMyha.Player.StateManager;
+using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
 
 namespace KatrinaGame.Components
 {
     public partial class MovementComponent : Node, IMovementComponent
     {
-        [Export] public float Speed { get; set; } = 200f;
-        [Export] public float RunSpeed { get; set; } = 350f;
-        [Export] public float JumpVelocity { get; set; } = -400f;
-        [Export] public float Gravity { get; set; } = 700f;
+
         [Export] public bool IsMovementBlocked { get; set; } = false;
 
         private BasePlayer _player;
@@ -36,53 +34,52 @@ namespace KatrinaGame.Components
         public void PhysicsProcess(double delta)
         {
             ApplyGravity(delta);
-            CheckLanding(); // Adicionar esta chamada
+            CheckLanding(); 
         }
 
         public void HandleInput(double delta) { }
 
-        public void Move(Vector2 direction, bool isRunning = false)
+        public void Move(Vector2 direction, float CurrentSpeed)
         {
+            GDLogger.PrintInfo(CurrentSpeed);
             PlayerManager.GetPlayerGlobalInstance().UpdatePlayerPosition(_player.GlobalPosition);
             if (IsMovementBlocked) return;
 
-            float currentSpeed = isRunning ? RunSpeed : Speed;
+            var isPlayerMoving = direction.X != 0;
+            var isPlayerOnFloor = this._player.IsOnFloor();
+            var isPlayerJumping = this._player.CurrentPlayerState == PlayerState.JUMPING;
 
-            if (direction.X != 0)
+            if (isPlayerMoving)
             {
-                if (this._player.IsOnFloor() && this._player.CurrentPlayerState != PlayerState.JUMPING)
-                {
-                    this._player.SetState(PlayerState.RUN);
-                    SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), PlayerManager.RunNoiseRadius);
-                }
-
                 IsPlayerWalking = true;
-                _player.Velocity = new Vector2(direction.Normalized().X * currentSpeed, _player.Velocity.Y);
-
-                if (direction.X > 0)
-                {
-                    _player.AnimatedSprite2D.FlipH = false;
-                }
-                else if (direction.X < 0)
-                {
-                    _player.AnimatedSprite2D.FlipH = true;
-                }
+                _player.Velocity = new Vector2(direction.Normalized().X * CurrentSpeed, _player.Velocity.Y);
+                UpdateSpriteDirection(direction);
             }
-            else
-            {
-                // Só muda para IDLE se estiver no chão E não estiver pulando
-                if (this._player.IsOnFloor() && this._player.CurrentPlayerState != PlayerState.JUMPING)
-                {
-                    this._player.SetState(PlayerState.IDLE);
-                    SignalManager.EmitSignal(nameof(SignalManager.PlayerStoped));
-                }
 
+            if (IsMovingConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping))
+            {
+                var newState = CurrentSpeed == _player.Speed ? PlayerState.RUN : PlayerState.SNEAK;
+                var newRadiusSound = CurrentSpeed == _player.Speed ? PlayerManager.RunNoiseRadius : PlayerManager.SneakNoiseRadius;
+                this._player.SetState(newState);
+                SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), newRadiusSound);
+            }
+
+            if (IsIdleConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping))
+            {
+                this._player.SetState(PlayerState.IDLE);
+                SignalManager.EmitSignal(nameof(SignalManager.PlayerStoped));
+            }
+
+            if (!isPlayerMoving)
+            {
                 IsPlayerWalking = false;
                 _player.Velocity = new Vector2(
                     Mathf.MoveToward(_player.Velocity.X, 0, _inertiaDeceleration),
                     _player.Velocity.Y
                 );
             }
+
+            CheckLanding();
         }
 
         public void Jump()
@@ -90,15 +87,39 @@ namespace KatrinaGame.Components
             if (IsMovementBlocked || !_player.IsOnFloor()) return;
 
             this._player.SetState(PlayerState.JUMPING);
-            _player.Velocity = new Vector2(_player.Velocity.X, JumpVelocity);
+            _player.Velocity = new Vector2(_player.Velocity.X, _player.JumpVelocity);
             SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), PlayerManager.JumpNoiseRadius);
         }
 
+
+        private static bool IsIdleConditionMet(bool isPlayerMoving, bool isPlayerOnFloor, bool isPlayerJumping)
+        {
+            return !isPlayerMoving && !isPlayerJumping && isPlayerOnFloor;
+        }
+
+        private static bool IsMovingConditionMet(bool isPlayerMoving, bool isPlayerOnFloor, bool isPlayerJumping)
+        {
+            return isPlayerMoving && isPlayerOnFloor && !isPlayerJumping;
+        }
+
+        private void UpdateSpriteDirection(Vector2 direction)
+        {
+            if (direction.X > 0)
+            {
+                _player.AnimatedSprite2D.FlipH = false;
+            }
+            else if (direction.X < 0)
+            {
+                _player.AnimatedSprite2D.FlipH = true;
+            }
+        }
+
+  
         // Adicionar este método para detectar quando o jogador pousa
         private void CheckLanding()
         {
             /*
-             Frame 1: Jogador no chão → _wasOnFloorLastFrame = true
+            Frame 1: Jogador no chão → _wasOnFloorLastFrame = true
             Frame 2: Jogador pula → _player.IsOnFloor() = false → _wasOnFloorLastFrame = false  
             Frame 3: Jogador no ar → _wasOnFloorLastFrame = false
             Frame 4: Jogador pousa → _player.IsOnFloor() = true, _wasOnFloorLastFrame = false
@@ -128,7 +149,7 @@ namespace KatrinaGame.Components
         {
             if (!_player.IsOnFloor())
             {
-                _player.Velocity = new Vector2(_player.Velocity.X, _player.Velocity.Y + Gravity * (float)delta);
+                _player.Velocity = new Vector2(_player.Velocity.X, _player.Velocity.Y + _player.Gravity * (float)delta);
             }
         }
 

@@ -10,6 +10,7 @@ public partial class PlayerManager : Node
 
 
     public static float RunNoiseRadius { get; private set; } = 100f;
+    public static float SneakNoiseRadius { get; private set; } = 20f;
     public static float JumpNoiseRadius { get; private set; } = 50f;
     public override void _Ready()
     {

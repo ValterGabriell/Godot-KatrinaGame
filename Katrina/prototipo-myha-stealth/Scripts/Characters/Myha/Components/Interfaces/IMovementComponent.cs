@@ -1,17 +1,13 @@
 using Godot;
 using PrototipoMyha.Player.Components.Interfaces;
+using PrototipoMyha.Scripts.Utils;
 
 namespace KatrinaGame.Core.Interfaces
 {
     public interface IMovementComponent : IPlayerBaseComponent
     {
-        float Speed { get; set; }
-        float RunSpeed { get; set; }
-        float JumpVelocity { get; set; }
         bool IsMovementBlocked { get; set; }
-        bool IsPlayerWalking { get;}
-
-        void Move(Vector2 direction, bool isRunning = false);
+        void Move(Vector2 direction, float PlayerSpeed);
         void Jump();
         void ApplyGravity(double delta);
     }

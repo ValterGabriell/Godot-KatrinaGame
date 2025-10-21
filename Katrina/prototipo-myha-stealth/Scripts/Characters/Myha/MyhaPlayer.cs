@@ -6,6 +6,7 @@ using PrototipoMyha;
 using PrototipoMyha.Player.Components.Impl;
 using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Scripts.Characters.Myha.Components.Impl;
+using PrototipoMyha.Scripts.Utils;
 using System;
 
 namespace KatrinaGame.Players
@@ -19,6 +20,8 @@ namespace KatrinaGame.Players
         private CircleShape2D SoundAreaWalkingColiisonComponent { get; set; }
 
         private IMovementComponent MovementComponent;
+        private float CurrentPlayerSpeed = 0f;
+
 
 
         protected override void InstanciateComponents()
@@ -49,6 +52,8 @@ namespace KatrinaGame.Players
         {
             // Input de movimento
             Vector2 inputVector = Vector2.Zero;
+            if(inputVector == Vector2.Zero) CurrentPlayerSpeed = 0f;
+
 
             if (Input.IsActionPressed("d") && MovementComponent.IsMovementBlocked == false)
             {
@@ -58,6 +63,7 @@ namespace KatrinaGame.Players
                     AttackRaycast,
                     PushRaycast
                 ]);
+                CurrentPlayerSpeed = Speed ;
             }
 
             if (Input.IsActionPressed("a") && MovementComponent.IsMovementBlocked == false)
@@ -68,6 +74,7 @@ namespace KatrinaGame.Players
                    AttackRaycast,
                     PushRaycast
                ]);
+                CurrentPlayerSpeed = Speed;
             }
 
             if (Input.IsActionJustPressed("jump"))
@@ -76,8 +83,14 @@ namespace KatrinaGame.Players
                 MovementComponent.Jump();
             }
 
-            bool isRunning = Input.IsActionPressed("run");
-            MovementComponent.Move(inputVector, isRunning);
+            if (Input.IsKeyPressed(Key.Ctrl))
+            {
+                GD.PrintRich("Entrou no modo Sneak", Colors.Yellow);
+                CurrentPlayerSpeed = SneakSpeed;
+            }
+
+
+            MovementComponent.Move(inputVector, CurrentPlayerSpeed);
 
             base.HandleInput(delta);
         }

@@ -9,10 +9,16 @@ namespace KatrinaGame.Core
 {
     public abstract partial class BasePlayer : CharacterBody2D
     {
+        [Export] public float Speed { get; set; } = 300f;
+        [Export] public float SneakSpeed { get; set; } = 100f;
+        [Export] public float JumpVelocity { get; set; } = -300f;
+        [Export] public float Gravity { get; set; } = 700f;
         public PlayerState CurrentPlayerState { get; private set; } = PlayerState.IDLE;
 
         protected Dictionary<string, IPlayerBaseComponent> Components = new();
         [Export] public AnimatedSprite2D AnimatedSprite2D { get; set; }
+
+  
         public override void _Ready()
         {
             InstanciateComponents();

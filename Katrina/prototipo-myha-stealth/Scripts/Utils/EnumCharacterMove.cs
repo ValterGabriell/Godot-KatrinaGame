@@ -4,14 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrototipoMyha
+namespace PrototipoMyha.Scripts.Utils
 {
-    public enum EnumMove
-    {
-        RIGHT,
-        LEFT,
-        IDLE
-    }
+
 
     public enum EnumGuardMove
     {

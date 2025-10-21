@@ -37,7 +37,6 @@ namespace PrototipoMyha.Player.Components.Impl
 
         private void OnMyhaIsMoving(float NoiseValue)
         {
-            GDLogger.PrintInfo("MakeSoundWhileWalkComponent - OnMyhaIsMoving - NoiseValue: " + NoiseValue);
             this.MyhaPlayer.AlterRadiusCollisionSoundArea(NoiseValue);
         }
 

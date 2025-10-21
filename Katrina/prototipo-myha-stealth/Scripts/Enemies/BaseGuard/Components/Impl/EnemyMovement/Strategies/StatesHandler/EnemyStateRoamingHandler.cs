@@ -31,9 +31,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         {
             InEnemy.SetState(EnemyState.Roaming);
             float distanceToTarget = InEnemy.GlobalPosition.DistanceTo(InTargetPosition.Value);
-            GDLogger.PrintInfo(
-                $"[EnemyStateRoamingHandler] Distance to Target: {distanceToTarget}",
-                nameof(EnemyStateRoamingHandler));
+
             if (distanceToTarget < 55f) // Chegou perto do target
             {
                 // Para e espera um pouco

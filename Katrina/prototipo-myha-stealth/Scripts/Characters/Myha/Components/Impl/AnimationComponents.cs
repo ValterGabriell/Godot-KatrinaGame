@@ -53,6 +53,12 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
                 this._player.AnimatedSprite2D.Play(EnumAnimations.idle.ToString());
             }
 
+        
+            if (_player.CurrentPlayerState == Player.StateManager.PlayerState.SNEAK)
+            {
+                this._player.AnimatedSprite2D.Play(EnumAnimations.sneak.ToString());
+            }
+
             // Só muda para idle se estiver no chão
             if (_player.CurrentPlayerState == Player.StateManager.PlayerState.JUMPING)
             {

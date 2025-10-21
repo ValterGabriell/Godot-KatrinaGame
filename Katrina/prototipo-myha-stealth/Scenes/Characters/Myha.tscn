@@ -151,7 +151,7 @@ size = Vector2(20, 14)
 [sub_resource type="CircleShape2D" id="CircleShape2D_3bx22"]
 radius = 25.298222
 
-[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "SoundAreaWalkingComponent", "SoundAreaWalkingColiisonComponent", "AnimatedSprite2D") groups=["player"]]
+[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "SoundAreaWalkingComponent", "AnimatedSprite2D") groups=["player"]]
 collision_layer = 2
 collision_mask = 261
 script = ExtResource("1_gp1ay")
@@ -159,7 +159,6 @@ AttackRaycast = NodePath("AttackRaycast")
 PushRaycast = NodePath("PushRaycast")
 BallScene = ExtResource("2_hntan")
 SoundAreaWalkingComponent = NodePath("SoundArea")
-SoundAreaWalkingColiisonComponent = NodePath("SoundArea/CollisionShape2D")
 AnimatedSprite2D = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

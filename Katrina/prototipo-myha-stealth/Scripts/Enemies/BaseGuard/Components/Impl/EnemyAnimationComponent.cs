@@ -1,6 +1,7 @@
 using Godot;
 using PrototipoMyha.Enemy;
 using PrototipoMyha.Enemy.Components.Interfaces;
+using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
 using System;
 using static PrototipoMyha.SignalManager;
