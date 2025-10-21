@@ -17,7 +17,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private Random InRandom = new Random();
         private float InWaitTime;
         private float InMaxWaitTime;
-
+        private SignalManager SignalManager = SignalManager.Instance;
         public EnemyStateRoamingHandler(float inWaitTime, float inMaxWaitTime)
         {
             InWaitTime = inWaitTime;
@@ -29,9 +29,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             double delta,
             EnemyBase InEnemy, Vector2? InTargetPosition = null)
         {
-            InEnemy.SetState(EnemyState.Roaming);
             float distanceToTarget = InEnemy.GlobalPosition.DistanceTo(InTargetPosition.Value);
-
+            GDLogger.PrintDebug($"[Roaming] Distance to Target: {distanceToTarget}");
             if (distanceToTarget < 55f) // Chegou perto do target
             {
                 // Para e espera um pouco
@@ -45,10 +44,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 int directionSign = direction.X > 0 ? 1 : -1;
                 if (InEnemy.RayCast2DDetection != null)
                 {
-                    float raycastDirection = directionSign;
-                    RaycastUtils.FlipRaycast(raycastDirection, [InEnemy.RayCast2DDetection]);  
+                    SignalManager.EmitSignal(nameof(SignalManager.FlipObject), directionSign);
                 }
-                SpriteUtils.FlipSprite(directionSign, InEnemy.AnimatedSprite2DEnemy);
 
                 float horizontalVelocity = direction.X * InEnemy.EnemyResource.MoveSpeed * (float)delta;
                 InEnemy.Velocity = new Vector2(horizontalVelocity, InEnemy.Velocity.Y);

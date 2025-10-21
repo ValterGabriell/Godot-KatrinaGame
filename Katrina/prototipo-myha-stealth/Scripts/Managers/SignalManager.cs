@@ -12,6 +12,7 @@ public partial class SignalManager : Node
     [Signal] public delegate void EnemySpottedPlayerEventHandler();
     [Signal] public delegate void PlayerIsMovingEventHandler(float NoiseValue);
     [Signal] public delegate void PlayerStopedEventHandler();
+    [Signal] public delegate void FlipObjectEventHandler(int direction);
 
 
     public static SignalManager Instance { get; private set; }

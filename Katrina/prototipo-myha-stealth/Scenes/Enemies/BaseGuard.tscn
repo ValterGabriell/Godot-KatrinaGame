@@ -277,7 +277,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
 size = Vector2(15.75, 25)
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("RayCast2DDetection", "TimerToChase", "AnimatedSprite2DEnemy")]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("RayCast2DDetection", "TimerToChase", "AnimatedSprite2DEnemy", "Raycast2DBounderie")]
 collision_layer = 12288
 collision_mask = 3
 script = ExtResource("1_ib5uv")
@@ -285,6 +285,7 @@ EnemyResource = ExtResource("2_n2d1g")
 RayCast2DDetection = NodePath("RayCast2DDetectionPlayer")
 TimerToChase = NodePath("TimerToChase")
 AnimatedSprite2DEnemy = NodePath("AnimatedSprite2D")
+Raycast2DBounderie = NodePath("RaycastBounderies/RayCast2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -308,3 +309,9 @@ one_shot = true
 [node name="TimerToStayAlert" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="RaycastBounderies" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="RaycastBounderies"]
+target_position = Vector2(23, 0)
+collision_mask = 32768

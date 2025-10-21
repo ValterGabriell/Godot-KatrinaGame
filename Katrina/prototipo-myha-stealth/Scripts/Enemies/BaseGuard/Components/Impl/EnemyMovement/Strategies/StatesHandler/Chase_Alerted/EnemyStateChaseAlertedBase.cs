@@ -18,6 +18,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         // Threshold para considerar se estão no mesmo nível vertical
         private const float VerticalLevelThreshold = 30f;
+        private SignalManager SignalManager = SignalManager.Instance;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -53,7 +54,6 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
             InEnemy.Velocity = new Vector2(horizontalVelocity, InEnemy.Velocity.Y);
 
-            GDLogger.PrintDebug(InTargetMovement);
 
             if (InEnemy.RayCast2DDetection != null)
             {
@@ -64,8 +64,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 ///por padrao true
                 if (IsRaycastDirectionNotInitialized())
                 {
-                    RaycastUtils.FlipRaycast(direction, [InEnemy.RayCast2DDetection]);
-                    SpriteUtils.FlipSprite(direction, InEnemy.AnimatedSprite2DEnemy);
+                    SignalManager.EmitSignal(nameof(SignalManager.FlipObject), direction);
                 }
 
                 if (isColliding)

@@ -41,7 +41,7 @@ namespace KatrinaGame.Components
 
         public void Move(Vector2 direction, float CurrentSpeed)
         {
-            GDLogger.PrintInfo(CurrentSpeed);
+           
             PlayerManager.GetPlayerGlobalInstance().UpdatePlayerPosition(_player.GlobalPosition);
             if (IsMovementBlocked) return;
 

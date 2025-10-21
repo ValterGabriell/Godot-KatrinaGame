@@ -97,6 +97,7 @@ sneak={
 2d_physics/layer_13="enemy"
 2d_physics/layer_14="guardEnemy"
 2d_physics/layer_15="playerWalkArea"
+2d_physics/layer_16="bounderie_world"
 
 [rendering]
 

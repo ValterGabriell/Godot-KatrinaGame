@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://b1gnb8slestvs"]
+[gd_scene load_steps=9 format=4 uid="uid://b1gnb8slestvs"]
 
 [ext_resource type="Texture2D" uid="uid://d2ivhrkguvk2u" path="res://Assets/Tilesets/World/PrototipoWorldTileset.png" id="1_7mycd"]
 [ext_resource type="PackedScene" uid="uid://dw4s248phtymn" path="res://Scenes/Characters/Myha.tscn" id="2_0xm2m"]
@@ -21,6 +21,12 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 4098
 sources/0 = SubResource("TileSetAtlasSource_272bh")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(177, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(175, 9)
+
 [node name="Main" type="Node2D"]
 
 [node name="World" type="TileMapLayer" parent="."]
@@ -37,4 +43,21 @@ position = Vector2(766, -9)
 CollisionShadowScale = Vector2(3, 2.3)
 
 [node name="MyhaGuard" parent="." instance=ExtResource("6_7mycd")]
-position = Vector2(389, -15)
+position = Vector2(395, -14)
+
+[node name="Bounderies" type="Node2D" parent="."]
+
+[node name="BounderieWord_Left" type="StaticBody2D" parent="Bounderies"]
+position = Vector2(329, -80)
+collision_layer = 32768
+collision_mask = 4096
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies/BounderieWord_Left"]
+position = Vector2(3, -8.5)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Bounderies/BounderieWord_Left"]
+position = Vector2(1434, -13)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_lquwl")

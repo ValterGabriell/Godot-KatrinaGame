@@ -14,8 +14,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.PatrolHan
             // Gera um ponto aleatório apenas no eixo X (horizontal)
             float offsetX = (float)(InRandomInstance.NextDouble() * 2 - 1) * InPatrolRadius;
             
-            if(offsetX > 350)
-                offsetX = 350;
+            if(offsetX > 1000)
+                offsetX = 1000;
             var randomOffset = new Vector2(offsetX, 0);
             return randomOffset;
         }

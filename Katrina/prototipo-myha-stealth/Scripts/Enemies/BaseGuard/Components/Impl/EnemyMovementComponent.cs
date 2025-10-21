@@ -16,10 +16,12 @@ namespace PrototipoMyha.Enemy.Components.Impl
         private Vector2 _targetPosition;
         private float _waitTimer = 0f;
         private float _maxWaitTime = 3f;
-        private float _patrolRadius = 200f; // Raio de patrulhamento
+        private float _patrolRadius = 900f; // Raio de patrulhamento
         private Vector2 _initialPosition;
         private EnemyState? LastEnemyState = null;
         private IEnemyStateHandler enemyStateHandler;
+        private bool HasCollidedWithBounderie = false;
+
 
         public EnemyMovementComponent(EnemyBase enemy)
         {
@@ -29,7 +31,7 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         public void Initialize()
         {
- 
+
             SetNewRandomTarget();
         }
 
@@ -38,9 +40,10 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         public void Process(double delta)
         {
-
+            CheckIfCollideWithBounderie(delta);
             if (HasEnemyStateChanged())
             {
+
                 LastEnemyState = this._Enemy.CurrentEnemyState;
                 enemyStateHandler = GetEnemyStateHandler.GetStateHandler(
                     state: _Enemy.CurrentEnemyState,
@@ -60,7 +63,6 @@ namespace PrototipoMyha.Enemy.Components.Impl
                         delta: delta,
                         InEnemy: _Enemy,
                         InTargetPosition: _targetPosition);
-
             }
 
         }
@@ -70,16 +72,26 @@ namespace PrototipoMyha.Enemy.Components.Impl
             return LastEnemyState != this._Enemy.CurrentEnemyState || LastEnemyState == null;
         }
 
-
+        private void CheckIfCollideWithBounderie(double delta)
+        {
+           
+            if (this._Enemy.Raycast2DBounderie.IsColliding() && !HasCollidedWithBounderie)
+            {
+                this._Enemy.SetState(EnemyState.Waiting);
+                SetNewRandomTarget();
+                _waitTimer = enemyStateHandler.ExecuteState(
+                      delta: delta,
+                      InEnemy: _Enemy,
+                      InTargetPosition: _targetPosition);
+            }
+        }
 
 
         private void SetNewRandomTarget()
         {
-
             IPatrolTypeHandler patrolStrategyHandler = GetPatrolType.GetHandler(this._Enemy.EnemyResource.PatrolStyle);
             Vector2 randomOffset = patrolStrategyHandler.GetPatrolTarget(_patrolRadius, _random);
             _targetPosition = _initialPosition + randomOffset;
-
         }
     }
 }

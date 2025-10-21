@@ -1,6 +1,7 @@
 using Godot;
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Enemy.States;
+using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,14 @@ public abstract partial class EnemyBase : CharacterBody2D
     [Export] public Timer TimerToChase = null;
     [Export] public AnimatedSprite2D AnimatedSprite2DEnemy = null;
 
+    [ExportGroup("Bounderies")]
+    [Export] public RayCast2D Raycast2DBounderie = null;
+
 
 
 
     protected Dictionary<string, IEnemyBaseComponents> Components = new();
-
+    private SignalManager SignalManager;
     public EnemyState CurrentEnemyState { get; private set; }  = EnemyState.Roaming;
 
 
@@ -31,7 +35,8 @@ public abstract partial class EnemyBase : CharacterBody2D
     {
         InstanciateSpecificComponents();
         TimerToChase.Timeout += OnTimerToChaseTimeout;
-
+        SignalManager = SignalManager.Instance;
+        SignalManager.FlipObject += FlipEnemy;
         foreach (var component in Components.Values)
         {
             component.Initialize();
@@ -42,6 +47,12 @@ public abstract partial class EnemyBase : CharacterBody2D
     {
         if (this.CurrentEnemyState == EnemyState.Alerted)
             SetState(EnemyState.Waiting);
+    }
+
+    public void FlipEnemy(int direction)
+    {
+        RaycastUtils.FlipRaycast(direction, [RayCast2DDetection, Raycast2DBounderie]);
+        SpriteUtils.FlipSprite(direction, AnimatedSprite2DEnemy);
     }
 
     private void OnTimerToChaseTimeout()
