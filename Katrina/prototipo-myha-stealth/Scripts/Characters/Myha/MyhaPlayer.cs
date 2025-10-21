@@ -16,7 +16,7 @@ namespace KatrinaGame.Players
         [Export] public RayCast2D PushRaycast { get; set; }
         [Export] public PackedScene BallScene { get; set; }
         [Export] public Area2D SoundAreaWalkingComponent { get; set; }
-        [Export] public CollisionShape2D SoundAreaWalkingColiisonComponent { get; set; }
+        private CircleShape2D SoundAreaWalkingColiisonComponent { get; set; }
 
         private IMovementComponent MovementComponent;
 
@@ -30,6 +30,14 @@ namespace KatrinaGame.Players
 
             MovementComponent = GetComponent<IMovementComponent>();
             SignalManager.Instance.PlayerStateChanged += PlayerStateChanged;
+            SoundAreaWalkingColiisonComponent = SoundAreaWalkingComponent
+            .GetNode<CollisionShape2D>("CollisionShape2D")
+            .Shape as CircleShape2D;
+        }
+
+        public void AlterRadiusCollisionSoundArea(float newRadius)
+        {
+            SoundAreaWalkingColiisonComponent.Radius = newRadius;
         }
 
         private void PlayerStateChanged(PlayerState NewState)

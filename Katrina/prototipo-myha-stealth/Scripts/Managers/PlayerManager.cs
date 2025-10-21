@@ -9,8 +9,8 @@ public partial class PlayerManager : Node
     private static PlayerManager PlayerGlobalInstance = null;
 
 
-    public static float RunNoiseRadius { get; private set; } = 300f;
-    public static float JumpNoiseRadius { get; private set; } = 100f;
+    public static float RunNoiseRadius { get; private set; } = 100f;
+    public static float JumpNoiseRadius { get; private set; } = 50f;
     public override void _Ready()
     {
         if (PlayerGlobalInstance == null)

@@ -1,15 +1,10 @@
 using Godot;
 using KatrinaGame.Core;
-using KatrinaGame.Core.Interfaces;
 using KatrinaGame.Players;
 using PrototipoMyha.Enemy;
 using PrototipoMyha.Player.Components.Interfaces;
 using PrototipoMyha.Utilidades;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PrototipoMyha.Player.Components.Impl
 {
@@ -26,20 +21,24 @@ namespace PrototipoMyha.Player.Components.Impl
             this.MyhaPlayer = BasePlayer;
         }
 
-        public void HandleInput(double delta)
-        {
-            
-        }
+        public void HandleInput(double delta) {}
 
         public void Initialize(BasePlayer player)
         {
             this.MyhaPlayer.SoundAreaWalkingComponent.BodyEntered += OnBodyEntered;
-            this.SignalManager.MyhaIsMoving += OnMyhaIsMoving;
+            this.SignalManager.PlayerIsMoving += OnMyhaIsMoving;
+            this.SignalManager.PlayerStoped += OnMyhaStoped;
+        }
+
+        private void OnMyhaStoped()
+        {
+            this.MyhaPlayer.AlterRadiusCollisionSoundArea(0);
         }
 
         private void OnMyhaIsMoving(float NoiseValue)
         {
             GDLogger.PrintInfo("MakeSoundWhileWalkComponent - OnMyhaIsMoving - NoiseValue: " + NoiseValue);
+            this.MyhaPlayer.AlterRadiusCollisionSoundArea(NoiseValue);
         }
 
         private void OnBodyEntered(Node2D area)
@@ -52,15 +51,8 @@ namespace PrototipoMyha.Player.Components.Impl
 
 
 
-        public void Process(double delta)
-        {
+        public void Process(double delta){ }
 
-
-        }
-
-        public void PhysicsProcess(double delta)
-        {
-
-        }
+        public void PhysicsProcess(double delta){}
     }
 }

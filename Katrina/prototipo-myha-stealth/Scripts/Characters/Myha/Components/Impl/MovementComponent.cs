@@ -53,7 +53,7 @@ namespace KatrinaGame.Components
                 if (this._player.IsOnFloor() && this._player.CurrentPlayerState != PlayerState.JUMPING)
                 {
                     this._player.SetState(PlayerState.RUN);
-                    SignalManager.EmitSignal(nameof(SignalManager.MyhaIsMoving), PlayerManager.RunNoiseRadius);
+                    SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), PlayerManager.RunNoiseRadius);
                 }
 
                 IsPlayerWalking = true;
@@ -74,6 +74,7 @@ namespace KatrinaGame.Components
                 if (this._player.IsOnFloor() && this._player.CurrentPlayerState != PlayerState.JUMPING)
                 {
                     this._player.SetState(PlayerState.IDLE);
+                    SignalManager.EmitSignal(nameof(SignalManager.PlayerStoped));
                 }
 
                 IsPlayerWalking = false;
@@ -90,7 +91,7 @@ namespace KatrinaGame.Components
 
             this._player.SetState(PlayerState.JUMPING);
             _player.Velocity = new Vector2(_player.Velocity.X, JumpVelocity);
-            SignalManager.EmitSignal(nameof(SignalManager.MyhaIsMoving), PlayerManager.JumpNoiseRadius);
+            SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), PlayerManager.JumpNoiseRadius);
         }
 
         // Adicionar este método para detectar quando o jogador pousa
