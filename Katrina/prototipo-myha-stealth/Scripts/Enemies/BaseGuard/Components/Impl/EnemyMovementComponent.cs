@@ -16,7 +16,7 @@ namespace PrototipoMyha.Enemy.Components.Impl
         private Vector2 _targetPosition;
         private float _waitTimer = 0f;
         private float _maxWaitTime = 3f;
-        private float _patrolRadius = 900f; // Raio de patrulhamento
+
         private Vector2 _initialPosition;
         private EnemyState? LastEnemyState = null;
         private IEnemyStateHandler enemyStateHandler;
@@ -90,7 +90,7 @@ namespace PrototipoMyha.Enemy.Components.Impl
         private void SetNewRandomTarget()
         {
             IPatrolTypeHandler patrolStrategyHandler = GetPatrolType.GetHandler(this._Enemy.EnemyResource.PatrolStyle);
-            Vector2 randomOffset = patrolStrategyHandler.GetPatrolTarget(_patrolRadius, _random);
+            Vector2 randomOffset = patrolStrategyHandler.GetPatrolTarget(this._Enemy.PatrolRadius, _random);
             _targetPosition = _initialPosition + randomOffset;
         }
     }

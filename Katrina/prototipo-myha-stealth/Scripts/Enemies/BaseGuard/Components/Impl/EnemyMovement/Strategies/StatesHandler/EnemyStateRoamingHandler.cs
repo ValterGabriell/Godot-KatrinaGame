@@ -17,7 +17,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private Random InRandom = new Random();
         private float InWaitTime;
         private float InMaxWaitTime;
-        private SignalManager SignalManager = SignalManager.Instance;
+
         public EnemyStateRoamingHandler(float inWaitTime, float inMaxWaitTime)
         {
             InWaitTime = inWaitTime;
@@ -30,9 +30,9 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             EnemyBase InEnemy, Vector2? InTargetPosition = null)
         {
             float distanceToTarget = InEnemy.GlobalPosition.DistanceTo(InTargetPosition.Value);
-            GDLogger.PrintDebug($"[Roaming] Distance to Target: {distanceToTarget}");
             if (distanceToTarget < 55f) // Chegou perto do target
             {
+                GDLogger.PrintDebug("EnemyStateRoamingHandler: Reached target, waiting...");
                 // Para e espera um pouco
                 InWaitTime = InRandom.Next(1, (int)InMaxWaitTime);
                 InEnemy.Velocity = new Vector2(0, InEnemy.Velocity.Y);
@@ -41,11 +41,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             else
             {
                 Vector2 direction = (InTargetPosition.Value - InEnemy.GlobalPosition).Normalized();
-                int directionSign = direction.X > 0 ? 1 : -1;
-                if (InEnemy.RayCast2DDetection != null)
-                {
-                    SignalManager.EmitSignal(nameof(SignalManager.FlipObject), directionSign);
-                }
+                FlipEnemyDirection(InEnemy, direction);
 
                 float horizontalVelocity = direction.X * InEnemy.EnemyResource.MoveSpeed * (float)delta;
                 InEnemy.Velocity = new Vector2(horizontalVelocity, InEnemy.Velocity.Y);
@@ -54,6 +50,14 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             DetectAndChasePlayer(InEnemy);
 
             return InWaitTime;
+        }
+
+        private static void FlipEnemyDirection(EnemyBase InEnemy, Vector2 direction)
+        {
+            int directionSign = direction.X > 0 ? 1 : -1;
+
+            RaycastUtils.FlipRaycast(directionSign, [InEnemy.Raycast2DBounderie, InEnemy.RayCast2DDetection]);
+            SpriteUtils.FlipSprite(directionSign, InEnemy.AnimatedSprite2DEnemy);
         }
 
         private static void DetectAndChasePlayer(EnemyBase InEnemy)

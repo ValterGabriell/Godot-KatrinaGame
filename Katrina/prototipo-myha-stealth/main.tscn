@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=4 uid="uid://b1gnb8slestvs"]
+[gd_scene load_steps=10 format=4 uid="uid://b1gnb8slestvs"]
 
 [ext_resource type="Texture2D" uid="uid://d2ivhrkguvk2u" path="res://Assets/Tilesets/World/PrototipoWorldTileset.png" id="1_7mycd"]
 [ext_resource type="PackedScene" uid="uid://dw4s248phtymn" path="res://Scenes/Characters/Myha.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ce8dcph8wdnvb" path="res://Scripts/Items/ShadowArea/ShadowAreaScene.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://fivb1ydt0fiu" path="res://Scenes/Items/Plataform/PrototipoPlataform/PrototipoPlataform.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dyb3c5aecsw5r" path="res://Scenes/Enemies/BaseGuard.tscn" id="6_7mycd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_272bh"]
@@ -35,15 +36,25 @@ tile_map_data = PackedByteArray("AAAVAAAAAAABAAUAAAAWAAAAAAACAAUAAAAXAAAAAAACAAU
 tile_set = SubResource("TileSet_5vw27")
 
 [node name="Myha" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(620, -19)
+position = Vector2(884, -21)
 collision_mask = 37
 
 [node name="ShadowArea" parent="." instance=ExtResource("5_7mycd")]
 position = Vector2(766, -9)
 CollisionShadowScale = Vector2(3, 2.3)
 
-[node name="MyhaGuard" parent="." instance=ExtResource("6_7mycd")]
-position = Vector2(395, -14)
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="CharacterBody2D2" parent="Enemies" instance=ExtResource("6_7mycd")]
+position = Vector2(1010, -107)
+PatrolRadius = 200.0
+
+[node name="CharacterBody2D" parent="Enemies" instance=ExtResource("6_7mycd")]
+position = Vector2(1042, -16)
+PatrolRadius = 600.0
+
+[node name="CharacterBody2D3" parent="Enemies" instance=ExtResource("6_7mycd")]
+position = Vector2(734, -68)
 
 [node name="Bounderies" type="Node2D" parent="."]
 
@@ -61,3 +72,11 @@ shape = SubResource("RectangleShape2D_1bvp3")
 position = Vector2(1434, -13)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="Plataforms" type="Node2D" parent="."]
+
+[node name="PrototipoPlataform" parent="Plataforms" instance=ExtResource("5_lquwl")]
+position = Vector2(762, -43)
+
+[node name="PrototipoPlataform2" parent="Plataforms" instance=ExtResource("5_lquwl")]
+position = Vector2(1011, -83)

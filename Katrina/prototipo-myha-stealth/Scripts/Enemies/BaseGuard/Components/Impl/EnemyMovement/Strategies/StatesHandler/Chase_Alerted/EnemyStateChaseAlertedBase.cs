@@ -18,7 +18,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         // Threshold para considerar se estão no mesmo nível vertical
         private const float VerticalLevelThreshold = 30f;
-        private SignalManager SignalManager = SignalManager.Instance;
+
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -64,7 +64,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 ///por padrao true
                 if (IsRaycastDirectionNotInitialized())
                 {
-                    SignalManager.EmitSignal(nameof(SignalManager.FlipObject), direction);
+                    FlipEnemyDirection(InEnemy, directionToPlayer);
                 }
 
                 if (isColliding)
@@ -86,6 +86,15 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
             return 3;
         }
+
+        private static void FlipEnemyDirection(EnemyBase InEnemy, Vector2 direction)
+        {
+            int directionSign = direction.X > 0 ? 1 : -1;
+
+            RaycastUtils.FlipRaycast(directionSign, [InEnemy.Raycast2DBounderie, InEnemy.RayCast2DDetection]);
+            SpriteUtils.FlipSprite(directionSign, InEnemy.AnimatedSprite2DEnemy);
+        }
+
 
         /// <summary>
         /// Verifica se o jogador está em um nível vertical diferente do inimigo

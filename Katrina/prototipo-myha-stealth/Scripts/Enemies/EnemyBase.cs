@@ -23,11 +23,11 @@ public abstract partial class EnemyBase : CharacterBody2D
     [ExportGroup("Bounderies")]
     [Export] public RayCast2D Raycast2DBounderie = null;
 
-
+    [Export] public float PatrolRadius = 900f;
 
 
     protected Dictionary<string, IEnemyBaseComponents> Components = new();
-    private SignalManager SignalManager;
+
     public EnemyState CurrentEnemyState { get; private set; }  = EnemyState.Roaming;
 
 
@@ -35,8 +35,8 @@ public abstract partial class EnemyBase : CharacterBody2D
     {
         InstanciateSpecificComponents();
         TimerToChase.Timeout += OnTimerToChaseTimeout;
-        SignalManager = SignalManager.Instance;
-        SignalManager.FlipObject += FlipEnemy;
+
+
         foreach (var component in Components.Values)
         {
             component.Initialize();
@@ -49,11 +49,6 @@ public abstract partial class EnemyBase : CharacterBody2D
             SetState(EnemyState.Waiting);
     }
 
-    public void FlipEnemy(int direction)
-    {
-        RaycastUtils.FlipRaycast(direction, [RayCast2DDetection, Raycast2DBounderie]);
-        SpriteUtils.FlipSprite(direction, AnimatedSprite2DEnemy);
-    }
 
     private void OnTimerToChaseTimeout()
     {
