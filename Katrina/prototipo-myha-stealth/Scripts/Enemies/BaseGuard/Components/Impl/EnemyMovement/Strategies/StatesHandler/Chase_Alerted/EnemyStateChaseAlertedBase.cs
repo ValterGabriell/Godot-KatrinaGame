@@ -18,7 +18,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         // Threshold para considerar se estão no mesmo nível vertical
         private const float VerticalLevelThreshold = 30f;
-
+        private const int TIME_TO_LOOK_UP_DOWN = 300;
+        private int controlTimeToLookUpDown = 0;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -77,7 +78,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 }
 
                 if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted
-                    && horizontalDistanceToTarget < 20f && !IsInvestigatingArea)
+                    && horizontalDistanceToTarget < 20f && !IsInvestigatingArea && !isPlayerAtDifferentLevel)
                 {
                     ToggleRaycastDirectionOnAlert(direction);
                     InEnemy.SetState(States.EnemyState.Waiting);
@@ -113,22 +114,28 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         /// <param name="enemy">O inimigo que deve executar a animação</param>
         private void ActivateLookUpDownAnimation(EnemyBase enemy)
         {
+            controlTimeToLookUpDown++;
             // Determina se o jogador está acima ou abaixo
             bool isPlayerAbove = InTargetMovement.Y < enemy.GlobalPosition.Y;
-            enemy.SetState(States.EnemyState.Waiting);
+      
             // Exemplo de como ativar animação específica
             if (isPlayerAbove)
             {
                 // Animação olhando para cima
-              
                 GDLogger.PrintDebug("Player is above - Enemy stopped and looking up");
             }
             else
             {
                 // Animação olhando para baixo
-          
                 GDLogger.PrintDebug("Player is below - Enemy stopped and looking down");
             }
+
+            if (controlTimeToLookUpDown > TIME_TO_LOOK_UP_DOWN)
+            {
+                enemy.SetState(States.EnemyState.Waiting);
+                controlTimeToLookUpDown = 0;
+            }
+              
         }
 
         private bool IsRaycastDirectionNotInitialized()
