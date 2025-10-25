@@ -30,9 +30,10 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             EnemyBase InEnemy, Vector2? InTargetPosition = null)
         {
             float distanceToTarget = InEnemy.GlobalPosition.DistanceTo(InTargetPosition.Value);
-            if (distanceToTarget < 55f) // Chegou perto do target
+            
+            if (distanceToTarget < 5f) // Chegou perto do target
             {
-                GDLogger.PrintDebug("EnemyStateRoamingHandler: Reached target, waiting...");
+
                 // Para e espera um pouco
                 InWaitTime = InRandom.Next(1, (int)InMaxWaitTime);
                 InEnemy.Velocity = new Vector2(0, InEnemy.Velocity.Y);
@@ -57,7 +58,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         {
             int directionSign = direction.X > 0 ? 1 : -1;
 
-            RaycastUtils.FlipRaycast(directionSign, [InEnemy.Raycast2DBounderie, InEnemy.RayCast2DDetection]);
+            RaycastUtils.FlipRaycast(directionSign, [InEnemy.RayCast2DDetection]);
             SpriteUtils.FlipSprite(directionSign, InEnemy.AnimatedSprite2DEnemy);
         }
 
@@ -69,9 +70,9 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 && playerDetected is MyhaPlayer myha 
                 && myha.CurrentPlayerState != Player.StateManager.PlayerState.HIDDEN)
             {
-                GDLogger.PrintDebug("EnemyStateRoamingHandler: Player detected, starting chase...");
+     
                 InEnemy.SetState(EnemyState.Chasing);
-                SignalManager.Instance.EmitSignal(nameof(SignalManager.EnemyStartToChase));
+        
             }
         }
     }

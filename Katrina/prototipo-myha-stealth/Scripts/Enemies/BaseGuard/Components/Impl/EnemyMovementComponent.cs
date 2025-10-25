@@ -4,7 +4,6 @@ using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Enemy.States;
 using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
-using PrototipoMyha.Utilidades;
 using System;
 
 namespace PrototipoMyha.Enemy.Components.Impl
@@ -31,7 +30,6 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         public void Initialize()
         {
-
             SetNewRandomTarget();
         }
 
@@ -40,10 +38,8 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         public void Process(double delta)
         {
-            CheckIfCollideWithBounderie(delta);
             if (HasEnemyStateChanged())
             {
-
                 LastEnemyState = this._Enemy.CurrentEnemyState;
                 enemyStateHandler = GetEnemyStateHandler.GetStateHandler(
                     state: _Enemy.CurrentEnemyState,
@@ -72,25 +68,22 @@ namespace PrototipoMyha.Enemy.Components.Impl
             return LastEnemyState != this._Enemy.CurrentEnemyState || LastEnemyState == null;
         }
 
-        private void CheckIfCollideWithBounderie(double delta)
-        {
-            if (this._Enemy.Raycast2DBounderie.IsColliding() && !HasCollidedWithBounderie)
-            {
-                this._Enemy.SetState(EnemyState.Waiting);
-                SetNewRandomTarget();
-                _waitTimer = enemyStateHandler.ExecuteState(
-                      delta: delta,
-                      InEnemy: _Enemy,
-                      InTargetPosition: _targetPosition);
-            }
-        }
-
 
         private void SetNewRandomTarget()
         {
             IPatrolTypeHandler patrolStrategyHandler = GetPatrolType.GetHandler(this._Enemy.EnemyResource.PatrolStyle);
             Vector2 randomOffset = patrolStrategyHandler.GetPatrolTarget(this._Enemy.PatrolRadius, _random);
+
             _targetPosition = _initialPosition + randomOffset;
+
+            // Aplicar os limites dos marcadores
+            if (_Enemy.Marker_01 != null && _Enemy.Marker_02 != null)
+            {
+                float minX = Mathf.Min(_Enemy.Marker_01.GlobalPosition.X, _Enemy.Marker_02.GlobalPosition.X);
+                float maxX = Mathf.Max(_Enemy.Marker_01.GlobalPosition.X, _Enemy.Marker_02.GlobalPosition.X);
+
+                _targetPosition.X = Mathf.Clamp(_targetPosition.X, minX, maxX);
+            }
         }
     }
 }

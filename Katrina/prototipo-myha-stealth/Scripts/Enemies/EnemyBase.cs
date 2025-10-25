@@ -20,10 +20,11 @@ public abstract partial class EnemyBase : CharacterBody2D
     [Export] public Timer TimerToChase = null;
     [Export] public AnimatedSprite2D AnimatedSprite2DEnemy = null;
 
-    [ExportGroup("Bounderies")]
-    [Export] public RayCast2D Raycast2DBounderie = null;
-
     [Export] public float PatrolRadius = 900f;
+
+    [ExportGroup("Bounderies")]
+    [Export] public Marker2D Marker_01 = null;
+    [Export] public Marker2D Marker_02 = null;
 
 
     protected Dictionary<string, IEnemyBaseComponents> Components = new();
@@ -31,7 +32,7 @@ public abstract partial class EnemyBase : CharacterBody2D
     public EnemyState CurrentEnemyState { get; private set; }  = EnemyState.Roaming;
 
 
-    public override void _Ready()
+    public override void _Ready() 
     {
         InstanciateSpecificComponents();
         TimerToChase.Timeout += OnTimerToChaseTimeout;
@@ -55,7 +56,6 @@ public abstract partial class EnemyBase : CharacterBody2D
         if(this.CurrentEnemyState == EnemyState.Chasing)
             SetState(EnemyState.Waiting);
 
-        SignalManager.Instance.EmitSignal(nameof(SignalManager.EnemyEndToChase));
     }
 
     public void SetState(EnemyState newState)

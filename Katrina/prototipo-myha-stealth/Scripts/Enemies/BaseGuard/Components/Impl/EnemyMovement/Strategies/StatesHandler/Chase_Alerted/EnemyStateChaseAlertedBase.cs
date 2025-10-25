@@ -32,10 +32,27 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
            EnemyBase InEnemy,
            Vector2? InPositionToChase = null)
         {
+            //chase
             if (InPositionToChase.HasValue)
-                this.InTargetMovement = InPositionToChase.Value;
+                this.InTargetMovement = ClampToBoundaries(InEnemy, InPositionToChase.Value);
+            else 
+                this.InTargetMovement = ClampToBoundaries(InEnemy, InTargetMovement);
+
 
             return HandleAlertedMovement(InEnemy);
+        }
+
+        private Vector2 ClampToBoundaries(EnemyBase enemy, Vector2 position)
+        {
+            if (enemy.Marker_01 == null || enemy.Marker_02 == null)
+                return position;
+
+            float minX = Mathf.Min(enemy.Marker_01.GlobalPosition.X, enemy.Marker_02.GlobalPosition.X);
+            float maxX = Mathf.Max(enemy.Marker_01.GlobalPosition.X, enemy.Marker_02.GlobalPosition.X);
+
+            position.X = Mathf.Clamp(position.X, minX, maxX);
+
+            return position;
         }
 
         private float HandleAlertedMovement(EnemyBase InEnemy)
@@ -45,9 +62,12 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             // Verifica se o jogador não está no mesmo nível vertical
             bool isPlayerAtDifferentLevel = IsPlayerAtDifferentVerticalLevel(InEnemy);
 
+            // NOVO: Verifica se chegou no limite dos marcadores
+            bool isAtBoundary = IsAtBoundaryLimit(InEnemy);
+
             // Se o jogador estiver em nível diferente, pare o movimento horizontal
             float horizontalVelocity = 0f;
-            if (!isPlayerAtDifferentLevel)
+            if (!isPlayerAtDifferentLevel && !isAtBoundary) // Adicionado !isAtBoundary
             {
                 horizontalVelocity = directionToPlayer.X * InEnemy.EnemyResource.ChaseSpeed;
             }
@@ -62,7 +82,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 float direction = directionToPlayer.X > 0 ? 1 : -1;
 
                 ///por padrao true
-                if (IsRaycastDirectionNotInitialized())
+                if (IsRaycastDirectionNotInitialized() && !isAtBoundary) // Adicionado !isAtBoundary
                 {
                     FlipEnemyDirection(InEnemy, directionToPlayer);
                 }
@@ -71,17 +91,46 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
                 ProcessChaseAtDifferentLevel(InEnemy, directionToPlayer, isPlayerAtDifferentLevel, horizontalVelocity);
 
-                HandleAlertedStateTransition(InEnemy, isPlayerAtDifferentLevel, direction);
+                HandleAlertedStateTransition(InEnemy, isPlayerAtDifferentLevel, direction, isAtBoundary); // Passar isAtBoundary
+
+                //é desativado quando o inimigo mata o jogador
+                if (InEnemy.RayCast2DDetection.Enabled == false)
+                {
+                    InEnemy.RayCast2DDetection.Enabled = true;
+                }
             }
 
             return TIME_TO_WAIT_WHEN_WAITING_START;
+        }
+
+        // NOVO MÉTODO: Verifica se o inimigo está no limite dos marcadores
+        private bool IsAtBoundaryLimit(EnemyBase enemy)
+        {
+            if (enemy.Marker_01 == null || enemy.Marker_02 == null)
+                return false;
+
+            float minX = Mathf.Min(enemy.Marker_01.GlobalPosition.X, enemy.Marker_02.GlobalPosition.X);
+            float maxX = Mathf.Max(enemy.Marker_01.GlobalPosition.X, enemy.Marker_02.GlobalPosition.X);
+
+            const float BOUNDARY_THRESHOLD = 10f; // Margem de erro
+
+            // Verifica se está próximo de qualquer limite
+            bool isAtMinBoundary = Mathf.Abs(enemy.GlobalPosition.X - minX) < BOUNDARY_THRESHOLD;
+            bool isAtMaxBoundary = Mathf.Abs(enemy.GlobalPosition.X - maxX) < BOUNDARY_THRESHOLD;
+
+            return isAtMinBoundary || isAtMaxBoundary;
         }
 
         private static void CheckAndStartChaseTimer(EnemyBase InEnemy, bool isColliding)
         {
             // Se o raycast detectar o jogador, reinicia ou inicia o timer para perseguir
             if (isColliding)
-                InEnemy.TimerToChase.Start();
+            {
+                SignalManager.Instance.EmitSignal(nameof(SignalManager.EnemyKillMyha));
+                InEnemy.RayCast2DDetection.Enabled = false;
+                isColliding = false;
+            }
+                
         }
 
         private float ProcessChaseAtDifferentLevel(EnemyBase InEnemy, Vector2 directionToPlayer, bool isPlayerAtDifferentLevel, float horizontalVelocity)
@@ -106,10 +155,18 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             return horizontalVelocity;
         }
 
-        private void HandleAlertedStateTransition(EnemyBase InEnemy, bool isPlayerAtDifferentLevel, float direction)
+
+        private void HandleAlertedStateTransition(EnemyBase InEnemy, bool isPlayerAtDifferentLevel, float direction, bool isAtBoundary)
         {
             // Calcula apenas a distância horizontal (eixo X)
             float horizontalDistanceToTarget = Mathf.Abs(InTargetMovement.X - InEnemy.GlobalPosition.X);
+
+     
+            if (InEnemy.CurrentEnemyState == States.EnemyState.Chasing && isAtBoundary)
+            {
+                InEnemy.SetState(States.EnemyState.Waiting);
+                return;
+            }
 
             if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted
                 && horizontalDistanceToTarget < 20f && !IsInvestigatingArea && !isPlayerAtDifferentLevel)
@@ -123,7 +180,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         {
             int directionSign = direction.X > 0 ? 1 : -1;
 
-            RaycastUtils.FlipRaycast(directionSign, [InEnemy.Raycast2DBounderie, InEnemy.RayCast2DDetection]);
+            RaycastUtils.FlipRaycast(directionSign, [InEnemy.RayCast2DDetection]);
             SpriteUtils.FlipSprite(directionSign, InEnemy.AnimatedSprite2DEnemy);
         }
 

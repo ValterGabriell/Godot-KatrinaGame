@@ -1,8 +1,11 @@
 using Godot;
 using KatrinaGame.Core.Interfaces;
+using PrototipoMyha;
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Player.Components.Interfaces;
 using PrototipoMyha.Player.StateManager;
+using PrototipoMyha.Utilidades;
+using System;
 using System.Collections.Generic;
 
 namespace KatrinaGame.Core
@@ -18,6 +21,8 @@ namespace KatrinaGame.Core
         protected Dictionary<string, IPlayerBaseComponent> Components = new();
         [Export] public AnimatedSprite2D AnimatedSprite2D { get; set; }
 
+
+
   
         public override void _Ready()
         {
@@ -26,6 +31,13 @@ namespace KatrinaGame.Core
             {
                 component.Initialize(this);
             }
+
+            SignalManager.Instance.EnemyKillMyha += OnEnemyKillMyha;
+        }
+
+        private void OnEnemyKillMyha()
+        {
+            GDLogger.PrintInfo("BasePlayer: OnEnemyKillMyha called");
         }
 
         public override void _Process(double delta)

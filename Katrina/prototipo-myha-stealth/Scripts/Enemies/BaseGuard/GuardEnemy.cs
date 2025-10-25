@@ -1,4 +1,5 @@
 // GuardController.cs
+using Godot;
 using PrototipoMyha.Enemy;
 using PrototipoMyha.Enemy.Components.Impl;
 using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl;

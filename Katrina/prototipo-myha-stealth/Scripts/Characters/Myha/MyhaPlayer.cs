@@ -6,6 +6,7 @@ using PrototipoMyha;
 using PrototipoMyha.Player.Components.Impl;
 using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Scripts.Characters.Myha.Components.Impl;
+using System;
 
 namespace KatrinaGame.Players
 {
@@ -39,8 +40,16 @@ namespace KatrinaGame.Players
         private void SubscribeSignals()
         {
             SignalManager.Instance.PlayerStateChanged += PlayerStateChanged;
-            //SignalManager.Instance.EnemyStartToChase += EnemyStartToChase;
-            //SignalManager.Instance.EnemyEndToChase += EnemyENDToChase;
+            SignalManager.Instance.GameLoaded += UpdatePlayerPosition;
+   
+
+        }
+
+
+
+        private void UpdatePlayerPosition(Vector2 position)
+        {
+            this.GlobalPosition = position;
         }
 
         public void AlterRadiusCollisionSoundArea(float newRadius)
@@ -91,7 +100,7 @@ namespace KatrinaGame.Players
 
             if (Input.IsKeyPressed(Key.Ctrl))
             {
-                GD.PrintRich("Entrou no modo Sneak", Colors.Yellow);
+               
                 CurrentPlayerSpeed = SneakSpeed;
             }
 

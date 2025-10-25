@@ -28,6 +28,5 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 _ => throw new NotImplementedException($"State handler for {state} is not implemented."),
             };
         }
-
     }
 }
