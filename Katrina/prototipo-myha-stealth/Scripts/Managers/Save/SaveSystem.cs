@@ -1,18 +1,15 @@
 using Godot;
+using PrototipoMyha.Scripts.Utils.Objetos;
 using PrototipoMyha.Utilidades;
 using System.Text.Json;
-// NÃO USE: using System.IO;
+
 
 public partial class SaveSystem : Node
 {
     private const string SAVE_PATH = "user://savegame.json";
 
     public static SaveSystem SaveSystemInstance = null;
-    public class SaveData
-    {
-        public float PlayerPosition_X { get; set; }
-        public float PlayerPosition_Y { get; set; }
-    }
+ 
 
     public override void _Ready()
     {
@@ -26,7 +23,7 @@ public partial class SaveSystem : Node
         }
     }
 
-    public void SaveGame(SaveData data)
+    public void SaveGame(LevelSaveData data)
     {
         GDLogger.PrintObject(data);
         string json = JsonSerializer.Serialize(data, new JsonSerializerOptions
@@ -48,7 +45,7 @@ public partial class SaveSystem : Node
         }
     }
 
-    public SaveData LoadGame()
+    public LevelSaveData LoadGame()
     {
         if (!Godot.FileAccess.FileExists(SAVE_PATH))
         {
@@ -61,7 +58,7 @@ public partial class SaveSystem : Node
         if (file != null)
         {
             string json = file.GetAsText();
-            SaveData data = JsonSerializer.Deserialize<SaveData>(json);
+            LevelSaveData data = JsonSerializer.Deserialize<LevelSaveData>(json);
             
             return data;
         }

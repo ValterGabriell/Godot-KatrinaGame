@@ -21,6 +21,4 @@ public partial class EnemyResources : Resource
     [ExportGroup("Detection")]
     [Export] public PatrolType PatrolStyle = PatrolType.XAxis;
 
-
-
 }

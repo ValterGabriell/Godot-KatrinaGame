@@ -1,8 +1,7 @@
 using Godot;
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Enemy.States;
-using PrototipoMyha.Scripts.Utils;
-using PrototipoMyha.Utilidades;
+using PrototipoMyha.Scripts.Utils.Objetos;
 using System;
 using System.Collections.Generic;
 
@@ -36,12 +35,18 @@ public abstract partial class EnemyBase : CharacterBody2D
     {
         InstanciateSpecificComponents();
         TimerToChase.Timeout += OnTimerToChaseTimeout;
+        SignalManager.Instance.GameLoaded += OnGameLoaded;
 
 
         foreach (var component in Components.Values)
         {
             component.Initialize();
         }
+    }
+
+    private void OnGameLoaded(Vector2 position)
+    {
+        throw new NotImplementedException();
     }
 
     private void OnTimerToStayAlertTimeout()
@@ -102,4 +107,6 @@ public abstract partial class EnemyBase : CharacterBody2D
     }
 
     protected EnemyState CurrentState = EnemyState.Roaming;
+
+    
 }

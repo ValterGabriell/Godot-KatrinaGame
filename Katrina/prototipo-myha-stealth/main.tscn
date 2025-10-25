@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://b1gnb8slestvs"]
+[gd_scene load_steps=9 format=4 uid="uid://b1gnb8slestvs"]
 
 [ext_resource type="Texture2D" uid="uid://d2ivhrkguvk2u" path="res://Assets/Tilesets/World/PrototipoWorldTileset.png" id="1_7mycd"]
+[ext_resource type="Script" uid="uid://b2xg02af7iy2a" path="res://Scripts/Levels/Level_0.cs" id="1_272bh"]
 [ext_resource type="PackedScene" uid="uid://dw4s248phtymn" path="res://Scenes/Characters/Myha.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ce8dcph8wdnvb" path="res://Scripts/Items/ShadowArea/ShadowAreaScene.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://fivb1ydt0fiu" path="res://Scenes/Items/Plataform/PrototipoPlataform/PrototipoPlataform.tscn" id="5_lquwl"]
@@ -23,6 +24,7 @@ physics_layer_0/collision_mask = 4098
 sources/0 = SubResource("TileSetAtlasSource_272bh")
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_272bh")
 
 [node name="World" type="TileMapLayer" parent="."]
 position = Vector2(1, 0)
@@ -41,7 +43,7 @@ CollisionShadowScale = Vector2(3, 2.3)
 
 [node name="Plataforma01" type="Node2D" parent="Enemies"]
 
-[node name="CharacterBody2D3" parent="Enemies/Plataforma01" node_paths=PackedStringArray("Marker_01", "Marker_02") instance=ExtResource("6_7mycd")]
+[node name="CharacterBody2D3" parent="Enemies/Plataforma01" node_paths=PackedStringArray("Marker_01", "Marker_02") groups=["enemy"] instance=ExtResource("6_7mycd")]
 position = Vector2(734, -68)
 Marker_01 = NodePath("../Marker2D")
 Marker_02 = NodePath("../Marker2D2")
@@ -56,7 +58,7 @@ position = Vector2(897, -56)
 
 [node name="01" type="Node2D" parent="Enemies/Floor"]
 
-[node name="CharacterBody2D" parent="Enemies/Floor/01" node_paths=PackedStringArray("Marker_01", "Marker_02") instance=ExtResource("6_7mycd")]
+[node name="CharacterBody2D" parent="Enemies/Floor/01" node_paths=PackedStringArray("Marker_01", "Marker_02") groups=["enemy"] instance=ExtResource("6_7mycd")]
 position = Vector2(969, -13)
 PatrolRadius = 600.0
 Marker_01 = NodePath("../Marker2D")
@@ -70,7 +72,7 @@ position = Vector2(1025, -2)
 
 [node name="02" type="Node2D" parent="Enemies/Floor"]
 
-[node name="CharacterBody2D2" parent="Enemies/Floor/02" node_paths=PackedStringArray("Marker_01", "Marker_02") instance=ExtResource("6_7mycd")]
+[node name="CharacterBody2D2" parent="Enemies/Floor/02" node_paths=PackedStringArray("Marker_01", "Marker_02") groups=["enemy"] instance=ExtResource("6_7mycd")]
 position = Vector2(1259, -14)
 PatrolRadius = 200.0
 Marker_01 = NodePath("../Marker2D")

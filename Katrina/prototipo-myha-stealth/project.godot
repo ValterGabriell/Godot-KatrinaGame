@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 PlayerManager="*res://Scripts/Managers/PlayerManager.cs"
 SignalManager="*res://Scripts/Managers/SignalManager.cs"
 GameManager="*res://Scripts/Managers/GameManager.cs"
-SaveSystem="*res://Scripts/Utils/SaveSystem.cs"
+SaveSystem="*res://Scripts/Managers/Save/SaveSystem.cs"
 
 [dotnet]
 
