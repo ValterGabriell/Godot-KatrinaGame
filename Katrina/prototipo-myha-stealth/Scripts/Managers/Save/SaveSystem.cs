@@ -25,7 +25,6 @@ public partial class SaveSystem : Node
 
     public void SaveGame(LevelSaveData data)
     {
-        GDLogger.PrintObject(data);
         string json = JsonSerializer.Serialize(data, new JsonSerializerOptions
         {
             WriteIndented = true

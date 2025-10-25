@@ -35,7 +35,7 @@ public abstract partial class EnemyBase : CharacterBody2D
     {
         InstanciateSpecificComponents();
         TimerToChase.Timeout += OnTimerToChaseTimeout;
-        SignalManager.Instance.GameLoaded += OnGameLoaded;
+
 
 
         foreach (var component in Components.Values)
@@ -44,10 +44,7 @@ public abstract partial class EnemyBase : CharacterBody2D
         }
     }
 
-    private void OnGameLoaded(Vector2 position)
-    {
-        throw new NotImplementedException();
-    }
+
 
     private void OnTimerToStayAlertTimeout()
     {
@@ -108,5 +105,14 @@ public abstract partial class EnemyBase : CharacterBody2D
 
     protected EnemyState CurrentState = EnemyState.Roaming;
 
-    
+    public EnemySaveData ToSaveData()
+    {
+        return new EnemySaveData
+        {
+            InstanceID = this.GetInstanceId(),
+            PositionX = this.GlobalPosition.X,
+            PositionY = this.GlobalPosition.Y
+        };
+    }
+
 }

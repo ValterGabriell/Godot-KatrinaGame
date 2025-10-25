@@ -48,11 +48,11 @@ namespace PrototipoMyha.Scripts.Managers
 
         public void SetCurrentLevelInitialData(int levelNumber, List<EnemyBase> enemies, Vector2 PlayerPosition)
         {
-            GDLogger.PrintInfo($"Level Number: {levelNumber}, Player Position: {PlayerPosition}, Enemies Count: {enemies.Count}");
+            
             CurrentLevel = new LevelSaveData
             {
                 LevelNumber = levelNumber,
-                Enemies = enemies,
+                Enemies = enemies.Select(e => e.ToSaveData()).ToList(),
                 PlayerPosition_X_OnLevel = PlayerPosition.X,
                 PlayerPosition_Y_OnLevel = PlayerPosition.Y
             };
@@ -93,11 +93,11 @@ namespace PrototipoMyha.Scripts.Managers
                     // Encontre o inimigo correspondente pelo Id ou outro identificador
                     var enemy = enemiesInScene
                         .OfType<EnemyBase>()
-                        .FirstOrDefault(e => e.GetInstanceId() == enemySave.GetInstanceId()); 
+                        .FirstOrDefault(e => e.GetInstanceId() == enemySave.InstanceID); 
 
                     if (enemy != null)
                     {
-                        enemy.GlobalPosition = new Vector2(enemySave.Position.X, enemySave.Position.Y);
+                        enemy.GlobalPosition = new Vector2(enemySave.PositionX, enemySave.PositionY);
                     }
                 }
             }
