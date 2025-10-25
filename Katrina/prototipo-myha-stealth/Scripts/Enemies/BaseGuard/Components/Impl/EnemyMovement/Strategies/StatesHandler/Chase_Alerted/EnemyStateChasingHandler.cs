@@ -1,9 +1,4 @@
 using Godot;
-using KatrinaGame.Core;
-using PrototipoMyha.Enemy.States;
-using PrototipoMyha.Utilidades;
-using System;
-using static Godot.TextServer;
 
 namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Chase_Alerted
 {
@@ -16,7 +11,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         public override float ExecuteState(double delta, EnemyBase InEnemy, Vector2? InPositionToChase = null)
         {
-            InEnemy.SetState(EnemyState.Chasing);
+            InEnemy.TimerToChase.Start();
             return base.ExecuteState(delta, InEnemy, InPositionToChase);
         }
     }

@@ -47,7 +47,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 InEnemy.Velocity = new Vector2(horizontalVelocity, InEnemy.Velocity.Y);
             }
 
-            DetectAndChasePlayer(InEnemy);
+            if(InEnemy.CurrentEnemyState != EnemyState.Chasing)
+                DetectAndChasePlayer(InEnemy);
 
             return InWaitTime;
         }
@@ -63,11 +64,14 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private static void DetectAndChasePlayer(EnemyBase InEnemy)
         {
             (BasePlayer playerDetected, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
+
             if (isColliding 
                 && playerDetected is MyhaPlayer myha 
                 && myha.CurrentPlayerState != Player.StateManager.PlayerState.HIDDEN)
             {
-                InEnemy.TimerToChase.Start();
+                GDLogger.PrintDebug("EnemyStateRoamingHandler: Player detected, starting chase...");
+                InEnemy.SetState(EnemyState.Chasing);
+                SignalManager.Instance.EmitSignal(nameof(SignalManager.EnemyStartToChase));
             }
         }
     }

@@ -42,7 +42,7 @@ namespace PrototipoMyha.Player.Components.Impl
 
         private void OnBodyEntered(Node2D area)
         {
-            if (area is EnemyBase enemy)
+            if (area is EnemyBase enemy && enemy.CurrentEnemyState != Enemy.States.EnemyState.Chasing)
             {
                 enemy.SetState(Enemy.States.EnemyState.Alerted);
             }

@@ -6,8 +6,6 @@ using PrototipoMyha;
 using PrototipoMyha.Player.Components.Impl;
 using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Scripts.Characters.Myha.Components.Impl;
-using PrototipoMyha.Scripts.Utils;
-using System;
 
 namespace KatrinaGame.Players
 {
@@ -32,10 +30,17 @@ namespace KatrinaGame.Players
 
 
             MovementComponent = GetComponent<IMovementComponent>();
-            SignalManager.Instance.PlayerStateChanged += PlayerStateChanged;
+            SubscribeSignals();
             SoundAreaWalkingColiisonComponent = SoundAreaWalkingComponent
             .GetNode<CollisionShape2D>("CollisionShape2D")
             .Shape as CircleShape2D;
+        }
+
+        private void SubscribeSignals()
+        {
+            SignalManager.Instance.PlayerStateChanged += PlayerStateChanged;
+            //SignalManager.Instance.EnemyStartToChase += EnemyStartToChase;
+            //SignalManager.Instance.EnemyEndToChase += EnemyENDToChase;
         }
 
         public void AlterRadiusCollisionSoundArea(float newRadius)
@@ -47,6 +52,7 @@ namespace KatrinaGame.Players
         {
             this.SetState(NewState);
         }
+
 
         protected override void HandleInput(double delta)
         {

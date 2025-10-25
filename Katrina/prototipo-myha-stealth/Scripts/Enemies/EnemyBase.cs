@@ -54,6 +54,8 @@ public abstract partial class EnemyBase : CharacterBody2D
     {
         if(this.CurrentEnemyState == EnemyState.Chasing)
             SetState(EnemyState.Waiting);
+
+        SignalManager.Instance.EmitSignal(nameof(SignalManager.EnemyEndToChase));
     }
 
     public void SetState(EnemyState newState)

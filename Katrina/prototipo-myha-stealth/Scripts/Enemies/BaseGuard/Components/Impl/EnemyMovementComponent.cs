@@ -74,7 +74,6 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         private void CheckIfCollideWithBounderie(double delta)
         {
-           
             if (this._Enemy.Raycast2DBounderie.IsColliding() && !HasCollidedWithBounderie)
             {
                 this._Enemy.SetState(EnemyState.Waiting);

@@ -18,7 +18,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         // Threshold para considerar se estão no mesmo nível vertical
         private const float VerticalLevelThreshold = 30f;
-        private const int TIME_TO_LOOK_UP_DOWN = 300;
+        private const int TIME_TO_LOOK_UP_DOWN = 200;
+        private const int TIME_TO_WAIT_WHEN_WAITING_START = 3;
         private int controlTimeToLookUpDown = 0;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
@@ -33,15 +34,13 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         {
             if (InPositionToChase.HasValue)
                 this.InTargetMovement = InPositionToChase.Value;
-            return HandleChaseMovement(InEnemy);
+
+            return HandleAlertedMovement(InEnemy);
         }
 
-        private float HandleChaseMovement(EnemyBase InEnemy)
+        private float HandleAlertedMovement(EnemyBase InEnemy)
         {
             Vector2 directionToPlayer = (InTargetMovement - InEnemy.GlobalPosition).Normalized();
-
-            // Calcula apenas a distância horizontal (eixo X)
-            float horizontalDistanceToTarget = Mathf.Abs(InTargetMovement.X - InEnemy.GlobalPosition.X);
 
             // Verifica se o jogador não está no mesmo nível vertical
             bool isPlayerAtDifferentLevel = IsPlayerAtDifferentVerticalLevel(InEnemy);
@@ -68,24 +67,56 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                     FlipEnemyDirection(InEnemy, directionToPlayer);
                 }
 
-                if (isColliding)
-                    InEnemy.TimerToChase.Start();
+                CheckAndStartChaseTimer(InEnemy, isColliding);
 
-                // Ativa animação específica quando o jogador está em nível diferente
-                if (isPlayerAtDifferentLevel)
+                ProcessChaseAtDifferentLevel(InEnemy, directionToPlayer, isPlayerAtDifferentLevel, horizontalVelocity);
+
+                HandleAlertedStateTransition(InEnemy, isPlayerAtDifferentLevel, direction);
+            }
+
+            return TIME_TO_WAIT_WHEN_WAITING_START;
+        }
+
+        private static void CheckAndStartChaseTimer(EnemyBase InEnemy, bool isColliding)
+        {
+            // Se o raycast detectar o jogador, reinicia ou inicia o timer para perseguir
+            if (isColliding)
+                InEnemy.TimerToChase.Start();
+        }
+
+        private float ProcessChaseAtDifferentLevel(EnemyBase InEnemy, Vector2 directionToPlayer, bool isPlayerAtDifferentLevel, float horizontalVelocity)
+        {
+            // Ativa animação específica quando o jogador está em nível diferente
+            if (isPlayerAtDifferentLevel && InEnemy.CurrentEnemyState != States.EnemyState.Chasing)
+            {
+                //move o inimigo na direção do jogador
+                horizontalVelocity = directionToPlayer.X * InEnemy.EnemyResource.ChaseSpeed;
+                InEnemy.Velocity = new Vector2(horizontalVelocity, InEnemy.Velocity.Y);
+
+                //caso esteja perto o suficiente do jogador no eixo X, para olhar para cima ou para baixo
+                var diff = Mathf.Abs(InEnemy.Position.X - InTargetMovement.X);
+                if (diff < 3)
                 {
+                    InEnemy.Velocity = Vector2.Zero;
                     ActivateLookUpDownAnimation(InEnemy);
                 }
 
-                if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted
-                    && horizontalDistanceToTarget < 20f && !IsInvestigatingArea && !isPlayerAtDifferentLevel)
-                {
-                    ToggleRaycastDirectionOnAlert(direction);
-                    InEnemy.SetState(States.EnemyState.Waiting);
-                }
             }
 
-            return 3;
+            return horizontalVelocity;
+        }
+
+        private void HandleAlertedStateTransition(EnemyBase InEnemy, bool isPlayerAtDifferentLevel, float direction)
+        {
+            // Calcula apenas a distância horizontal (eixo X)
+            float horizontalDistanceToTarget = Mathf.Abs(InTargetMovement.X - InEnemy.GlobalPosition.X);
+
+            if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted
+                && horizontalDistanceToTarget < 20f && !IsInvestigatingArea && !isPlayerAtDifferentLevel)
+            {
+                ToggleRaycastDirectionOnAlert(direction);
+                InEnemy.SetState(States.EnemyState.Waiting);
+            }
         }
 
         private static void FlipEnemyDirection(EnemyBase InEnemy, Vector2 direction)

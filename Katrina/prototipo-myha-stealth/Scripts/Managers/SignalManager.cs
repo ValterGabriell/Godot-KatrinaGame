@@ -12,6 +12,8 @@ public partial class SignalManager : Node
     [Signal] public delegate void EnemySpottedPlayerEventHandler();
     [Signal] public delegate void PlayerIsMovingEventHandler(float NoiseValue);
     [Signal] public delegate void PlayerStopedEventHandler();
+    [Signal] public delegate void EnemyStartToChaseEventHandler();
+    [Signal] public delegate void EnemyEndToChaseEventHandler();
 
 
 
