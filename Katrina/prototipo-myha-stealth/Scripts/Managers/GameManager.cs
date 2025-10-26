@@ -4,12 +4,18 @@ using PrototipoMyha.Scripts.Utils.Objetos;
 using PrototipoMyha.Utilidades;
 using System.Collections.Generic;
 using System.Linq;
+using static Godot.Control;
 
 namespace PrototipoMyha.Scripts.Managers
 {
     public partial class GameManager : Node
     {
         private static GameManager _instance;
+        private CanvasLayer _fadeLayer;
+        private ColorRect _fadeRect;
+        private int TIME_TO_LOAD_GAME = 300;
+        private bool playerHasBeenKilled = false;
+
         public LevelSaveData CurrentLevel { get; private set; }
 
         // Salvar quando o jogador apertar uma tecla
@@ -39,6 +45,43 @@ namespace PrototipoMyha.Scripts.Managers
             {
                 QueueFree();
             }
+
+           
+            _fadeLayer = new CanvasLayer();
+            AddChild(_fadeLayer);
+
+  
+            _fadeRect = new ColorRect
+            {
+                Color = new Color(0, 0, 0, 0), // Preto transparente
+                AnchorLeft = 0,
+                AnchorTop = 0,
+                AnchorRight = 1,
+                AnchorBottom = 1,
+                Position = Vector2.Zero,
+                Size = Vector2.Zero,
+                MouseFilter = MouseFilterEnum.Ignore
+            };
+            _fadeLayer.AddChild(_fadeRect);
+        }
+
+        public override void _Process(double delta)
+        {
+            if(playerHasBeenKilled)
+            {
+                GDLogger.PrintDebug(TIME_TO_LOAD_GAME);
+                while (TIME_TO_LOAD_GAME > 0)
+                {
+                    TIME_TO_LOAD_GAME--;
+                }
+                LoadGame();
+            }
+        }
+
+        private void FadeScreen()
+        {
+            var tween = CreateTween();
+            tween.TweenProperty(_fadeRect, "color:a", 1.0f, 1.0f); // Fade para preto em 1 segundo
         }
 
         public static GameManager GetGameManagerInstance()
@@ -61,9 +104,15 @@ namespace PrototipoMyha.Scripts.Managers
 
         private void OnEnemyKillMyha()
         {
-            LoadGame();
+            playerHasBeenKilled = true;
+            SetGameSpeed(0.5f);
+            //FadeScreen();
         }
 
+        public void SetGameSpeed(float timeScale)
+        {
+            Engine.TimeScale = timeScale;
+        }
         public void SaveGame()
         {
             var saveData = new LevelSaveData()
@@ -98,6 +147,7 @@ namespace PrototipoMyha.Scripts.Managers
                     if (enemy != null)
                     {
                         enemy.GlobalPosition = new Vector2(enemySave.PositionX, enemySave.PositionY);
+                        enemy.SetState(enemySave.EnemyState);
                     }
                 }
             }

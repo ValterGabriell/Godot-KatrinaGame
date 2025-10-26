@@ -1,4 +1,5 @@
 using PrototipoMyha.Enemy;
+using PrototipoMyha.Enemy.States;
 using System.Collections.Generic;
 
 namespace PrototipoMyha.Scripts.Utils.Objetos
@@ -16,5 +17,6 @@ namespace PrototipoMyha.Scripts.Utils.Objetos
         public ulong InstanceID { get; set; }
         public float PositionX { get; set; }
         public float PositionY { get; set; }
+        public EnemyState EnemyState { get; set; }
     }
 }

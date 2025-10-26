@@ -52,9 +52,6 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
             if (enemyStateHandler != null)
             {
-                if (this._Enemy.CurrentEnemyState == EnemyState.Chasing)
-                    _targetPosition = PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition();
-
                 _waitTimer = enemyStateHandler.ExecuteState(
                         delta: delta,
                         InEnemy: _Enemy,

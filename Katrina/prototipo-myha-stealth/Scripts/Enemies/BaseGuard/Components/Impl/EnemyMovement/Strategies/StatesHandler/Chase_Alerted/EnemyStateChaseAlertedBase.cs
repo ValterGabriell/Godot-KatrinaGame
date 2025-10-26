@@ -3,6 +3,7 @@ using KatrinaGame.Core;
 using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
 using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
+using static Godot.TextServer;
 
 namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Chase_Alerted
 {
@@ -21,6 +22,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private const int TIME_TO_LOOK_UP_DOWN = 200;
         private const int TIME_TO_WAIT_WHEN_WAITING_START = 3;
         private int controlTimeToLookUpDown = 0;
+
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -75,23 +77,30 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             InEnemy.Velocity = new Vector2(horizontalVelocity, InEnemy.Velocity.Y);
 
 
+            ProcessAlertAtDifferentLevel(InEnemy, directionToPlayer, isPlayerAtDifferentLevel, horizontalVelocity);
+            HandleAlertedStateTransition(InEnemy, isPlayerAtDifferentLevel, directionToPlayer, isAtBoundary);
+            ///por padrao true
+            if (IsRaycastDirectionNotInitialized() && !isAtBoundary) // Adicionado !isAtBoundary
+            {
+                FlipEnemyDirection(InEnemy, directionToPlayer);
+            }
+
+            ProcessKillOfPlayer(InEnemy);
+
+            return TIME_TO_WAIT_WHEN_WAITING_START;
+        }
+
+        private void ProcessKillOfPlayer(EnemyBase InEnemy)
+        {
             if (InEnemy.RayCast2DDetection != null)
             {
                 (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
 
-                float direction = directionToPlayer.X > 0 ? 1 : -1;
-
-                ///por padrao true
-                if (IsRaycastDirectionNotInitialized() && !isAtBoundary) // Adicionado !isAtBoundary
+                if (isColliding)
                 {
-                    FlipEnemyDirection(InEnemy, directionToPlayer);
+                    SignalManager.Instance.EmitSignal(nameof(SignalManager.EnemyKillMyha));
+                    InEnemy.Velocity = Vector2.Zero;
                 }
-
-                CheckAndStartChaseTimer(InEnemy, isColliding);
-
-                ProcessChaseAtDifferentLevel(InEnemy, directionToPlayer, isPlayerAtDifferentLevel, horizontalVelocity);
-
-                HandleAlertedStateTransition(InEnemy, isPlayerAtDifferentLevel, direction, isAtBoundary); // Passar isAtBoundary
 
                 //é desativado quando o inimigo mata o jogador
                 if (InEnemy.RayCast2DDetection.Enabled == false)
@@ -99,8 +108,6 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                     InEnemy.RayCast2DDetection.Enabled = true;
                 }
             }
-
-            return TIME_TO_WAIT_WHEN_WAITING_START;
         }
 
         // NOVO MÉTODO: Verifica se o inimigo está no limite dos marcadores
@@ -121,19 +128,9 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             return isAtMinBoundary || isAtMaxBoundary;
         }
 
-        private static void CheckAndStartChaseTimer(EnemyBase InEnemy, bool isColliding)
-        {
-            // Se o raycast detectar o jogador, reinicia ou inicia o timer para perseguir
-            if (isColliding)
-            {
-                SignalManager.Instance.EmitSignal(nameof(SignalManager.EnemyKillMyha));
-                InEnemy.RayCast2DDetection.Enabled = false;
-                isColliding = false;
-            }
-                
-        }
 
-        private float ProcessChaseAtDifferentLevel(EnemyBase InEnemy, Vector2 directionToPlayer, bool isPlayerAtDifferentLevel, float horizontalVelocity)
+
+        private float ProcessAlertAtDifferentLevel(EnemyBase InEnemy, Vector2 directionToPlayer, bool isPlayerAtDifferentLevel, float horizontalVelocity)
         {
             // Ativa animação específica quando o jogador está em nível diferente
             if (isPlayerAtDifferentLevel && InEnemy.CurrentEnemyState != States.EnemyState.Chasing)
@@ -156,17 +153,11 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         }
 
 
-        private void HandleAlertedStateTransition(EnemyBase InEnemy, bool isPlayerAtDifferentLevel, float direction, bool isAtBoundary)
+        private void HandleAlertedStateTransition(EnemyBase InEnemy, bool isPlayerAtDifferentLevel, Vector2 directionToPlayer, bool isAtBoundary)
         {
+                 float direction = directionToPlayer.X > 0 ? 1 : -1;
             // Calcula apenas a distância horizontal (eixo X)
             float horizontalDistanceToTarget = Mathf.Abs(InTargetMovement.X - InEnemy.GlobalPosition.X);
-
-     
-            if (InEnemy.CurrentEnemyState == States.EnemyState.Chasing && isAtBoundary)
-            {
-                InEnemy.SetState(States.EnemyState.Waiting);
-                return;
-            }
 
             if (InEnemy.CurrentEnemyState == States.EnemyState.Alerted
                 && horizontalDistanceToTarget < 20f && !IsInvestigatingArea && !isPlayerAtDifferentLevel)

@@ -37,7 +37,7 @@ namespace KatrinaGame.Core
 
         private void OnEnemyKillMyha()
         {
-            GDLogger.PrintInfo("BasePlayer: OnEnemyKillMyha called");
+          
         }
 
         public override void _Process(double delta)

@@ -111,7 +111,8 @@ public abstract partial class EnemyBase : CharacterBody2D
         {
             InstanceID = this.GetInstanceId(),
             PositionX = this.GlobalPosition.X,
-            PositionY = this.GlobalPosition.Y
+            PositionY = this.GlobalPosition.Y,
+            EnemyState = this.CurrentEnemyState
         };
     }
 
