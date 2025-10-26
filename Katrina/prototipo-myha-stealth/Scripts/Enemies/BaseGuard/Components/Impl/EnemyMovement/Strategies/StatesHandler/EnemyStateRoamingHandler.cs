@@ -48,7 +48,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 InEnemy.Velocity = new Vector2(horizontalVelocity, InEnemy.Velocity.Y);
             }
 
-            if(InEnemy.CurrentEnemyState != EnemyState.Chasing)
+            if (InEnemy.CurrentEnemyState != EnemyState.Chasing && !InEnemy.JustLoaded)
                 DetectAndChasePlayer(InEnemy);
 
             return InWaitTime;
@@ -70,7 +70,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                 && playerDetected is MyhaPlayer myha 
                 && myha.CurrentPlayerState != Player.StateManager.PlayerState.HIDDEN)
             {
-     
+                GDLogger.PrintDebug("Player detected! Switching to Chasing state.");
                 InEnemy.SetState(EnemyState.Chasing);
         
             }

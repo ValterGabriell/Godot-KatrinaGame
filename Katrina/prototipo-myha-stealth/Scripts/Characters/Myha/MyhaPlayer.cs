@@ -70,7 +70,7 @@ namespace KatrinaGame.Players
             if(inputVector == Vector2.Zero) CurrentPlayerSpeed = 0f;
 
 
-            if (Input.IsActionPressed("d") && MovementComponent.IsMovementBlocked == false)
+            if (Input.IsActionPressed("d") && this.IsMovementBlocked == false)
             {
                 inputVector.X += 1;
                 FlipRaycast(direction: 1,
@@ -81,7 +81,7 @@ namespace KatrinaGame.Players
                 CurrentPlayerSpeed = Speed ;
             }
 
-            if (Input.IsActionPressed("a") && MovementComponent.IsMovementBlocked == false)
+            if (Input.IsActionPressed("a") && this.IsMovementBlocked == false)
             {
                 inputVector.X -= 1;
                 FlipRaycast(direction: -1,

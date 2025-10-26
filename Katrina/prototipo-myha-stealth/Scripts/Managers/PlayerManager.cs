@@ -1,5 +1,6 @@
 using Godot;
-
+using KatrinaGame.Core;
+using KatrinaGame.Players;
 using System;
 
 public partial class PlayerManager : Node
@@ -8,16 +9,23 @@ public partial class PlayerManager : Node
 
     private static PlayerManager PlayerGlobalInstance = null;
 
-
+    public BasePlayer BasePlayer { get; private set; } = null;
     public static float RunNoiseRadius { get; private set; } = 150f;
     public static float SneakNoiseRadius { get; private set; } = 20f;
     public static float JumpNoiseRadius { get; private set; } = 50f;
     public override void _Ready()
     {
         var playerInTree = GetTree().GetNodesInGroup("player");
+        BasePlayer = playerInTree.Count > 0
+            ? playerInTree[0] as BasePlayer
+            : null;
+
         CurrentPlayerPosition = playerInTree.Count > 0
-            ? (playerInTree[0] as CharacterBody2D).GlobalPosition
+            ? BasePlayer.GlobalPosition
             : Vector2.Zero;
+
+
+
         if (PlayerGlobalInstance == null)
         {
             PlayerGlobalInstance = this;

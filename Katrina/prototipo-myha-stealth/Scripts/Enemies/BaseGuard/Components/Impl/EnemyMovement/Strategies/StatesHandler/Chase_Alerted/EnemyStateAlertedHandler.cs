@@ -1,4 +1,5 @@
 using Godot;
+using KatrinaGame.Core;
 using PrototipoMyha.Utilidades;
 
 namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler.Chase_Alerted
@@ -16,6 +17,14 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             double delta,
             EnemyBase InEnemy, Vector2? InPositionToChase = null)
         {
+            (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
+            if (isColliding)
+            {
+               InEnemy.SetState(States.EnemyState.Chasing);
+               return 0.1f;
+            }
+
+
             InEnemy.SetState(States.EnemyState.Alerted);
             alertWaitDuration -= (float)delta;
             InEnemy.Velocity = Vector2.Zero;

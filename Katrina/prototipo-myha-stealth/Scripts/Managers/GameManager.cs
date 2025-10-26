@@ -13,7 +13,8 @@ namespace PrototipoMyha.Scripts.Managers
         private static GameManager _instance;
         private CanvasLayer _fadeLayer;
         private ColorRect _fadeRect;
-        private int TIME_TO_LOAD_GAME = 300;
+        private int TIME_TO_LOAD_GAME = TIME_TO_LOAD_GAME_CONST;
+        private const  int TIME_TO_LOAD_GAME_CONST = 150;
         private bool playerHasBeenKilled = false;
 
         public LevelSaveData CurrentLevel { get; private set; }
@@ -69,12 +70,12 @@ namespace PrototipoMyha.Scripts.Managers
         {
             if(playerHasBeenKilled)
             {
-                GDLogger.PrintDebug(TIME_TO_LOAD_GAME);
-                while (TIME_TO_LOAD_GAME > 0)
+                FadeScreen();
+                TIME_TO_LOAD_GAME -= 1;
+                if (TIME_TO_LOAD_GAME == 0)
                 {
-                    TIME_TO_LOAD_GAME--;
+                    LoadGame();
                 }
-                LoadGame();
             }
         }
 
@@ -105,8 +106,7 @@ namespace PrototipoMyha.Scripts.Managers
         private void OnEnemyKillMyha()
         {
             playerHasBeenKilled = true;
-            SetGameSpeed(0.5f);
-            //FadeScreen();
+            SetGameSpeed(0.1f);
         }
 
         public void SetGameSpeed(float timeScale)
@@ -128,12 +128,21 @@ namespace PrototipoMyha.Scripts.Managers
 
         public void LoadGame()
         {
+            playerHasBeenKilled = false;
+            TIME_TO_LOAD_GAME = TIME_TO_LOAD_GAME_CONST;
+            SetGameSpeed(1.0f);
+
+            var tween = CreateTween();
+            tween.TweenProperty(_fadeRect, "color:a", 0.0f, 1.0f);
+
             var saveData = SaveSystem.SaveSystemInstance.LoadGame();
             if (saveData != null)
             {
                 Vector2 loadedPosition = new Vector2(saveData.PlayerPosition_X_OnLevel, saveData.PlayerPosition_Y_OnLevel);
                 SignalManager.Instance.EmitSignal(nameof(SignalManager.GameLoaded), loadedPosition);
-                PlayerManager.GetPlayerGlobalInstance().UpdatePlayerPosition(loadedPosition);
+                var instanceManager = PlayerManager.GetPlayerGlobalInstance();
+                instanceManager.UpdatePlayerPosition(loadedPosition);
+                instanceManager.BasePlayer.UnblockMovement();
 
                 var enemiesInScene = GetTree().GetNodesInGroup("enemy"); 
 
@@ -148,9 +157,12 @@ namespace PrototipoMyha.Scripts.Managers
                     {
                         enemy.GlobalPosition = new Vector2(enemySave.PositionX, enemySave.PositionY);
                         enemy.SetState(enemySave.EnemyState);
+                        enemy.JustLoaded = true;
                     }
                 }
             }
+
+          
         }
     }
 

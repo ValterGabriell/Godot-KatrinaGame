@@ -32,7 +32,7 @@ tile_map_data = PackedByteArray("AAAVAAAAAAABAAUAAAAWAAAAAAACAAUAAAAXAAAAAAACAAU
 tile_set = SubResource("TileSet_5vw27")
 
 [node name="Myha" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(1454, -15)
+position = Vector2(1719, -12)
 collision_mask = 37
 
 [node name="ShadowArea" parent="." instance=ExtResource("5_7mycd")]
@@ -41,34 +41,7 @@ CollisionShadowScale = Vector2(3, 2.3)
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Plataforma01" type="Node2D" parent="Enemies"]
-
-[node name="CharacterBody2D3" parent="Enemies/Plataforma01" node_paths=PackedStringArray("Marker_01", "Marker_02") groups=["enemy"] instance=ExtResource("6_7mycd")]
-position = Vector2(734, -68)
-Marker_01 = NodePath("../Marker2D")
-Marker_02 = NodePath("../Marker2D2")
-
-[node name="Marker2D" type="Marker2D" parent="Enemies/Plataforma01"]
-position = Vector2(627, -57)
-
-[node name="Marker2D2" type="Marker2D" parent="Enemies/Plataforma01"]
-position = Vector2(897, -56)
-
 [node name="Floor" type="Node2D" parent="Enemies"]
-
-[node name="01" type="Node2D" parent="Enemies/Floor"]
-
-[node name="CharacterBody2D" parent="Enemies/Floor/01" node_paths=PackedStringArray("Marker_01", "Marker_02") groups=["enemy"] instance=ExtResource("6_7mycd")]
-position = Vector2(969, -13)
-PatrolRadius = 600.0
-Marker_01 = NodePath("../Marker2D")
-Marker_02 = NodePath("../Marker2D2")
-
-[node name="Marker2D" type="Marker2D" parent="Enemies/Floor/01"]
-position = Vector2(919, -1)
-
-[node name="Marker2D2" type="Marker2D" parent="Enemies/Floor/01"]
-position = Vector2(1025, -2)
 
 [node name="02" type="Node2D" parent="Enemies/Floor"]
 

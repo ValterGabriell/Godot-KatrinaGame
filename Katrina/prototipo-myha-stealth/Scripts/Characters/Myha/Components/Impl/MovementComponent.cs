@@ -12,7 +12,7 @@ namespace KatrinaGame.Components
     public partial class MovementComponent : Node, IMovementComponent
     {
 
-        [Export] public bool IsMovementBlocked { get; set; } = false;
+
 
         private BasePlayer _player;
         private float _inertiaDeceleration = 20f;
@@ -27,6 +27,7 @@ namespace KatrinaGame.Components
         public void Initialize(BasePlayer player)
         {
             _player = player;
+            SignalManager.EnemyKillMyha += () => _player.BlockMovement();
         }
 
         public void Process(double delta) { }
@@ -41,9 +42,8 @@ namespace KatrinaGame.Components
 
         public void Move(Vector2 direction, float CurrentSpeed)
         {
-           
             PlayerManager.GetPlayerGlobalInstance().UpdatePlayerPosition(_player.GlobalPosition);
-            if (IsMovementBlocked) return;
+            if (this._player.IsMovementBlocked) return;
 
             var isPlayerMoving = direction.X != 0;
             var isPlayerOnFloor = this._player.IsOnFloor();
@@ -84,7 +84,7 @@ namespace KatrinaGame.Components
 
         public void Jump()
         {
-            if (IsMovementBlocked || !_player.IsOnFloor()) return;
+            if (this._player.IsMovementBlocked || !_player.IsOnFloor()) return;
 
             this._player.SetState(PlayerState.JUMPING);
             _player.Velocity = new Vector2(_player.Velocity.X, _player.JumpVelocity);

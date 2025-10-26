@@ -22,7 +22,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private const int TIME_TO_LOOK_UP_DOWN = 200;
         private const int TIME_TO_WAIT_WHEN_WAITING_START = 3;
         private int controlTimeToLookUpDown = 0;
-
+        private bool FlagToKillPlayer = false;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -155,7 +155,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         private void HandleAlertedStateTransition(EnemyBase InEnemy, bool isPlayerAtDifferentLevel, Vector2 directionToPlayer, bool isAtBoundary)
         {
-                 float direction = directionToPlayer.X > 0 ? 1 : -1;
+            float direction = directionToPlayer.X > 0 ? 1 : -1;
             // Calcula apenas a distância horizontal (eixo X)
             float horizontalDistanceToTarget = Mathf.Abs(InTargetMovement.X - InEnemy.GlobalPosition.X);
 

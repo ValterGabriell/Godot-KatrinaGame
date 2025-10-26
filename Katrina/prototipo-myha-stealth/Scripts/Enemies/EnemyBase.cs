@@ -25,7 +25,7 @@ public abstract partial class EnemyBase : CharacterBody2D
     [Export] public Marker2D Marker_01 = null;
     [Export] public Marker2D Marker_02 = null;
 
-
+    public bool JustLoaded { get; set; } = false;
     protected Dictionary<string, IEnemyBaseComponents> Components = new();
 
     public EnemyState CurrentEnemyState { get; private set; }  = EnemyState.Roaming;
@@ -41,6 +41,11 @@ public abstract partial class EnemyBase : CharacterBody2D
         foreach (var component in Components.Values)
         {
             component.Initialize();
+        }
+        if (JustLoaded)
+        {
+            JustLoaded = false;
+            return; //ignora o alerta inicial, foi feito porque ao carregar, ele voltava ao estado de alerta
         }
     }
 

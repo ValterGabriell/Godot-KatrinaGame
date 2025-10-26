@@ -16,6 +16,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             Action SetNewWaitTimeWhenWaiting
             )
         {
+            GDLogger.PrintDebug($"Getting state handler for state: {state}"); 
             return state switch
             {
                 EnemyState.Roaming => new EnemyStateRoamingHandler(WaitTime, MaxWaitTime),

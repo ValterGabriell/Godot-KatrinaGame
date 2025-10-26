@@ -12,6 +12,7 @@ namespace KatrinaGame.Core
 {
     public abstract partial class BasePlayer : CharacterBody2D
     {
+        [Export] public bool IsMovementBlocked { get; private set; } = false;
         [Export] public float Speed { get; set; } = 300f;
         [Export] public float SneakSpeed { get; set; } = 100f;
         [Export] public float JumpVelocity { get; set; } = -300f;
@@ -32,12 +33,20 @@ namespace KatrinaGame.Core
                 component.Initialize(this);
             }
 
-            SignalManager.Instance.EnemyKillMyha += OnEnemyKillMyha;
         }
 
-        private void OnEnemyKillMyha()
+
+
+        public void BlockMovement()
         {
-          
+            IsMovementBlocked = true;
+
+
+        }
+
+        public void UnblockMovement()
+        {
+            IsMovementBlocked = false;
         }
 
         public override void _Process(double delta)
@@ -56,7 +65,12 @@ namespace KatrinaGame.Core
             {
                 component.PhysicsProcess(delta);
             }
-
+            if (IsMovementBlocked && Velocity.Length() > 0f)
+            {
+                Velocity *= 0.8f;
+                if (Velocity.Length() < 1f)
+                    Velocity = Vector2.Zero;
+            }
             MoveAndSlide();
         }
 
