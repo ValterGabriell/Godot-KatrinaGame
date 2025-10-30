@@ -11,10 +11,12 @@ public partial class Level_0 : Node2D
     {
         var enemiesInScene = GetTree().GetNodesInGroup("enemy");
         var data = PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition();
-        GDLogger.PrintInfo(data); 
+
+        var listaInimigos  = enemiesInScene.OfType<EnemyBase>().ToList();
+
         GameManager.GetGameManagerInstance().SetCurrentLevelInitialData(
             levelNumber: 0,
-            enemies: enemiesInScene.OfType<EnemyBase>().ToList(),
+            enemies: listaInimigos,
             PlayerPosition: data
         );
     }

@@ -1,5 +1,6 @@
 using Godot;
 using PrototipoMyha.Enemy;
+using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Scripts.Utils.Objetos;
 using PrototipoMyha.Utilidades;
 using System.Collections.Generic;
@@ -66,18 +67,6 @@ namespace PrototipoMyha.Scripts.Managers
             _fadeLayer.AddChild(_fadeRect);
         }
 
-        public override void _Process(double delta)
-        {
-            if(playerHasBeenKilled)
-            {
-                FadeScreen();
-                TIME_TO_LOAD_GAME -= 1;
-                if (TIME_TO_LOAD_GAME == 0)
-                {
-                    LoadGame();
-                }
-            }
-        }
 
         private void FadeScreen()
         {
@@ -92,7 +81,6 @@ namespace PrototipoMyha.Scripts.Managers
 
         public void SetCurrentLevelInitialData(int levelNumber, List<EnemyBase> enemies, Vector2 PlayerPosition)
         {
-            
             CurrentLevel = new LevelSaveData
             {
                 LevelNumber = levelNumber,
@@ -105,8 +93,13 @@ namespace PrototipoMyha.Scripts.Managers
 
         private void OnEnemyKillMyha()
         {
-            playerHasBeenKilled = true;
             SetGameSpeed(0.1f);
+            FadeScreen();
+            TIME_TO_LOAD_GAME -= 1;
+            if (TIME_TO_LOAD_GAME == 0)
+            {
+                LoadGame();
+            }
         }
 
         public void SetGameSpeed(float timeScale)
@@ -142,7 +135,7 @@ namespace PrototipoMyha.Scripts.Managers
                 SignalManager.Instance.EmitSignal(nameof(SignalManager.GameLoaded), loadedPosition);
                 var instanceManager = PlayerManager.GetPlayerGlobalInstance();
                 instanceManager.UpdatePlayerPosition(loadedPosition);
-                instanceManager.BasePlayer.UnblockMovement();
+                instanceManager.BasePlayer.SetState(PlayerState.IDLE);
 
                 var enemiesInScene = GetTree().GetNodesInGroup("enemy"); 
 
@@ -151,11 +144,12 @@ namespace PrototipoMyha.Scripts.Managers
                     // Encontre o inimigo correspondente pelo Id ou outro identificador
                     var enemy = enemiesInScene
                         .OfType<EnemyBase>()
-                        .FirstOrDefault(e => e.GetInstanceId() == enemySave.InstanceID); 
+                        .FirstOrDefault(e => e.GetIdentifier() == enemySave.InstanceID); 
 
                     if (enemy != null)
                     {
                         enemy.GlobalPosition = new Vector2(enemySave.PositionX, enemySave.PositionY);
+                    
                         enemy.SetState(enemySave.EnemyState);
                         enemy.JustLoaded = true;
                     }

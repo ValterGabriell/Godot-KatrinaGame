@@ -39,13 +39,13 @@ namespace KatrinaGame.Core
 
         public void BlockMovement()
         {
+            GDLogger.PrintInfo("Blocking Movement");
             IsMovementBlocked = true;
-
-
         }
 
         public void UnblockMovement()
         {
+            GDLogger.PrintInfo("Unblocking Movement");
             IsMovementBlocked = false;
         }
 

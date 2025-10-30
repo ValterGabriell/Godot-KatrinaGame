@@ -2,6 +2,7 @@ using Godot;
 using PrototipoMyha.Enemy;
 using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.PatrolHandler;
 using PrototipoMyha.Enemy.States;
+using System;
 using System.Collections.Generic;
 
 namespace PrototipoMyha.Scripts.Utils.Objetos
@@ -16,7 +17,7 @@ namespace PrototipoMyha.Scripts.Utils.Objetos
 
     public class EnemySaveData
     {
-        public ulong InstanceID { get; set; }
+        public Guid InstanceID { get; set; }
         public float PositionX { get; set; }
         public float PositionY { get; set; }
         public EnemyState EnemyState { get; set; }

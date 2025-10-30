@@ -2,6 +2,7 @@ using Godot;
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Enemy.States;
 using PrototipoMyha.Scripts.Utils.Objetos;
+using PrototipoMyha.Utilidades;
 using System;
 using System.Collections.Generic;
 
@@ -24,19 +25,24 @@ public abstract partial class EnemyBase : CharacterBody2D
     [ExportGroup("Bounderies")]
     [Export] public Marker2D Marker_01 = null;
     [Export] public Marker2D Marker_02 = null;
+    [Export] public PackedScene BulletShoot;
 
     public bool JustLoaded { get; set; } = false;
     protected Dictionary<string, IEnemyBaseComponents> Components = new();
 
     public EnemyState CurrentEnemyState { get; private set; }  = EnemyState.Roaming;
+    private Guid Identifier = Guid.NewGuid();
 
 
+    public Guid GetIdentifier()
+    {
+        return Identifier;
+    }
     public override void _Ready() 
     {
         InstanciateSpecificComponents();
         TimerToChase.Timeout += OnTimerToChaseTimeout;
-
-
+        //SignalManager.Instance.EnemyShoot += Shoot;
 
         foreach (var component in Components.Values)
         {
@@ -49,7 +55,33 @@ public abstract partial class EnemyBase : CharacterBody2D
         }
     }
 
+    private void Shoot(Vector2 positionToGoShoot)
+    {
+        GDLogger.PrintDebug("EnemyBase: Shooting bullet");
+        AnimatedSprite2D sprite = (AnimatedSprite2D)BulletShoot.Instantiate();
+        sprite.Position = this.Position;
+        AddChild(sprite);
 
+        if (!sprite.IsPlaying())
+            sprite.Play("default");
+
+        Tween tween = this.CreateTween();
+        tween.TweenProperty(sprite, "position", positionToGoShoot, 0.5f);
+
+        Timer timer = new Timer();
+        timer.WaitTime = 2.5f;
+        timer.OneShot = true;
+        AddChild(timer);
+
+        timer.Timeout += () =>
+        {
+            if (IsInstanceValid(sprite))
+            {
+                sprite.QueueFree();
+            }
+            timer.QueueFree();
+        };
+    }
 
     private void OnTimerToStayAlertTimeout()
     {
@@ -114,7 +146,7 @@ public abstract partial class EnemyBase : CharacterBody2D
     {
         return new EnemySaveData
         {
-            InstanceID = this.GetInstanceId(),
+            InstanceID = Identifier,
             PositionX = this.GlobalPosition.X,
             PositionY = this.GlobalPosition.Y,
             EnemyState = this.CurrentEnemyState

@@ -27,7 +27,7 @@ namespace KatrinaGame.Components
         public void Initialize(BasePlayer player)
         {
             _player = player;
-            SignalManager.EnemyKillMyha += () => _player.BlockMovement();
+          
         }
 
         public void Process(double delta) { }

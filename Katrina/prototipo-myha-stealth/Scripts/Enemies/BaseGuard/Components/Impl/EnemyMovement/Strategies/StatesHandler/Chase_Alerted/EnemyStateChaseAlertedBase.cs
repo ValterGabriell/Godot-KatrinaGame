@@ -22,7 +22,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private const int TIME_TO_LOOK_UP_DOWN = 200;
         private const int TIME_TO_WAIT_WHEN_WAITING_START = 3;
         private int controlTimeToLookUpDown = 0;
-        private bool FlagToKillPlayer = false;
+        private bool FlagHasEmittedSignalDeath = false;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -34,6 +34,12 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
            EnemyBase InEnemy,
            Vector2? InPositionToChase = null)
         {
+            if (InEnemy.CurrentEnemyState != States.EnemyState.Alerted 
+                && FlagHasEmittedSignalDeath)
+            {
+                FlagHasEmittedSignalDeath = false;
+            }
+
             //chase
             if (InPositionToChase.HasValue)
                 this.InTargetMovement = ClampToBoundaries(InEnemy, InPositionToChase.Value);
@@ -96,10 +102,12 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             {
                 (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
 
-                if (isColliding)
+
+                if (isColliding && !FlagHasEmittedSignalDeath)
                 {
                     SignalManager.Instance.EmitSignal(nameof(SignalManager.EnemyKillMyha));
                     InEnemy.Velocity = Vector2.Zero;
+                    FlagHasEmittedSignalDeath = true;
                 }
 
                 //é desativado quando o inimigo mata o jogador

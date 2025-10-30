@@ -29,7 +29,9 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
             this.SignalManager = SignalManager.Instance;
             this.SignalManager.EnemySpottedPlayer += OnEnemySpottedPlayer;
             this.SignalManager.EnemySpottedPlayerShowAlert += OnEnemySpottedPlayerShowAlert;
+
         }
+
 
         private void OnEnemySpottedPlayerShowAlert(Vector2 positionToShowAlert)
         {
@@ -85,7 +87,6 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
                 Enemy.States.EnemyState.Chasing => EnumGuardMove.shoot.ToString(),
                 _ => EnumGuardMove.roaming.ToString(),
             };
-
 
             if (!IsWalkingToAlert)
                 this._Enemy.AnimatedSprite2DEnemy.Play(currentAnimation);
