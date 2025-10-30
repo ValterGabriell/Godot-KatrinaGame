@@ -8,15 +8,21 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
     {
         private float alertWaitDuration = 2.0f;
         private SignalManager SignalManager;
+        private Vector2 lastKnownPlayerPosition;
+        
         public EnemyStateAlertedHandler(Vector2 lastKnownPlayerPosition) : base(lastKnownPlayerPosition)
         {
             SignalManager = SignalManager.Instance;
+            this.lastKnownPlayerPosition = lastKnownPlayerPosition;
         }
 
         public override float ExecuteState(
             double delta,
             EnemyBase InEnemy, Vector2? InPositionToChase = null)
         {
+
+            SignalManager.EmitSignal(nameof(SignalManager.EnemySpottedPlayerShowAlert), lastKnownPlayerPosition);
+
             (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
             if (isColliding)
             {
@@ -32,6 +38,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             if (alertWaitDuration <= 0f)
             {
                 SignalManager.EmitSignal(nameof(SignalManager.EnemySpottedPlayer));
+
                 waitTime = base.ExecuteState(delta, InEnemy);
             }
             return waitTime;

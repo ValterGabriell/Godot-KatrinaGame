@@ -13,7 +13,10 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
         private EnemyBase _Enemy;
         private bool IsWalkingToAlert = false;
         private SignalManager SignalManager;
-
+        private PackedScene spriteScene;
+        private bool _alertShown = false;
+        private AnimatedSprite2D _currentAlertSprite;
+        private Timer _currentAlertTimer;
         public EnemyAnimationComponent(EnemyBase enemy)
         {
             _Enemy = enemy;
@@ -21,10 +24,46 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
 
         public void Initialize()
         {
+            spriteScene = (PackedScene)GD.Load("res://Scenes/Items/Itens/ItemAlertSound.tscn");
+
             this.SignalManager = SignalManager.Instance;
             this.SignalManager.EnemySpottedPlayer += OnEnemySpottedPlayer;
+            this.SignalManager.EnemySpottedPlayerShowAlert += OnEnemySpottedPlayerShowAlert;
         }
 
+        private void OnEnemySpottedPlayerShowAlert(Vector2 positionToShowAlert)
+        {
+            if (_alertShown)
+                return; 
+
+            _alertShown = true;
+            
+            AnimatedSprite2D sprite = (AnimatedSprite2D)spriteScene.Instantiate();
+            sprite.Position = positionToShowAlert;
+            AddChild(sprite);
+
+            if (!sprite.IsPlaying())
+                sprite.Play("default");
+
+            Timer timer = new Timer();
+            timer.WaitTime = 2.5f;
+            timer.OneShot = true;
+            AddChild(timer);
+
+            timer.Timeout += () =>
+            {
+                GDLogger.PrintDebug("Removing alert sprite");
+                if (IsInstanceValid(sprite))
+                {
+                    sprite.QueueFree();
+                
+                }
+                timer.QueueFree();
+                _alertShown = false;
+            };
+
+            timer.Start();
+        }
 
         public void PhysicsProcess(double delta)
         {
@@ -57,6 +96,7 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
         private void OnEnemySpottedPlayer()
         {
             IsWalkingToAlert = true;
+
         }
     }
 }
