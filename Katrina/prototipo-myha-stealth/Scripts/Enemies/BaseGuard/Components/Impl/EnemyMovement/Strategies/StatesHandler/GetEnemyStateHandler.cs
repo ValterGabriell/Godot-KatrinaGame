@@ -21,7 +21,6 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             {
                 EnemyState.Roaming => new EnemyStateRoamingHandler(WaitTime, MaxWaitTime),
                 EnemyState.Waiting => new EnemyStateWaitingHandler(WaitTime, SetNewWaitTimeWhenWaiting),
-
                 //vector 0 pq o target position vai ser setado em tempo de execucao, referente ao player
                 EnemyState.Chasing => new EnemyStateChasingHandler(Vector2.Zero),
                 EnemyState.Alerted => new EnemyStateAlertedHandler(PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition()),

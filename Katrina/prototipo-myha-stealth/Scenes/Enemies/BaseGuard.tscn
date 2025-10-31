@@ -263,12 +263,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
 size = Vector2(15.75, 25)
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("RayCast2DDetection", "TimerToChase", "AnimatedSprite2DEnemy")]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("RayCast2DDetection", "Polygon2DDetection", "TimerToChase", "AnimatedSprite2DEnemy")]
 collision_layer = 12288
 collision_mask = 33
 script = ExtResource("1_ib5uv")
 EnemyResource = ExtResource("2_n2d1g")
 RayCast2DDetection = NodePath("RayCast2DDetectionPlayer")
+Polygon2DDetection = NodePath("Polygon2D")
 TimerToChase = NodePath("TimerToChase")
 AnimatedSprite2DEnemy = NodePath("AnimatedSprite2D")
 PatrolRadius = 300.0
@@ -283,8 +284,12 @@ position = Vector2(0.875, 0.5)
 shape = SubResource("RectangleShape2D_7mycd")
 metadata/_edit_lock_ = true
 
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.55815613, 0.55815613, 0.55815613, 1)
+polygon = PackedVector2Array(-0.006500244, -0.62032586, 93, 12, 93, -17)
+
 [node name="RayCast2DDetectionPlayer" type="RayCast2D" parent="."]
-target_position = Vector2(150, 0)
+target_position = Vector2(93, -1)
 collision_mask = 2
 metadata/_edit_lock_ = true
 

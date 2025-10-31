@@ -4,4 +4,6 @@
 
 [resource]
 script = ExtResource("1_nrbqc")
-_patrolRadius = 200.0
+AlertColor = Color(0.5114257, 0.5887524, 0.13145071, 0)
+DetectionColor = Color(0.39748234, 5.5350364e-07, 1.6845763e-07, 0)
+RoamingColor = Color(1, 1, 1, 0)

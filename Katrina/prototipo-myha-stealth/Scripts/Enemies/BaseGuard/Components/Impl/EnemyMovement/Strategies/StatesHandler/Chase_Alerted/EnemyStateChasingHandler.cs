@@ -11,6 +11,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         public override float ExecuteState(double delta, EnemyBase InEnemy, Vector2? InPositionToChase = null)
         {
+            InEnemy.SetPolygonDetectionColor();
             InEnemy.TimerToChase.Start();
             return base.ExecuteState(delta, InEnemy, InPositionToChase);
         }

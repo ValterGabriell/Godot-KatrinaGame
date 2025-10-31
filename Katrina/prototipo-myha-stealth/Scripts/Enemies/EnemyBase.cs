@@ -2,9 +2,9 @@ using Godot;
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Enemy.States;
 using PrototipoMyha.Scripts.Utils.Objetos;
-using PrototipoMyha.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace PrototipoMyha.Enemy;
 
@@ -15,6 +15,7 @@ public abstract partial class EnemyBase : CharacterBody2D
     [ExportGroup("Detection")]
     [Export] public RayCast2D RayCast2DDetection = null;
     [Export] public CircleShape2D CircleAreaDetection = null;
+    [Export] public Polygon2D Polygon2DDetection { get; private set; } = null;
 
     [ExportGroup("Chasing")]
     [Export] public Timer TimerToChase = null;
@@ -38,6 +39,22 @@ public abstract partial class EnemyBase : CharacterBody2D
     {
         return Identifier;
     }
+
+    public void SetPolygonRoamingColor()
+    {
+        this.Polygon2DDetection.Color = new Godot.Color(1f, 1f, 1f, 0.5f);
+    }
+
+    public void SetPolygonAlertedColor()
+    {
+        this.Polygon2DDetection.Color = new Godot.Color(1f, 1f, 0f, 0.5f);
+    }
+
+    public void SetPolygonDetectionColor()
+    {
+        this.Polygon2DDetection.Color = new Godot.Color(1f, 0f, 0f, 0.5f);
+    }
+
     public override void _Ready() 
     {
         InstanciateSpecificComponents();
@@ -57,7 +74,6 @@ public abstract partial class EnemyBase : CharacterBody2D
 
     private void Shoot(Vector2 positionToGoShoot)
     {
-        GDLogger.PrintDebug("EnemyBase: Shooting bullet");
         AnimatedSprite2D sprite = (AnimatedSprite2D)BulletShoot.Instantiate();
         sprite.Position = this.Position;
         AddChild(sprite);

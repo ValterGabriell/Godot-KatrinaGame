@@ -29,6 +29,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             double delta,
             EnemyBase InEnemy, Vector2? InTargetPosition = null)
         {
+
+            InEnemy.SetPolygonRoamingColor();
             float distanceToTarget = InEnemy.GlobalPosition.DistanceTo(InTargetPosition.Value);
             
             if (distanceToTarget < 5f) // Chegou perto do target
@@ -60,6 +62,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
             RaycastUtils.FlipRaycast(directionSign, [InEnemy.RayCast2DDetection]);
             SpriteUtils.FlipSprite(directionSign, InEnemy.AnimatedSprite2DEnemy);
+            PolyngUtils.Flip(directionSign, InEnemy.Polygon2DDetection);
         }
 
         private static void DetectAndChasePlayer(EnemyBase InEnemy)

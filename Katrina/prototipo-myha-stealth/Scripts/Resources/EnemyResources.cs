@@ -18,6 +18,7 @@ public partial class EnemyResources : Resource
     [Export] public float Gravity = 20f;
 
 
+
     [ExportGroup("Detection")]
     [Export] public PatrolType PatrolStyle = PatrolType.XAxis;
 

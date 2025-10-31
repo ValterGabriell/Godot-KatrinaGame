@@ -21,6 +21,8 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             EnemyBase InEnemy, Vector2? InPositionToChase = null)
         {
 
+
+            InEnemy.SetPolygonAlertedColor();
             SignalManager.EmitSignal(nameof(SignalManager.EnemySpottedPlayerShowAlert), lastKnownPlayerPosition);
 
             (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);

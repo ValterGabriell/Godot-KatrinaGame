@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace PrototipoMyha.Utilidades
 {
-    public class RaycastUtils
+    public static class RaycastUtils
     {
         public static void FlipRaycast(float direction, List<RayCast2D> Rasycast)
         {
             foreach (var current in Rasycast)
             {
-                current.TargetPosition = new Vector2(direction * Mathf.Abs(current.TargetPosition.X), current.TargetPosition.Y);
+                current.TargetPosition 
+                    = new Vector2(direction * Mathf.Abs(current.TargetPosition.X), current.TargetPosition.Y);
             }
         }
 

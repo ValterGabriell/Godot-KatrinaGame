@@ -179,6 +179,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
             RaycastUtils.FlipRaycast(directionSign, [InEnemy.RayCast2DDetection]);
             SpriteUtils.FlipSprite(directionSign, InEnemy.AnimatedSprite2DEnemy);
+            PolyngUtils.Flip(directionSign, InEnemy.Polygon2DDetection);
         }
 
 

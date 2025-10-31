@@ -121,7 +121,11 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
         {
 
             if (this._Enemy.CurrentEnemyState != Enemy.States.EnemyState.Alerted)
+            {
                 IsWalkingToAlert = false;
+            }
+
+              
 
             var currentAnimation = this._Enemy.CurrentEnemyState switch
             {
