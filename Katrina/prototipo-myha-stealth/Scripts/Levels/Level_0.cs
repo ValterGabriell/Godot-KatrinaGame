@@ -1,6 +1,8 @@
 using Godot;
+using PrototipoMyha;
 using PrototipoMyha.Enemy;
 using PrototipoMyha.Scripts.Managers;
+using PrototipoMyha.Scripts.Utils.Objetos;
 using PrototipoMyha.Utilidades;
 using System;
 using System.Linq;
@@ -13,11 +15,12 @@ public partial class Level_0 : Node2D
         var data = PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition();
 
         var listaInimigos  = enemiesInScene.OfType<EnemyBase>().ToList();
-
-        GameManager.GetGameManagerInstance().SetCurrentLevelInitialData(
+        var gameManagerInstance = GameManager.GetGameManagerInstance();
+        gameManagerInstance.SetCurrentLevelInitialData(
             levelNumber: 0,
             enemies: listaInimigos,
             PlayerPosition: data
         );
+        SaveSystem.SaveSystemInstance.SaveGame(gameManagerInstance.GetCurrentLevelUpdatedData());
     }
 }

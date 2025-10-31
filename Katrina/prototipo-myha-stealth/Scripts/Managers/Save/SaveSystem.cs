@@ -1,6 +1,7 @@
 using Godot;
 using PrototipoMyha.Scripts.Utils.Objetos;
 using PrototipoMyha.Utilidades;
+using System;
 using System.Text.Json;
 
 
@@ -25,22 +26,29 @@ public partial class SaveSystem : Node
 
     public void SaveGame(LevelSaveData data)
     {
-        string json = JsonSerializer.Serialize(data, new JsonSerializerOptions
+        try
         {
-            WriteIndented = true
-        });
+            string json = JsonSerializer.Serialize(data, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
 
-        using var file = Godot.FileAccess.Open(SAVE_PATH, Godot.FileAccess.ModeFlags.Write);
+            using var file = Godot.FileAccess.Open(SAVE_PATH, Godot.FileAccess.ModeFlags.Write);
 
-        if (file != null)
-        {
-            GDLogger.PrintObject(json);
-            file.StoreString(json);
-            GD.Print("Jogo salvo com sucesso!");
+            if (file != null)
+            {
+                GDLogger.PrintObject(json);
+                file.StoreString(json);
+                GD.Print("Jogo salvo com sucesso!");
+            }
+            else
+            {
+                GD.PrintErr("Erro ao salvar o jogo!");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            GD.PrintErr("Erro ao salvar o jogo!");
+            GD.PrintErr($"Erro ao serializar o save: {ex.Message}");
         }
     }
 
@@ -63,6 +71,7 @@ public partial class SaveSystem : Node
         }
 
         GD.PrintErr("Erro ao carregar o jogo!");
+
         return null;
     }
 

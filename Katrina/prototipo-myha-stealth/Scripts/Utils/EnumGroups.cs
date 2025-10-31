@@ -13,6 +13,7 @@ namespace PrototipoMyha
         SHAKABLE,
         death_water_area,
         enemy,
-        terrain
+        terrain,
+        AlertSprite
     }
 }

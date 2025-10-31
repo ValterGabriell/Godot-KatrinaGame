@@ -1,6 +1,7 @@
 using Godot;
 using PrototipoMyha.Player.StateManager;
 using System;
+using System.Collections.Generic;
 
 namespace PrototipoMyha;
 
@@ -26,12 +27,16 @@ public partial class SignalManager : Node
     public override void _Ready()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
-        {
-            QueueFree();
-        }
+            QueueFree(); 
     }
+
+
 }
+
+/*
+ SINAL: EnemyKillMyha | EMISSOR: EnemyStateChaseAlertedBase | PARÂMETROS: Nenhum | Observador: GameManager
+ 
+ 
+ */

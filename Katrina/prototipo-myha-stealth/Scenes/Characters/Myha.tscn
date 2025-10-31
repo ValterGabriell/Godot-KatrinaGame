@@ -171,7 +171,6 @@ position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_ig7tw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
 
 [node name="PushRaycast" type="RayCast2D" parent="."]
 target_position = Vector2(25, 0)

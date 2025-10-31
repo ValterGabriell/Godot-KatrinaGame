@@ -42,6 +42,7 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
             
             AnimatedSprite2D sprite = (AnimatedSprite2D)spriteScene.Instantiate();
             sprite.Position = positionToShowAlert;
+            sprite.AddToGroup(EnumGroups.AlertSprite.ToString());
             AddChild(sprite);
 
             if (!sprite.IsPlaying())
@@ -54,7 +55,6 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
 
             timer.Timeout += () =>
             {
-                GDLogger.PrintDebug("Removing alert sprite");
                 if (IsInstanceValid(sprite))
                 {
                     sprite.QueueFree();

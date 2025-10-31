@@ -22,11 +22,13 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private const int TIME_TO_LOOK_UP_DOWN = 200;
         private const int TIME_TO_WAIT_WHEN_WAITING_START = 3;
         private int controlTimeToLookUpDown = 0;
-        private bool FlagHasEmittedSignalDeath = false;
+        private SignalManager SignalManager;
+        private bool hasEmittedKillSignal = false;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
             InTargetMovement = inTargetMovement;
+            SignalManager = SignalManager.Instance;
         }
 
         public virtual float ExecuteState(
@@ -34,11 +36,6 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
            EnemyBase InEnemy,
            Vector2? InPositionToChase = null)
         {
-            if (InEnemy.CurrentEnemyState != States.EnemyState.Alerted 
-                && FlagHasEmittedSignalDeath)
-            {
-                FlagHasEmittedSignalDeath = false;
-            }
 
             //chase
             if (InPositionToChase.HasValue)
@@ -102,18 +99,12 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             {
                 (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
 
-
-                if (isColliding && !FlagHasEmittedSignalDeath)
+                if (isColliding 
+                    && !hasEmittedKillSignal)
                 {
-                    SignalManager.Instance.EmitSignal(nameof(SignalManager.EnemyKillMyha));
+                    SignalManager.EmitSignal(nameof(SignalManager.EnemyKillMyha));
                     InEnemy.Velocity = Vector2.Zero;
-                    FlagHasEmittedSignalDeath = true;
-                }
-
-                //é desativado quando o inimigo mata o jogador
-                if (InEnemy.RayCast2DDetection.Enabled == false)
-                {
-                    InEnemy.RayCast2DDetection.Enabled = true;
+                    hasEmittedKillSignal = true;
                 }
             }
         }
