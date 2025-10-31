@@ -15,7 +15,7 @@ public partial class SignalManager : Node
     [Signal] public delegate void PlayerIsMovingEventHandler(float NoiseValue);
     [Signal] public delegate void PlayerStopedEventHandler();
     [Signal] public delegate void EnemyKillMyhaEventHandler();
-    [Signal] public delegate void EnemyShootEventHandler(Vector2 positionToGoShoot);
+
     [Signal] public delegate void GameLoadedEventHandler(Vector2 position);
     
 
@@ -36,7 +36,7 @@ public partial class SignalManager : Node
 }
 
 /*
- SINAL: EnemyKillMyha | EMISSOR: EnemyStateChaseAlertedBase | PARÂMETROS: Nenhum | Observador: GameManager
+ SINAL: EnemyKillMyha | EMISSOR: EnemyStateChaseAlertedBase | PARÂMETROS: Nenhum | Observador: GameManager, EnemyAnimationComponent
  
  
  */

@@ -24,6 +24,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private int controlTimeToLookUpDown = 0;
         private SignalManager SignalManager;
         private bool hasEmittedKillSignal = false;
+        private bool stopEnemy = false;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -89,6 +90,10 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
             }
 
             ProcessKillOfPlayer(InEnemy);
+            if (stopEnemy)
+            {
+                InEnemy.Velocity = Vector2.Zero;
+            }
 
             return TIME_TO_WAIT_WHEN_WAITING_START;
         }
@@ -103,8 +108,10 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
                     && !hasEmittedKillSignal)
                 {
                     SignalManager.EmitSignal(nameof(SignalManager.EnemyKillMyha));
+
                     InEnemy.Velocity = Vector2.Zero;
                     hasEmittedKillSignal = true;
+                    stopEnemy = true;
                 }
             }
         }

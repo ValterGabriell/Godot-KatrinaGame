@@ -12,6 +12,75 @@ namespace PrototipoMyha.Utilidades
     public static class GDLogger
     {
         private static readonly object _lockObject = new object();
+        public static void PrintBlue(object message,
+        bool isVerbose = false,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string filePath = "",
+        [CallerLineNumber] int lineNumber = 0)
+        {
+            PrintWithEmoji("🔵", message, isVerbose, memberName, filePath, lineNumber);
+        }
+
+        public static void PrintGreen(object message,
+            bool isVerbose = false,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            PrintWithEmoji("🟢", message, isVerbose, memberName, filePath, lineNumber);
+        }
+
+        public static void PrintRed(object message,
+            bool isVerbose = false,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            PrintWithEmoji("🔴", message, isVerbose, memberName, filePath, lineNumber);
+        }
+
+        public static void PrintYellow(object message,
+            bool isVerbose = false,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
+        {
+            PrintWithEmoji("🟡", message, isVerbose, memberName, filePath, lineNumber);
+        }
+
+        private static void PrintWithEmoji(string emoji, object message, bool isVerbose,
+            string memberName, string filePath, int lineNumber)
+        {
+            var className = GetClassNameFromFilePath(filePath);
+            var timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
+            var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
+            lock (_lockObject)
+            {
+                if (isVerbose)
+                {
+                    GD.Print($"{emoji} ╔══ VERBOSE LOG ══════════════════════════════════");
+                    GD.Print($"{emoji} ║ Timestamp: {timestamp}");
+                    GD.Print($"{emoji} ║ Thread: {threadId}");
+                    GD.Print($"{emoji} ║ Class: {className}");
+                    GD.Print($"{emoji} ║ Method: {memberName}");
+                    GD.Print($"{emoji} ║ Line: {lineNumber}");
+                    GD.Print($"{emoji} ║ File: {System.IO.Path.GetFileName(filePath)}");
+                    GD.Print($"{emoji} ║ Message: {message}");
+                    GD.Print($"{emoji} ╚═════════════════════════════════════════════════");
+                }
+                else
+                {
+                    GD.Print($"{emoji} {message}");
+                }
+            }
+        }
+
+        private static string GetClassNameFromFilePath(string filePath)
+        {
+            return System.IO.Path.GetFileNameWithoutExtension(filePath) ?? "UnknownClass";
+        }
+
 
         /// <summary>
         /// Print básico com informações de contexto
@@ -153,33 +222,6 @@ namespace PrototipoMyha.Utilidades
             }
         }
 
-        /// <summary>
-        /// Print com contexto completo do método
-        /// </summary>
-        public static void PrintVerbose(object message,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = 0)
-        {
-            var className = GetClassNameFromFilePath(filePath);
-            var timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
-            var threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-            var stackTrace = new StackTrace(1, true);
-            var frame = stackTrace.GetFrame(0);
-
-            lock (_lockObject)
-            {
-                GD.Print($"╔══ VERBOSE LOG ══════════════════════════════════");
-                GD.Print($"║ Timestamp: {timestamp}");
-                GD.Print($"║ Thread: {threadId}");
-                GD.Print($"║ Class: {className}");
-                GD.Print($"║ Method: {memberName}");
-                GD.Print($"║ Line: {lineNumber}");
-                GD.Print($"║ File: {System.IO.Path.GetFileName(filePath)}");
-                GD.Print($"║ Message: {message}");
-                GD.Print($"╚══════════════════════════════════════════════════");
-            }
-        }
 
         /// <summary>
         /// Print de objeto com propriedades
@@ -269,14 +311,6 @@ namespace PrototipoMyha.Utilidades
 
         #region Helper Methods
 
-        private static string GetClassNameFromFilePath(string filePath)
-        {
-            if (string.IsNullOrEmpty(filePath))
-                return "Unknown";
-
-            var fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
-            return fileName;
-        }
 
         private static string GetLogLevelString(LogLevel level)
         {

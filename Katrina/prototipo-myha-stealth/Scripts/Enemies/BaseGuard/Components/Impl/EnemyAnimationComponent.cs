@@ -4,6 +4,7 @@ using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
 using System;
+using System.Reflection.Emit;
 using static PrototipoMyha.SignalManager;
 
 namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
@@ -14,7 +15,9 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
         private bool IsWalkingToAlert = false;
         private SignalManager SignalManager;
         private PackedScene spriteScene;
+        private PackedScene shootScene;
         private bool _alertShown = false;
+        private bool _hasShooted = false;
         private AnimatedSprite2D _currentAlertSprite;
         private Timer _currentAlertTimer;
         public EnemyAnimationComponent(EnemyBase enemy)
@@ -25,31 +28,34 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
         public void Initialize()
         {
             spriteScene = (PackedScene)GD.Load("res://Scenes/Items/Itens/ItemAlertSound.tscn");
+            shootScene = (PackedScene)GD.Load("res://Scenes/Items/Itens/Bullet01.tscn");
 
             this.SignalManager = SignalManager.Instance;
             this.SignalManager.EnemySpottedPlayer += OnEnemySpottedPlayer;
             this.SignalManager.EnemySpottedPlayerShowAlert += OnEnemySpottedPlayerShowAlert;
+            this.SignalManager.EnemyKillMyha += Shoot;
 
         }
 
-
-        private void OnEnemySpottedPlayerShowAlert(Vector2 positionToShowAlert)
+        private void Shoot()
         {
-            if (_alertShown)
-                return; 
+            if (_hasShooted)
+                return;
 
-            _alertShown = true;
-            
-            AnimatedSprite2D sprite = (AnimatedSprite2D)spriteScene.Instantiate();
-            sprite.Position = positionToShowAlert;
+            _hasShooted = true;
+            AnimatedSprite2D sprite = (AnimatedSprite2D)shootScene.Instantiate();
+            sprite.Position = this._Enemy.GlobalPosition;
             sprite.AddToGroup(EnumGroups.AlertSprite.ToString());
             AddChild(sprite);
 
             if (!sprite.IsPlaying())
                 sprite.Play("default");
 
+            var tween = CreateTween();
+            tween.TweenProperty(sprite, "position", PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition(), 0.3f);
+
             Timer timer = new Timer();
-            timer.WaitTime = 2.5f;
+            timer.WaitTime = 0.5f;
             timer.OneShot = true;
             AddChild(timer);
 
@@ -58,14 +64,53 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
                 if (IsInstanceValid(sprite))
                 {
                     sprite.QueueFree();
-                
+
+                }
+                timer.QueueFree();
+                _hasShooted = false;
+            };
+
+            timer.Start();
+
+          
+        }
+
+        private void OnEnemySpottedPlayerShowAlert(Vector2 positionToShowAlert)
+        {
+            if (_alertShown)
+                return;
+
+            _alertShown = true;
+            AnimatedSprite2D sprite = (AnimatedSprite2D)spriteScene.Instantiate();
+            sprite.Position = positionToShowAlert;
+            sprite.AddToGroup(EnumGroups.AlertSprite.ToString());
+            AddChild(sprite);
+
+            if (!sprite.IsPlaying())
+                sprite.Play("default");
+
+
+            Timer timer = new Timer();
+            timer.WaitTime = 2f;
+            timer.OneShot = true;
+            AddChild(timer);
+
+            timer.Timeout += () =>
+            {
+                if (IsInstanceValid(sprite))
+                {
+                    sprite.QueueFree();
+
                 }
                 timer.QueueFree();
                 _alertShown = false;
             };
 
             timer.Start();
+
         }
+
+       
 
         public void PhysicsProcess(double delta)
         {
