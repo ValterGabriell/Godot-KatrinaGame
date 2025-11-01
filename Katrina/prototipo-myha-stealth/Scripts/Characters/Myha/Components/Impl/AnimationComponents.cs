@@ -3,6 +3,7 @@ using KatrinaGame.Core;
 using KatrinaGame.Core.Interfaces;
 using KatrinaGame.Scripts.Utils;
 using PrototipoMyha.Player.Components.Interfaces;
+using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Utilidades;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
     public partial class AnimationComponents : Node, IAnimationComponents
     {
         private BasePlayer _player;
+        SignalManager SignalManager;
 
         public AnimationComponents(BasePlayer player)
         {
@@ -32,6 +34,15 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
         public void Initialize(BasePlayer player)
         {
           this._player = player;
+            this.SignalManager = SignalManager.Instance;
+            this.SignalManager.PlayerHasChangedState += OnPlayerHasChangedState;
+        }
+
+        private void OnPlayerHasChangedState(string animationToPlay)
+        {
+            this._player.AnimatedSprite2D.Play(animationToPlay);
+            this._player.SoundAnimatedSprite2D.Play(animationToPlay);
+
         }
 
         public void PhysicsProcess(double delta)
@@ -42,28 +53,6 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
         public void Process(double delta)
         {
 
-            // Só muda para animação de corrida se não estiver pulando
-            if (_player.CurrentPlayerState == Player.StateManager.PlayerState.RUN)
-            {
-                this._player.AnimatedSprite2D.Play(EnumAnimations.run.ToString());
-            }
-            // Só muda para idle se estiver no chão
-            if (_player.CurrentPlayerState == Player.StateManager.PlayerState.IDLE)
-            {
-                this._player.AnimatedSprite2D.Play(EnumAnimations.idle.ToString());
-            }
-
-        
-            if (_player.CurrentPlayerState == Player.StateManager.PlayerState.SNEAK)
-            {
-                this._player.AnimatedSprite2D.Play(EnumAnimations.sneak.ToString());
-            }
-
-            // Só muda para idle se estiver no chão
-            if (_player.CurrentPlayerState == Player.StateManager.PlayerState.JUMPING)
-            {
-                this._player.AnimatedSprite2D.Play(EnumAnimations.jump_up.ToString());
-            }
         }
     }
 }

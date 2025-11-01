@@ -60,14 +60,17 @@ namespace KatrinaGame.Components
             {
                 var newState = CurrentSpeed == _player.Speed ? PlayerState.RUN : PlayerState.SNEAK;
                 var newRadiusSound = CurrentSpeed == _player.Speed ? PlayerManager.RunNoiseRadius : PlayerManager.SneakNoiseRadius;
+                string newPlayerAnimation = CurrentSpeed == _player.Speed ? EnumAnimations.run.ToString() : EnumAnimations.sneak.ToString();
                 this._player.SetState(newState);
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), newRadiusSound);
+                SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), newPlayerAnimation);
             }
 
             if (IsIdleConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping))
             {
                 this._player.SetState(PlayerState.IDLE);
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerStoped));
+                SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.idle.ToString());
             }
 
             if (!isPlayerMoving)
@@ -89,6 +92,7 @@ namespace KatrinaGame.Components
             this._player.SetState(PlayerState.JUMPING);
             _player.Velocity = new Vector2(_player.Velocity.X, _player.JumpVelocity);
             SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), PlayerManager.JumpNoiseRadius);
+            SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.jump_up.ToString());
         }
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dw4s248phtymn"]
+[gd_scene load_steps=44 format=3 uid="uid://dw4s248phtymn"]
 
 [ext_resource type="Script" uid="uid://dk8egln53p1ft" path="res://Scripts/Characters/Myha/MyhaPlayer.cs" id="1_gp1ay"]
 [ext_resource type="PackedScene" uid="uid://dkjhvr053vtls" path="res://Scenes/Items/Gangorra.tscn" id="2_hntan"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://wcu1syg0rthr" path="res://Assets/Sprites/Characters/Myha/myha21jump.png" id="3_tpfg6"]
 [ext_resource type="Texture2D" uid="uid://dgbxtqsplftdo" path="res://Assets/Sprites/Characters/Myha/myha21idle.png" id="3_xyvna"]
 [ext_resource type="Texture2D" uid="uid://cjv776p4n10lc" path="res://Assets/Sprites/Characters/Myha/myha21sneak.png" id="4_lrdqb"]
+[ext_resource type="Texture2D" uid="uid://ccllucgvqoa4s" path="res://Assets/Sprites/Itens/RunAsset.png" id="7_c2xpc"]
+[ext_resource type="Texture2D" uid="uid://dtv1rosyy6aa5" path="res://Assets/Sprites/Itens/SneakAsset.png" id="8_qemu2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v2aao"]
 atlas = ExtResource("3_xyvna")
@@ -142,6 +144,127 @@ animations = [{
 "speed": 6.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5t58"]
+atlas = ExtResource("7_c2xpc")
+region = Rect2(612, 0, 153, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pm13k"]
+atlas = ExtResource("7_c2xpc")
+region = Rect2(612, 0, 153, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxiyw"]
+atlas = ExtResource("7_c2xpc")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cspum"]
+atlas = ExtResource("7_c2xpc")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmy07"]
+atlas = ExtResource("7_c2xpc")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_534h4"]
+atlas = ExtResource("7_c2xpc")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r34hb"]
+atlas = ExtResource("7_c2xpc")
+region = Rect2(576, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqcvp"]
+atlas = ExtResource("7_c2xpc")
+region = Rect2(672, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwj5b"]
+atlas = ExtResource("8_qemu2")
+region = Rect2(0, 0, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khs5b"]
+atlas = ExtResource("8_qemu2")
+region = Rect2(97, 0, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40thd"]
+atlas = ExtResource("8_qemu2")
+region = Rect2(194, 0, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gr6e5"]
+atlas = ExtResource("8_qemu2")
+region = Rect2(291, 0, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xerd1"]
+atlas = ExtResource("8_qemu2")
+region = Rect2(388, 0, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3vqs"]
+atlas = ExtResource("8_qemu2")
+region = Rect2(485, 0, 97, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xh3mw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5t58")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pm13k")
+}],
+"loop": true,
+"name": &"jump_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxiyw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cspum")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qmy07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_534h4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r34hb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqcvp")
+}],
+"loop": true,
+"name": &"run",
+"speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mwj5b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khs5b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40thd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gr6e5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xerd1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3vqs")
+}],
+"loop": true,
+"name": &"sneak",
+"speed": 9.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
 size = Vector2(20, 23)
 
@@ -151,7 +274,7 @@ size = Vector2(20, 14)
 [sub_resource type="CircleShape2D" id="CircleShape2D_3bx22"]
 radius = 25.298222
 
-[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "SoundAreaWalkingComponent", "AnimatedSprite2D") groups=["player"]]
+[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "SoundAreaWalkingComponent", "AnimatedSprite2D", "SoundAnimatedSprite2D") groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_gp1ay")
 AttackRaycast = NodePath("AttackRaycast")
@@ -159,6 +282,7 @@ PushRaycast = NodePath("PushRaycast")
 BallScene = ExtResource("2_hntan")
 SoundAreaWalkingComponent = NodePath("SoundArea")
 AnimatedSprite2D = NodePath("AnimatedSprite2D")
+SoundAnimatedSprite2D = NodePath("SoundAnimation")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -166,11 +290,21 @@ sprite_frames = SubResource("SpriteFrames_ecf6u")
 animation = &"jump_up"
 autoplay = "idle"
 
+[node name="SoundAnimation" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-0.9999943, 1.0000076)
+scale = Vector2(3.4732444, 3.3292644)
+sprite_frames = SubResource("SpriteFrames_xh3mw")
+animation = &"run"
+frame = 4
+frame_progress = 0.67147696
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_ig7tw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
 
 [node name="PushRaycast" type="RayCast2D" parent="."]
 target_position = Vector2(25, 0)
@@ -187,8 +321,6 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathCollision"]
 shape = SubResource("RectangleShape2D_qo5v2")
 debug_color = Color(0.6835048, 0, 0.08780732, 0.41960785)
-
-[node name="StateMachine" type="Node" parent="."]
 
 [node name="SoundArea" type="Area2D" parent="."]
 collision_layer = 16386

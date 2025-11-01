@@ -21,6 +21,7 @@ namespace KatrinaGame.Core
 
         protected Dictionary<string, IPlayerBaseComponent> Components = new();
         [Export] public AnimatedSprite2D AnimatedSprite2D { get; set; }
+        [Export] public AnimatedSprite2D SoundAnimatedSprite2D { get; set; }
 
 
 

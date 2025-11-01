@@ -11,7 +11,7 @@ public partial class PlayerManager : Node
 
     public BasePlayer BasePlayer { get; private set; } = null;
     public static float RunNoiseRadius { get; private set; } = 150f;
-    public static float SneakNoiseRadius { get; private set; } = 20f;
+    public static float SneakNoiseRadius { get; private set; } = 50f;
     public static float JumpNoiseRadius { get; private set; } = 50f;
     public override void _Ready()
     {

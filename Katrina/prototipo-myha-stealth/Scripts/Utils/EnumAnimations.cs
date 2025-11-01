@@ -13,4 +13,6 @@ namespace KatrinaGame.Scripts.Utils
         jump_up,
         sneak
     }
+
+
 }
