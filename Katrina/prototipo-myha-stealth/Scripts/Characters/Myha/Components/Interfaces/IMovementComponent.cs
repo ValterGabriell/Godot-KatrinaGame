@@ -10,5 +10,7 @@ namespace KatrinaGame.Core.Interfaces
         void Move(Vector2 direction, float PlayerSpeed);
         void Jump();
         void ApplyGravity(double delta);
+        bool IsWallWalkInactive();
+            bool IsWallWalkActive();
     }
 }

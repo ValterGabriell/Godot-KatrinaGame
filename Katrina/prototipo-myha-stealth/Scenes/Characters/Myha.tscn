@@ -274,7 +274,7 @@ size = Vector2(20, 14)
 [sub_resource type="CircleShape2D" id="CircleShape2D_3bx22"]
 radius = 25.298222
 
-[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "SoundAreaWalkingComponent", "AnimatedSprite2D", "SoundAnimatedSprite2D") groups=["player"]]
+[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "SoundAreaWalkingComponent", "TimeToFallWall", "AnimatedSprite2D", "SoundAnimatedSprite2D") groups=["player"]]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_gp1ay")
@@ -282,6 +282,7 @@ AttackRaycast = NodePath("AttackRaycast")
 PushRaycast = NodePath("PushRaycast")
 BallScene = ExtResource("2_hntan")
 SoundAreaWalkingComponent = NodePath("SoundArea")
+TimeToFallWall = NodePath("TimerToFallWall")
 AnimatedSprite2D = NodePath("AnimatedSprite2D")
 SoundAnimatedSprite2D = NodePath("SoundAnimation")
 
@@ -329,5 +330,9 @@ collision_mask = 4096
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SoundArea"]
 shape = SubResource("CircleShape2D_3bx22")
+
+[node name="TimerToFallWall" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
 
 [connection signal="body_entered" from="DeathCollision" to="." method="_on_death_collision_body_entered"]

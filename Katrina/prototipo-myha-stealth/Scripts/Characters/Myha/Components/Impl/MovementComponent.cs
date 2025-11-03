@@ -7,6 +7,7 @@ using PrototipoMyha;
 using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
+using System;
 
 namespace KatrinaGame.Components
 {
@@ -15,8 +16,10 @@ namespace KatrinaGame.Components
         private BasePlayer _player;
         private MyhaPlayer _myhaPlayer;
         private float _inertiaDeceleration = 20f;
-
+        private float _coyoteTime = 0.2f; // Tempo em segundos para o pulo de coyote
+        private float _coyoteTimer = 0f;
         private bool _wasOnFloorLastFrame = true; // Adicionar esta variável
+        private bool timeToFallStarted = false;
 
         //usando no walk sound area
         public bool IsPlayerWalking { get; private set; } = false;
@@ -27,33 +30,67 @@ namespace KatrinaGame.Components
         {
             _player = player;
             _myhaPlayer = player as MyhaPlayer;
+            this._player.TimeToFallWall.Timeout += FallFromWall;
+            
         }
 
-        public void Process(double delta) { }
+        private void FallFromWall()
+        {
+            this._player.SetState(PlayerState.FALLING_FOR_DEATH);
+        }
+
+        public void Process(double delta) {
+            //GDLogger.PrintDebug_Red(this._player.TimeToFallWall.TimeLeft);
+        }
 
         public void PhysicsProcess(double delta)
         {
             ApplyGravity(delta);
-            CheckLanding(); 
+            CheckLanding();
+            UpdateCoyoteTimer(delta);
         }
 
         public void HandleInput(double delta) { }
+        private void UpdateCoyoteTimer(double delta)
+        {
+            if (_player.IsOnFloor() && this._player.CurrentPlayerState != PlayerState.WALL_WALK_STOP)
+            {
+                _coyoteTimer = _coyoteTime; // reseta o timer quando está no chão
+            }
+            else
+            {
+                _coyoteTimer -= (float)delta; // diminui o timer quando está no ar
+            }
+        }
+
+
 
         public void Move(Vector2 direction, float CurrentSpeed)
         {
             PlayerManager.GetPlayerGlobalInstance().UpdatePlayerPosition(_player.GlobalPosition);
             if (this._player.IsMovementBlocked) return;
 
-            var isPlayerMoving = direction.X != 0;
+            var isPlayerMoving = this._player.CurrentPlayerState != PlayerState.WALL_WALK_STOP ? direction.X != 0 : direction.Y != 0;
             var isPlayerOnFloor = this._player.IsOnFloor();
             var isPlayerJumping = this._player.CurrentPlayerState == PlayerState.JUMPING;
-            var isPlayerWalLWalking = this._player.CurrentPlayerState == PlayerState.WALL_WALK;
+            var isPlayerWalLWalking = this._player.CurrentPlayerState == PlayerState.WALL_WALK_STOP;
 
-            if (isPlayerMoving)
+            
+
+            if (isPlayerMoving && this._player.CurrentPlayerState != PlayerState.WALL_WALK_STOP)
             {
                 IsPlayerWalking = true;
                 _player.Velocity = new Vector2(direction.Normalized().X * CurrentSpeed, _player.Velocity.Y);
+                
                 UpdateSpriteDirection(direction);
+            }
+
+            if (isPlayerMoving && this._player.CurrentPlayerState == PlayerState.WALL_WALK_STOP)
+            {
+                IsPlayerWalking = true;
+                _player.Velocity = new Vector2(0, direction.Normalized().Y * CurrentSpeed);
+ 
+                
             }
 
             if (IsMovingConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping))
@@ -68,41 +105,97 @@ namespace KatrinaGame.Components
 
             if (IsIdleConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping, isPlayerWalLWalking))
             {
+                
                 this._player.SetState(PlayerState.IDLE);
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerStoped));
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.idle.ToString());
             }
 
-            if(!isPlayerOnFloor && this._myhaPlayer.PushRaycast.IsColliding())
+            if (IsWallContactDetected(isPlayerOnFloor))
             {
-                this._player.SetState(PlayerState.WALL_WALK);
-                this._player.Velocity = new Vector2(0, 0);
+                // Se está pulando E subindo (velocidade Y negativa), não gruda na parede ainda
+                bool isRisingFromJump = isPlayerJumping && IsPlayerRising();
+
+                if (!isRisingFromJump && this._player.CurrentPlayerState != PlayerState.FALLING_FOR_DEATH)
+                {
+                    this._player.SetState(PlayerState.WALL_WALK_STOP);
+                    _player.Velocity = new Vector2(_player.Velocity.X, _player.Velocity.Y);
+
+                    if (this._player.TimeToFallWall.IsStopped())
+                    {
+                        this._player.TimeToFallWall.Start();
+                    }
+                }
             }
-           
+
+
 
             if (!isPlayerMoving)
             {
                 IsPlayerWalking = false;
-                _player.Velocity = new Vector2(
-                    Mathf.MoveToward(_player.Velocity.X, 0, _inertiaDeceleration),
-                    _player.Velocity.Y
-                );
+
+                if (this._player.CurrentPlayerState == PlayerState.WALL_WALK_STOP)
+                {
+                    // Reseta tanto X quanto Y na parede
+                    _player.Velocity = new Vector2(0, 0);
+                }
+                else
+                {
+                    // Reseta apenas X no chão/ar
+                    _player.Velocity = new Vector2(
+                        Mathf.MoveToward(_player.Velocity.X, 0, _inertiaDeceleration),
+                        _player.Velocity.Y
+                    );
+                }
             }
 
             CheckLanding();
         }
 
+        private bool IsWallContactDetected(bool isPlayerOnFloor)
+        {
+            return !isPlayerOnFloor && this._myhaPlayer.PushRaycast.IsColliding();
+        }
+
+        private bool IsPlayerRising()
+        {
+            return _player.Velocity.Y < 0;
+        }
+
         public void Jump()
         {
-            if (this._player.IsMovementBlocked || !_player.IsOnFloor()) return;
+            bool canJump = _player.IsOnFloor() || this._player.CurrentPlayerState == PlayerState.WALL_WALK_STOP || _coyoteTimer > 0f;
+
+            if (this._player.IsMovementBlocked || !canJump) return;
+
+            if (this._player.CurrentPlayerState == PlayerState.WALL_WALK_STOP)
+            {
+                ApplyWallJump();
+                return;
+            }
+
+            ApplyJump();
+        }
 
 
+        private void ApplyJump()
+        {
             this._player.SetState(PlayerState.JUMPING);
             _player.Velocity = new Vector2(_player.Velocity.X, _player.JumpVelocity);
+            
+
             SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), PlayerManager.JumpNoiseRadius);
             SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.jump_up.ToString());
         }
 
+        private void ApplyWallJump()
+        {
+            this._player.SetState(PlayerState.JUMPING);
+            _player.Velocity = new Vector2(0, _player.JumpVelocity);
+
+            SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), PlayerManager.JumpNoiseRadius);
+            SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.jump_up.ToString());
+        }
 
         private static bool IsIdleConditionMet(bool isPlayerMoving, bool isPlayerOnFloor, bool isPlayerJumping, bool isPlayerWalLWalking)
         {
@@ -159,12 +252,26 @@ namespace KatrinaGame.Components
 
         public void ApplyGravity(double delta)
         {
+            if (this._player.CurrentPlayerState == PlayerState.WALL_WALK_STOP)
+            {
+                return;
+            }
+
             if (!_player.IsOnFloor())
             {
                 _player.Velocity = new Vector2(_player.Velocity.X, _player.Velocity.Y + _player.Gravity * (float)delta);
             }
         }
 
+        public bool IsWallWalkInactive()
+        {
+            return this._player.CurrentPlayerState != PlayerState.WALL_WALK_STOP;
+        }
+
+        public bool IsWallWalkActive()
+        {
+            return this._player.CurrentPlayerState == PlayerState.WALL_WALK_STOP ;
+        }
         public void Cleanup() { }
     }
 }

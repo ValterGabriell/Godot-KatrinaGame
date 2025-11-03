@@ -6,6 +6,7 @@ using PrototipoMyha;
 using PrototipoMyha.Player.Components.Impl;
 using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Scripts.Characters.Myha.Components.Impl;
+using PrototipoMyha.Utilidades;
 using System;
 
 namespace KatrinaGame.Players
@@ -67,30 +68,58 @@ namespace KatrinaGame.Players
         {
             // Input de movimento
             Vector2 inputVector = Vector2.Zero;
-            if(inputVector == Vector2.Zero) CurrentPlayerSpeed = 0f;
+            if (inputVector == Vector2.Zero) CurrentPlayerSpeed = 0f;
 
 
-            if (Input.IsActionPressed("d") && this.IsMovementBlocked == false)
+            if (this.CurrentPlayerState != PlayerState.WALL_WALK_STOP)
             {
-                inputVector.X += 1;
-                FlipRaycast(direction: 1,
-                [
-                    AttackRaycast,
+                if (Input.IsActionPressed("d") && this.IsMovementBlocked == false)
+                {
+                    inputVector.X += 1;
+                    FlipRaycast(direction: 1,
+                    [
+                        AttackRaycast,
                     PushRaycast
-                ]);
-                CurrentPlayerSpeed = Speed ;
+                    ]);
+                    CurrentPlayerSpeed = Speed;
+                }
+
+                if (Input.IsActionPressed("a") && this.IsMovementBlocked == false)
+                {
+                    inputVector.X -= 1;
+                    FlipRaycast(direction: -1,
+                   [
+                       AttackRaycast,
+                    PushRaycast
+                   ]);
+                    CurrentPlayerSpeed = Speed;
+                }
+
+
+                if (Input.IsKeyPressed(Key.Ctrl))
+                {
+
+                    CurrentPlayerSpeed = SneakSpeed;
+                }
             }
 
-            if (Input.IsActionPressed("a") && this.IsMovementBlocked == false)
+            if(this.CurrentPlayerState == PlayerState.WALL_WALK_STOP)
             {
-                inputVector.X -= 1;
-                FlipRaycast(direction: -1,
-               [
-                   AttackRaycast,
-                    PushRaycast
-               ]);
-                CurrentPlayerSpeed = Speed;
+                if (Input.IsActionPressed("w") && this.IsMovementBlocked == false)
+                {
+                    inputVector.Y -= 1;
+                    CurrentPlayerSpeed = WallWalkSpeed;
+                }
+
+                if (Input.IsActionPressed("s") && this.IsMovementBlocked == false)
+                {
+                    inputVector.Y += 1;
+                    CurrentPlayerSpeed = WallWalkSpeed;
+                }
+
             }
+
+
 
             if (Input.IsActionJustPressed("jump"))
             {
@@ -98,17 +127,11 @@ namespace KatrinaGame.Players
                 MovementComponent.Jump();
             }
 
-            if (Input.IsKeyPressed(Key.Ctrl))
-            {
-               
-                CurrentPlayerSpeed = SneakSpeed;
-            }
-
-
             MovementComponent.Move(inputVector, CurrentPlayerSpeed);
 
             base.HandleInput(delta);
         }
 
+      
     }
 }
