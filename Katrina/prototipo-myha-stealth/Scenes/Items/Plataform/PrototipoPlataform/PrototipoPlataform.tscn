@@ -6,7 +6,7 @@
 size = Vector2(114, 20)
 
 [node name="PrototipoPlataform" type="StaticBody2D"]
-collision_layer = 32
+collision_layer = 4
 collision_mask = 4098
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

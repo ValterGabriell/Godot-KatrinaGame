@@ -1,6 +1,7 @@
 using Godot;
 using KatrinaGame.Core;
 using KatrinaGame.Core.Interfaces;
+using KatrinaGame.Players;
 using KatrinaGame.Scripts.Utils;
 using PrototipoMyha;
 using PrototipoMyha.Player.StateManager;
@@ -11,10 +12,8 @@ namespace KatrinaGame.Components
 {
     public partial class MovementComponent : Node, IMovementComponent
     {
-
-
-
         private BasePlayer _player;
+        private MyhaPlayer _myhaPlayer;
         private float _inertiaDeceleration = 20f;
 
         private bool _wasOnFloorLastFrame = true; // Adicionar esta variável
@@ -27,7 +26,7 @@ namespace KatrinaGame.Components
         public void Initialize(BasePlayer player)
         {
             _player = player;
-          
+            _myhaPlayer = player as MyhaPlayer;
         }
 
         public void Process(double delta) { }
@@ -48,6 +47,7 @@ namespace KatrinaGame.Components
             var isPlayerMoving = direction.X != 0;
             var isPlayerOnFloor = this._player.IsOnFloor();
             var isPlayerJumping = this._player.CurrentPlayerState == PlayerState.JUMPING;
+            var isPlayerWalLWalking = this._player.CurrentPlayerState == PlayerState.WALL_WALK;
 
             if (isPlayerMoving)
             {
@@ -66,12 +66,19 @@ namespace KatrinaGame.Components
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), newPlayerAnimation);
             }
 
-            if (IsIdleConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping))
+            if (IsIdleConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping, isPlayerWalLWalking))
             {
                 this._player.SetState(PlayerState.IDLE);
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerStoped));
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.idle.ToString());
             }
+
+            if(!isPlayerOnFloor && this._myhaPlayer.PushRaycast.IsColliding())
+            {
+                this._player.SetState(PlayerState.WALL_WALK);
+                this._player.Velocity = new Vector2(0, 0);
+            }
+           
 
             if (!isPlayerMoving)
             {
@@ -89,6 +96,7 @@ namespace KatrinaGame.Components
         {
             if (this._player.IsMovementBlocked || !_player.IsOnFloor()) return;
 
+
             this._player.SetState(PlayerState.JUMPING);
             _player.Velocity = new Vector2(_player.Velocity.X, _player.JumpVelocity);
             SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), PlayerManager.JumpNoiseRadius);
@@ -96,9 +104,9 @@ namespace KatrinaGame.Components
         }
 
 
-        private static bool IsIdleConditionMet(bool isPlayerMoving, bool isPlayerOnFloor, bool isPlayerJumping)
+        private static bool IsIdleConditionMet(bool isPlayerMoving, bool isPlayerOnFloor, bool isPlayerJumping, bool isPlayerWalLWalking)
         {
-            return !isPlayerMoving && !isPlayerJumping && isPlayerOnFloor;
+            return !isPlayerMoving && !isPlayerJumping && isPlayerOnFloor && !isPlayerWalLWalking;
         }
 
         private static bool IsMovingConditionMet(bool isPlayerMoving, bool isPlayerOnFloor, bool isPlayerJumping)

@@ -14,5 +14,6 @@ public enum PlayerState
     SNEAK,
     HIDDEN,
     APPEAR,
-    JUMPING
+    JUMPING,
+    WALL_WALK
 }

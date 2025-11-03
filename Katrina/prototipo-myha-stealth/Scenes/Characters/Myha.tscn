@@ -276,6 +276,7 @@ radius = 25.298222
 
 [node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "PushRaycast", "SoundAreaWalkingComponent", "AnimatedSprite2D", "SoundAnimatedSprite2D") groups=["player"]]
 collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_gp1ay")
 AttackRaycast = NodePath("AttackRaycast")
 PushRaycast = NodePath("PushRaycast")
@@ -308,7 +309,7 @@ zoom = Vector2(1.5, 1.5)
 
 [node name="PushRaycast" type="RayCast2D" parent="."]
 target_position = Vector2(25, 0)
-collision_mask = 4
+collision_mask = 32
 
 [node name="AttackRaycast" type="RayCast2D" parent="."]
 target_position = Vector2(34, 0)
@@ -316,7 +317,7 @@ collision_mask = 512
 
 [node name="DeathCollision" type="Area2D" parent="."]
 collision_layer = 64
-collision_mask = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathCollision"]
 shape = SubResource("RectangleShape2D_qo5v2")
