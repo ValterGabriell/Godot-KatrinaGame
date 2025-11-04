@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://b2xg02af7iy2a" path="res://Scripts/Levels/Level_0.cs" id="1_272bh"]
 [ext_resource type="PackedScene" uid="uid://dw4s248phtymn" path="res://Scenes/Characters/Myha.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ce8dcph8wdnvb" path="res://Scripts/Items/ShadowArea/ShadowAreaScene.tscn" id="5_7mycd"]
-[ext_resource type="PackedScene" uid="uid://fivb1ydt0fiu" path="res://Scenes/Items/Plataform/PrototipoPlataform/PrototipoPlataform.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://fivb1ydt0fiu" path="res://Scenes/Items/Plataform/HorizontalPlataform/HorizontalPlataform.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dyb3c5aecsw5r" path="res://Scenes/Enemies/BaseGuard.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://belhcxrdca17j" path="res://Scenes/Items/Itens/Bullet01.tscn" id="6_272bh"]
 [ext_resource type="PackedScene" uid="uid://cur6241ewq0d6" path="res://Scenes/Items/Plataform/VerticalPlataform/VerticalPlataform.tscn" id="8_5vw27"]

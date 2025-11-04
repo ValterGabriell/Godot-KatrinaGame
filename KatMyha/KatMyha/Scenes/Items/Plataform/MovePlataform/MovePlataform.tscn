@@ -1,10 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://c551nssba7gch"]
+[gd_scene load_steps=8 format=3 uid="uid://c551nssba7gch"]
 
-[ext_resource type="Script" uid="uid://ce2ypx36rw3me" path="res://MovePlataform.cs" id="1_143qh"]
-[ext_resource type="Texture2D" uid="uid://cbwbq8yyee6wn" path="res://Dec/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (6).png" id="1_hufhh"]
+[ext_resource type="Script" uid="uid://dddajnkljvrqb" path="res://Scenes/Items/Plataform/MovePlataform/MovePlataform.cs" id="1_fqw61"]
+[ext_resource type="Texture2D" uid="uid://cbwbq8yyee6wn" path="res://Assets/Sprites/Environment/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (6).png" id="1_hufhh"]
+
+[sub_resource type="Curve2D" id="Curve2D_fqw61"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -18, 26, 0, 0, 0, 0, -14, 37, 0, 0, 0, 0, 119, 40, 0, 0, 0, 0, 147, 14, 0, 0, 0, 0, 21, 19, 0, 0, 0, 0, 16, 31, 0, 0, 0, 0, -30, 14, 0, 0, 0, 0, -22, 0)
+}
+point_count = 8
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hufhh"]
 size = Vector2(56.5, 20)
+
+[sub_resource type="Animation" id="Animation_120v5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_143qh"]
 resource_name = "move_plataform"
@@ -22,38 +43,26 @@ tracks/0/keys = {
 "values": [0.0, 1.0]
 }
 
-[sub_resource type="Animation" id="Animation_120v5"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PathFollow2D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_120v5"]
 _data = {
 &"RESET": SubResource("Animation_120v5"),
 &"move_plataform": SubResource("Animation_143qh")
 }
 
-[node name="Path2D" type="Path2D" node_paths=PackedStringArray("PathFollow2D", "AnimationPlayer")]
-script = ExtResource("1_143qh")
-PathFollow2D = NodePath("PathFollow2D")
-AnimationPlayer = NodePath("AnimationPlayer")
+[node name="Path2D" type="Path2D"]
+curve = SubResource("Curve2D_fqw61")
+script = ExtResource("1_fqw61")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(-18, 26)
+rotation = 1.2220253
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
 remote_path = NodePath("../../AnimatableBody2D")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+position = Vector2(-18, 26)
+rotation = 1.2220253
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
 texture = ExtResource("1_hufhh")
