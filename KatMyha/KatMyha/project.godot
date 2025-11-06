@@ -33,6 +33,7 @@ pushable=""
 death_water_area=""
 enemy=""
 terrain=""
+wall_vertical=""
 
 [input]
 

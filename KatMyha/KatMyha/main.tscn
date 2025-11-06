@@ -85,6 +85,7 @@ scale = Vector2(2, 1)
 
 [node name="MovePlataformWithGrab" parent="Plataforms/MovePlataform" instance=ExtResource("10_efxa6")]
 position = Vector2(-650, 15)
+Speed = 0.8
 
 [node name="Shake" parent="Plataforms" instance=ExtResource("10_4c57u")]
 position = Vector2(-156, -22)

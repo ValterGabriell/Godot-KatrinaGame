@@ -57,15 +57,15 @@ PathFollow2D = NodePath("PathFollow2D")
 AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2(0, -1)
-rotation = 0.010869138
+position = Vector2(-1, -2)
+rotation = -0.0029498439
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
 remote_path = NodePath("../../AnimatableBody2D")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
-position = Vector2(0, -1)
-rotation = 0.010869138
+position = Vector2(-1, -2)
+rotation = -0.0029498439
 
 [node name="VerticalPlataform" parent="AnimatableBody2D" instance=ExtResource("2_e2lch")]
 position = Vector2(12, -65)
