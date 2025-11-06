@@ -1,15 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://c551nssba7gch"]
+[gd_scene load_steps=9 format=3 uid="uid://dnri2nw7j0trm"]
 
-[ext_resource type="Script" uid="uid://dddajnkljvrqb" path="res://Scripts/Items/Plataform/MovePlataform.cs" id="1_fqw61"]
-[ext_resource type="Texture2D" uid="uid://cbwbq8yyee6wn" path="res://Assets/Sprites/Environment/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (6).png" id="1_hufhh"]
+[ext_resource type="Texture2D" uid="uid://cbwbq8yyee6wn" path="res://Assets/Sprites/Environment/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (6).png" id="1_6msmu"]
+[ext_resource type="Script" uid="uid://dddajnkljvrqb" path="res://Scripts/Items/Plataform/MovePlataform.cs" id="1_sdns2"]
+[ext_resource type="PackedScene" uid="uid://cur6241ewq0d6" path="res://Scenes/Items/Plataform/VerticalPlataform/VerticalPlataform.tscn" id="2_e2lch"]
 
-[sub_resource type="Curve2D" id="Curve2D_fqw61"]
+[sub_resource type="Curve2D" id="Curve2D_sdns2"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 93, 0)
+"points": PackedVector2Array(0, 0, 0, 0, -1, -2, 0, 0, 0, 0, 338, -3)
 }
 point_count = 2
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hufhh"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e2lch"]
 size = Vector2(56.5, 20)
 
 [sub_resource type="Animation" id="Animation_120v5"]
@@ -49,27 +50,31 @@ _data = {
 &"move_plataform": SubResource("Animation_143qh")
 }
 
-[node name="Path2D" type="Path2D" node_paths=PackedStringArray("PathFollow2D", "AnimationPlayer")]
-curve = SubResource("Curve2D_fqw61")
-script = ExtResource("1_fqw61")
-Speed = 0.8
+[node name="MovePlataformWithGrab" type="Path2D" node_paths=PackedStringArray("PathFollow2D", "AnimationPlayer")]
+curve = SubResource("Curve2D_sdns2")
+script = ExtResource("1_sdns2")
 PathFollow2D = NodePath("PathFollow2D")
 AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2(-1, 0)
+position = Vector2(0, -1)
+rotation = 0.010869138
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
 remote_path = NodePath("../../AnimatableBody2D")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
-position = Vector2(-1, 0)
+position = Vector2(0, -1)
+rotation = 0.010869138
+
+[node name="VerticalPlataform" parent="AnimatableBody2D" instance=ExtResource("2_e2lch")]
+position = Vector2(12, -65)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
-texture = ExtResource("1_hufhh")
+texture = ExtResource("1_6msmu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
-shape = SubResource("RectangleShape2D_hufhh")
+shape = SubResource("RectangleShape2D_e2lch")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

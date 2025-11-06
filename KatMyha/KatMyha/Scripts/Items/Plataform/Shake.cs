@@ -2,8 +2,10 @@ using Godot;
 using KatrinaGame.Core;
 using PrototipoMyha;
 using PrototipoMyha.Player.StateManager;
+using PrototipoMyha.Utilidades;
+using System;
 
-public partial class ShakeObject : StaticBody2D
+public partial class Shake : StaticBody2D
 {
     [Export] public Area2D AreaDetectPlayer;
     [Export] public CollisionShape2D CollisionRotatePlayer;
@@ -53,6 +55,7 @@ public partial class ShakeObject : StaticBody2D
     }
     private void SetPlayerOnObject(Node2D body)
     {
+        player = body as BasePlayer;
         shouldResetRotation = false;
         isPlayerFalling = false;
         isPlayerOnObject = true;
@@ -86,7 +89,6 @@ public partial class ShakeObject : StaticBody2D
     private void ResetObjectRotation(double delta)
     {
         RotationDegrees = Mathf.Lerp(RotationDegrees, 0, 8f * (float)delta);
-        GD.Print("RotationDegrees: " + RotationDegrees);
         if (Mathf.Abs(RotationDegrees) < 0.1f)
             RotationDegrees = 0;
     }
@@ -94,11 +96,15 @@ public partial class ShakeObject : StaticBody2D
     private void MoveObjectWithPlayerInput(double delta, PlayerState currentPlayerMovement)
     {
         float moveSpeed = 10f;
-        if (Input.IsActionPressed("ui_right"))
+        if (Input.IsActionPressed("d"))
             ApplyRightMovement(delta, moveSpeed);
 
-        else if (Input.IsActionPressed("ui_left"))
+        else if (Input.IsActionPressed("a"))
             ApplyLeftMovement(delta, moveSpeed);
+        else if (Input.IsKeyPressed(Key.Space))
+        {
+            player.Velocity = new Vector2(player.Velocity.X, -300);
+        }
         else
             player.DecreaseBallance((float)delta);
 

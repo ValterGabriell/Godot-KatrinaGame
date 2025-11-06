@@ -1,13 +1,14 @@
 using Godot;
+using PrototipoMyha.Player.StateManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrototipoKatrina
+namespace KatrinaGame.Core
 {
-    public partial class MyhaEquilibrio : CharacterBody2D
+    public partial class BasePlayer : CharacterBody2D
     {
         private const float INITAL_MAX_BALLANCE = 100.0f;
         private float Equilibrio = INITAL_MAX_BALLANCE;
@@ -58,25 +59,25 @@ namespace PrototipoKatrina
         }
 
 
-        //public EnumMove GetCurrentPlayerMovement()
-        //{
-        //    return this.CurrentPlayerMovement;
-        //}
+        public PlayerState GetCurrentPlayerMovement()
+        {
+            return this.CurrentPlayerState;
+        }
 
-        //public void ResetBallance()
-        //{
-        //    Equilibrio = INITAL_MAX_BALLANCE;
-        //}
+        public void ResetBallance()
+        {
+            Equilibrio = INITAL_MAX_BALLANCE;
+        }
 
-        //public void SlowKatrinaVelocity()
-        //{
-        //    Speed = 50.0f; // Velocidade mínima
-        //}
+        public void SlowKatrinaVelocity()
+        {
+            Speed = 50.0f; 
+        }
 
-        //public void NormalizeKatrinaVelocity()
-        //{
-        //    Speed = 200.0f; // Velocidade mínima
-        //}
+        public void NormalizeKatrinaVelocity()
+        {
+            Speed = 200.0f; 
+        }
 
     }
 }
