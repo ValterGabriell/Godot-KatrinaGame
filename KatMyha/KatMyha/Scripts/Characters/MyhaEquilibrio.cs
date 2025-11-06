@@ -58,25 +58,25 @@ namespace PrototipoKatrina
         }
 
 
-        public EnumMove GetCurrentPlayerMovement()
-        {
-            return this.CurrentPlayerMovement;
-        }
+        //public EnumMove GetCurrentPlayerMovement()
+        //{
+        //    return this.CurrentPlayerMovement;
+        //}
 
-        public void ResetBallance()
-        {
-            Equilibrio = INITAL_MAX_BALLANCE;
-        }
+        //public void ResetBallance()
+        //{
+        //    Equilibrio = INITAL_MAX_BALLANCE;
+        //}
 
-        public void SlowKatrinaVelocity()
-        {
-            Speed = 50.0f; // Velocidade mínima
-        }
+        //public void SlowKatrinaVelocity()
+        //{
+        //    Speed = 50.0f; // Velocidade mínima
+        //}
 
-        public void NormalizeKatrinaVelocity()
-        {
-            Speed = 200.0f; // Velocidade mínima
-        }
+        //public void NormalizeKatrinaVelocity()
+        //{
+        //    Speed = 200.0f; // Velocidade mínima
+        //}
 
     }
 }
