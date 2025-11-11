@@ -1,17 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://dnri2nw7j0trm"]
+[gd_scene load_steps=8 format=3 uid="uid://dnri2nw7j0trm"]
 
-[ext_resource type="Texture2D" uid="uid://cbwbq8yyee6wn" path="res://Assets/Sprites/Environment/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (6).png" id="1_6msmu"]
+[ext_resource type="Texture2D" uid="uid://bc38phk2i10ob" path="res://Assets/Sprites/Itens/MovePlataform.png" id="1_6msmu"]
 [ext_resource type="Script" uid="uid://dddajnkljvrqb" path="res://Scripts/Items/Plataform/MovePlataform.cs" id="1_sdns2"]
-[ext_resource type="PackedScene" uid="uid://cur6241ewq0d6" path="res://Scenes/Items/Plataform/VerticalPlataform/VerticalPlataform.tscn" id="2_e2lch"]
 
 [sub_resource type="Curve2D" id="Curve2D_sdns2"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -1, -2, 0, 0, 0, 0, 338, -3)
+"points": PackedVector2Array(0, 0, 0, 0, 0, -4, 0, 0, 0, 0, 162, -6)
 }
 point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e2lch"]
-size = Vector2(56.5, 20)
+size = Vector2(67.011505, 67.990845)
 
 [sub_resource type="Animation" id="Animation_120v5"]
 length = 0.001
@@ -50,30 +49,26 @@ _data = {
 &"move_plataform": SubResource("Animation_143qh")
 }
 
-[node name="MovePlataformWithGrab" type="Path2D" node_paths=PackedStringArray("PathFollow2D", "AnimationPlayer")]
+[node name="MovePlataformWithDeath01" type="Path2D" node_paths=PackedStringArray("PathFollow2D", "AnimationPlayer")]
 curve = SubResource("Curve2D_sdns2")
 script = ExtResource("1_sdns2")
 PathFollow2D = NodePath("PathFollow2D")
 AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2(-1, -2)
-rotation = -0.0029498439
+position = Vector2(0, -3)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
 remote_path = NodePath("../../AnimatableBody2D")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
-position = Vector2(-1, -2)
-rotation = -0.0029498439
-
-[node name="VerticalPlataform" parent="AnimatableBody2D" instance=ExtResource("2_e2lch")]
-position = Vector2(12, -65)
+position = Vector2(0, -3)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
 texture = ExtResource("1_6msmu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+position = Vector2(-0.49999756, -0.0014772415)
 shape = SubResource("RectangleShape2D_e2lch")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

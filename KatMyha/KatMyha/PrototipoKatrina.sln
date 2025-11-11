@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrototipoKatrina", "PrototipoKatrina.csproj", "{0FAE8998-78AF-441D-9BCB-DF62067C22A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrototipoKatrina", "PrototipoKatrina.csproj", "{24F2D226-6469-4A1E-BA78-B9C641653DDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0FAE8998-78AF-441D-9BCB-DF62067C22A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FAE8998-78AF-441D-9BCB-DF62067C22A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FAE8998-78AF-441D-9BCB-DF62067C22A6}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{0FAE8998-78AF-441D-9BCB-DF62067C22A6}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{0FAE8998-78AF-441D-9BCB-DF62067C22A6}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{0FAE8998-78AF-441D-9BCB-DF62067C22A6}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{24F2D226-6469-4A1E-BA78-B9C641653DDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F2D226-6469-4A1E-BA78-B9C641653DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F2D226-6469-4A1E-BA78-B9C641653DDB}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{24F2D226-6469-4A1E-BA78-B9C641653DDB}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{24F2D226-6469-4A1E-BA78-B9C641653DDB}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{24F2D226-6469-4A1E-BA78-B9C641653DDB}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

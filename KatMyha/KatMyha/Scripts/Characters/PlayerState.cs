@@ -15,6 +15,7 @@ public enum PlayerState
     HIDDEN,
     APPEAR,
     JUMPING,
-    WALL_WALK_STOP,
-    FALLING_FOR_DEATH
+    JUMPING_WALL,
+    WALL_SLIDING,
+    FALLING
 }

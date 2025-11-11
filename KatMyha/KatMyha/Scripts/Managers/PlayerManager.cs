@@ -1,11 +1,12 @@
 using Godot;
 using KatrinaGame.Core;
 using KatrinaGame.Players;
+using PrototipoMyha.Utilidades;
 using System;
 
 public partial class PlayerManager : Node
 {
-    private Vector2 CurrentPlayerPosition;
+    private Vector2 CurrentPlayerPosition { get; set; }
 
     private static PlayerManager PlayerGlobalInstance = null;
 
@@ -13,6 +14,8 @@ public partial class PlayerManager : Node
     public static float RunNoiseRadius { get; private set; } = 150f;
     public static float SneakNoiseRadius { get; private set; } = 50f;
     public static float JumpNoiseRadius { get; private set; } = 50f;
+    public bool PlayerCanSaveTheGame { get; set; } = false;
+    
     public override void _Ready()
     {
         var playerInTree = GetTree().GetNodesInGroup("player");
@@ -24,8 +27,6 @@ public partial class PlayerManager : Node
             ? BasePlayer.GlobalPosition
             : Vector2.Zero;
 
-
-
         if (PlayerGlobalInstance == null)
         {
             PlayerGlobalInstance = this;
@@ -33,6 +34,15 @@ public partial class PlayerManager : Node
         else
         {
             QueueFree();
+        }
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        // Atualiza continuamente a posição do jogador
+        if (BasePlayer != null)
+        {
+            CurrentPlayerPosition = BasePlayer.GlobalPosition;
         }
     }
 

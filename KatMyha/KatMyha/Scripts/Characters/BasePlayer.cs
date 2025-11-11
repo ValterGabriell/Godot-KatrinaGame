@@ -14,7 +14,7 @@ namespace KatrinaGame.Core
     {
         [Export] public bool IsMovementBlocked { get; private set; } = false;
         [Export] public float Speed { get; set; } = 300f;
-        [Export] public float WallWalkSpeed { get; set; } = 100f;
+        [Export] public float WallWalkSpeed { get; set; } = 10f;
         [Export] public float SneakSpeed { get; set; } = 100f;
         [Export] public float JumpVelocity { get; set; } = -300f;
         [Export] public float Gravity { get; set; } = 700f;
@@ -37,6 +37,8 @@ namespace KatrinaGame.Core
             }
 
         }
+
+
 
 
 

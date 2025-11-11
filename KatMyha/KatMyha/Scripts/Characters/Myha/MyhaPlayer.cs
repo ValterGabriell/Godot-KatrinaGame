@@ -3,18 +3,23 @@ using KatrinaGame.Components;
 using KatrinaGame.Core;
 using KatrinaGame.Core.Interfaces;
 using PrototipoMyha;
+using PrototipoMyha.Enemy;
 using PrototipoMyha.Player.Components.Impl;
 using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Scripts.Characters.Myha.Components.Impl;
+using PrototipoMyha.Scripts.Managers;
 using PrototipoMyha.Utilidades;
 using System;
+using System.Linq;
 
 namespace KatrinaGame.Players
 {
     public partial class MyhaPlayer : BasePlayer
     {
         [Export] public RayCast2D AttackRaycast { get; set; }
-        [Export] public RayCast2D PushRaycast { get; set; }
+        [Export] public RayCast2D LeftRaycastWallSlide { get; set; }
+        [Export] public RayCast2D RightRaycastWallSlide { get; set; }
+ 
         [Export] public PackedScene BallScene { get; set; }
         [Export] public Area2D SoundAreaWalkingComponent { get; set; }
         private CircleShape2D SoundAreaWalkingColiisonComponent { get; set; }
@@ -22,6 +27,9 @@ namespace KatrinaGame.Players
         private IMovementComponent MovementComponent;
         private float CurrentPlayerSpeed = 0f;
 
+        /*WALL JUMP*/
+        private int WallDirection { get; set; } = 0;
+        [Export] public Vector2 WallJumpForce { get; set; } = new Vector2(250, -400);
 
 
         protected override void InstanciateComponents()
@@ -46,7 +54,15 @@ namespace KatrinaGame.Players
 
         }
 
+        public RayCast2D GetLeftRayCastDirectionForWallSlide()
+        {
+            return this.LeftRaycastWallSlide;
+        }
 
+        public RayCast2D GetRightRayCastDirectionForWallSlide()
+        {
+            return this.RightRaycastWallSlide;
+        }
 
         private void UpdatePlayerPosition(Vector2 position)
         {
@@ -71,15 +87,14 @@ namespace KatrinaGame.Players
             if (inputVector == Vector2.Zero) CurrentPlayerSpeed = 0f;
 
 
-            if (this.CurrentPlayerState != PlayerState.WALL_WALK_STOP)
+            if (this.CurrentPlayerState != PlayerState.WALL_SLIDING)
             {
                 if (Input.IsActionPressed("d") && this.IsMovementBlocked == false)
                 {
                     inputVector.X += 1;
                     FlipRaycast(direction: 1,
                     [
-                        AttackRaycast,
-                    PushRaycast
+                        AttackRaycast
                     ]);
                     CurrentPlayerSpeed = Speed;
                 }
@@ -89,8 +104,7 @@ namespace KatrinaGame.Players
                     inputVector.X -= 1;
                     FlipRaycast(direction: -1,
                    [
-                       AttackRaycast,
-                    PushRaycast
+                       AttackRaycast
                    ]);
                     CurrentPlayerSpeed = Speed;
                 }
@@ -103,7 +117,7 @@ namespace KatrinaGame.Players
                 }
             }
 
-            if(this.CurrentPlayerState == PlayerState.WALL_WALK_STOP)
+            if(this.CurrentPlayerState == PlayerState.WALL_SLIDING)
             {
                 if (Input.IsActionPressed("w") && this.IsMovementBlocked == false)
                 {
@@ -120,7 +134,6 @@ namespace KatrinaGame.Players
             }
 
 
-
             if (Input.IsActionJustPressed("jump"))
             {
                 inputVector.Y -= 1;
@@ -132,6 +145,5 @@ namespace KatrinaGame.Players
             base.HandleInput(delta);
         }
 
-      
     }
 }

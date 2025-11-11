@@ -18,14 +18,21 @@ namespace PrototipoMyha.Scripts.Managers
         private int TIME_TO_LOAD_GAME = TIME_TO_LOAD_GAME_CONST;
         private const  int TIME_TO_LOAD_GAME_CONST = 150;
         private bool playerHasBeenKilled = false;
+        public int CurrentLevelNumber { get; private set; } = 1;
 
-        public LevelSaveData CurrentLevel { get; private set; }
+        public LevelSaveData CurrentLevelObjData { get; private set; }
+
+        public void SetCurrentLevelNumber(int levelNumber)
+        {
+            CurrentLevelNumber = levelNumber;
+        }
+
 
         // Salvar quando o jogador apertar uma tecla
         public override void _Input(InputEvent @event)
         {
             // F5 para salvar
-            if (@event.IsActionPressed("save_game"))
+            if (@event.IsActionPressed("save_game") && PlayerManager.GetPlayerGlobalInstance().PlayerCanSaveTheGame)
             {
                 SaveGame();
             }
@@ -80,22 +87,23 @@ namespace PrototipoMyha.Scripts.Managers
             return _instance;
         }
 
-        public void SetCurrentLevelInitialData(int levelNumber, List<EnemyBase> enemies, Vector2 PlayerPosition)
+        public void SetCurrentLevelInitialData(List<EnemyBase> enemies)
         {
-            CurrentLevel = new LevelSaveData
+       
+            CurrentLevelObjData = new LevelSaveData
             {
-                LevelNumber = levelNumber,
+                LevelNumber = GameManager.GetGameManagerInstance().CurrentLevelNumber,
                 Enemies = enemies.Select(e => e.ToSaveData()).ToList(),
-                PlayerPosition_X_OnLevel = PlayerPosition.X,
-                PlayerPosition_Y_OnLevel = PlayerPosition.Y
+                PlayerPosition_X_OnLevel = PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition().X,
+                PlayerPosition_Y_OnLevel = PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition().Y
             };
         }
 
         public LevelSaveData GetCurrentLevelUpdatedData()
         {
-            if (CurrentLevel != null)
+            if (CurrentLevelObjData != null)
             {
-                return CurrentLevel;
+                return CurrentLevelObjData;
             }
             return null;
         }
@@ -127,12 +135,15 @@ namespace PrototipoMyha.Scripts.Managers
         }
         public void SaveGame()
         {
+            var playerManager = PlayerManager.GetPlayerGlobalInstance();
+            Vector2 currentPlayerPosition = playerManager.GetPlayerPosition();
+            
             var saveData = new LevelSaveData()
             {
-                LevelNumber = this.CurrentLevel.LevelNumber,
-                PlayerPosition_X_OnLevel = CurrentLevel.PlayerPosition_X_OnLevel,
-                PlayerPosition_Y_OnLevel = CurrentLevel.PlayerPosition_Y_OnLevel,
-                Enemies = this.CurrentLevel.Enemies
+                LevelNumber = this.CurrentLevelObjData.LevelNumber,
+                PlayerPosition_X_OnLevel = currentPlayerPosition.X,
+                PlayerPosition_Y_OnLevel = currentPlayerPosition.Y,
+                Enemies = this.CurrentLevelObjData.Enemies
             };
 
             SaveSystem.SaveSystemInstance.SaveGame(saveData);

@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=4 uid="uid://b1gnb8slestvs"]
 
 [ext_resource type="Texture2D" uid="uid://d2ivhrkguvk2u" path="res://Assets/Tilesets/World/PrototipoWorldTileset.png" id="1_7mycd"]
-[ext_resource type="Script" uid="uid://b2xg02af7iy2a" path="res://Scripts/Levels/Level_0.cs" id="1_272bh"]
+[ext_resource type="Script" uid="uid://p0tnlhwc8n4b" path="res://Scripts/Levels/LevelBase.cs" id="1_efxa6"]
 [ext_resource type="PackedScene" uid="uid://dw4s248phtymn" path="res://Scenes/Characters/Myha.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ce8dcph8wdnvb" path="res://Scripts/Items/ShadowArea/ShadowAreaScene.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://fivb1ydt0fiu" path="res://Scenes/Items/Plataform/HorizontalPlataform/HorizontalPlataform.tscn" id="5_lquwl"]
@@ -29,7 +29,7 @@ physics_layer_0/collision_mask = 4098
 sources/0 = SubResource("TileSetAtlasSource_272bh")
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_272bh")
+script = ExtResource("1_efxa6")
 
 [node name="World" type="TileMapLayer" parent="."]
 position = Vector2(1, 0)
@@ -84,8 +84,7 @@ position = Vector2(-1102, -13)
 scale = Vector2(2, 1)
 
 [node name="MovePlataformWithGrab" parent="Plataforms/MovePlataform" instance=ExtResource("10_efxa6")]
-position = Vector2(-650, 15)
-Speed = 0.8
+position = Vector2(-642, -27)
 
 [node name="Shake" parent="Plataforms" instance=ExtResource("10_4c57u")]
 position = Vector2(-156, -22)

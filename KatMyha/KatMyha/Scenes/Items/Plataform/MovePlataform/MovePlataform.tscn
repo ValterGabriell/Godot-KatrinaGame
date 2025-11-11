@@ -1,13 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://c551nssba7gch"]
+[gd_scene load_steps=7 format=3 uid="uid://c551nssba7gch"]
 
 [ext_resource type="Script" uid="uid://dddajnkljvrqb" path="res://Scripts/Items/Plataform/MovePlataform.cs" id="1_fqw61"]
 [ext_resource type="Texture2D" uid="uid://cbwbq8yyee6wn" path="res://Assets/Sprites/Environment/sci fi pixel art decoration pack-LAZYSPAR7AN/deco (6).png" id="1_hufhh"]
-
-[sub_resource type="Curve2D" id="Curve2D_fqw61"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 93, 0)
-}
-point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hufhh"]
 size = Vector2(56.5, 20)
@@ -50,7 +44,7 @@ _data = {
 }
 
 [node name="Path2D" type="Path2D" node_paths=PackedStringArray("PathFollow2D", "AnimationPlayer")]
-curve = SubResource("Curve2D_fqw61")
+rotation = 1.5707964
 script = ExtResource("1_fqw61")
 Speed = 0.8
 PathFollow2D = NodePath("PathFollow2D")
@@ -58,12 +52,14 @@ AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 position = Vector2(-1, 0)
+rotation = -1.5707964
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
 remote_path = NodePath("../../AnimatableBody2D")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
 position = Vector2(-1, 0)
+rotation = -1.5707964
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
 texture = ExtResource("1_hufhh")

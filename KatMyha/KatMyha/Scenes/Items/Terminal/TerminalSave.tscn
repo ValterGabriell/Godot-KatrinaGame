@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://doux7cxdy7auk"]
+
+[ext_resource type="Script" uid="uid://bv23twc71v3um" path="res://Scripts/Items/Terminal/Terminal.cs" id="1_7m6kx"]
+[ext_resource type="Texture2D" uid="uid://b3vsdhy5lokns" path="res://Assets/Sprites/Itens/Terminal.png" id="1_nxn26"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nxn26"]
+size = Vector2(24, 30)
+
+[node name="TerminalSave" type="Node2D"]
+script = ExtResource("1_7m6kx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_nxn26")
+
+[node name="SaveArea" type="Area2D" parent="."]
+collision_layer = 65536
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SaveArea"]
+shape = SubResource("RectangleShape2D_nxn26")
+
+[connection signal="body_entered" from="SaveArea" to="." method="_on_save_area_body_entered"]
+[connection signal="body_exited" from="SaveArea" to="." method="_on_save_area_body_exited"]

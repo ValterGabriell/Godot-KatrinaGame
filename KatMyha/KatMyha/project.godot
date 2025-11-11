@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="KatMyha"
-run/main_scene="uid://b1gnb8slestvs"
+run/main_scene="uid://cb10hg7he4wk5"
 config/features=PackedStringArray("4.5", "C#", "Mobile")
 config/icon="res://icon.svg"
 
@@ -103,6 +103,8 @@ load_game={
 2d_physics/layer_13="enemy"
 2d_physics/layer_15="playerWalkArea"
 2d_physics/layer_16="bounderie_world"
+2d_physics/layer_17="terminal_save"
+2d_physics/layer_18="death_light"
 
 [rendering]
 
