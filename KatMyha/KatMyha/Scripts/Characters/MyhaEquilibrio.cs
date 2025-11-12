@@ -14,6 +14,7 @@ namespace KatrinaGame.Core
         private float Equilibrio = INITAL_MAX_BALLANCE;
         private float BallanceZero = 0.0f;
         private float BallanceMax = INITAL_MAX_BALLANCE;
+        [Export] public AudioStreamPlayer2D DeathAudioStreamPlayer2D { get; set; }
 
         [Signal]
         public delegate void BalanceZeroEventHandler();

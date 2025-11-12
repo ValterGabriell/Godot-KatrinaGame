@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dyb3c5aecsw5r"]
+[gd_scene load_steps=42 format=3 uid="uid://dyb3c5aecsw5r"]
 
 [ext_resource type="Script" uid="uid://dx0dresfbg0ix" path="res://Scripts/Enemies/BaseGuard/GuardEnemy.cs" id="1_ib5uv"]
 [ext_resource type="Resource" uid="uid://hx1o1nvw3c7k" path="res://Resources/Player/EnemyResource.tres" id="2_n2d1g"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://cnxsmctbx5bah" path="res://Assets/Sprites/Enemies/BaseGuard/guardWalkAlert.png" id="4_uysno"]
 [ext_resource type="Texture2D" uid="uid://d0xhwqawjm45g" path="res://Assets/Sprites/Enemies/BaseGuard/guardShoot.png" id="5_203vw"]
 [ext_resource type="Texture2D" uid="uid://b2skp2o8cxp3a" path="res://Assets/Sprites/Enemies/BaseGuard/guardStartAlert.png" id="5_tg06w"]
-[ext_resource type="AudioStream" uid="uid://c0udjqb08iloy" path="res://Assets/Sound/CatMeow.wav" id="8_c27uw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_al4k4"]
 atlas = ExtResource("3_tg06w")
@@ -274,7 +273,7 @@ Polygon2DDetection = NodePath("Polygon2D")
 TimerToChase = NodePath("TimerToChase")
 AnimatedSprite2DEnemy = NodePath("AnimatedSprite2D")
 PatrolRadius = 300.0
-CatAudioStreamPlayer2D = NodePath("KillEnemySound")
+CatAudioStreamPlayer2D = NodePath("")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -302,6 +301,3 @@ one_shot = true
 [node name="TimerToStayAlert" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
-
-[node name="KillEnemySound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_c27uw")

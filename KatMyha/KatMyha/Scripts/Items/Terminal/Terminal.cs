@@ -6,7 +6,6 @@ public partial class Terminal : Node2D
 {
     private Area2D SaveArea => GetNode<Area2D>("SaveArea");
     private AnimatedSprite2D AnimatedSprite2D => GetNode<AnimatedSprite2D>("Sprite2D");
-    private AudioStreamPlayer2D AudioStreamPlayer2D => GetNode<AudioStreamPlayer2D>("AudioSave");
 
     private bool _hasBeenUsed = false;
 
@@ -19,7 +18,6 @@ public partial class Terminal : Node2D
     private void OnPlayerSaveTheGame()
     {
         this._hasBeenUsed = true;
-        this.AudioStreamPlayer2D.Play();
         this.AnimatedSprite2D.Play("saving");
     }
 

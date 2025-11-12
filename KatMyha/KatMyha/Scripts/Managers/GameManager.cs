@@ -127,6 +127,7 @@ namespace PrototipoMyha.Scripts.Managers
         {
             SetGameSpeed(0.1f);
             await FadeScreenAsync(0.2f);
+            
             LoadGame();
         }
 

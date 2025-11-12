@@ -1,6 +1,8 @@
 using Godot;
+using KatMyha.Scripts.Managers;
 using KatrinaGame.Core;
 using KatrinaGame.Players;
+using KatrinaGame.Scripts.Utils;
 using PrototipoMyha.Enemy;
 using PrototipoMyha.Player.Components.Interfaces;
 using PrototipoMyha.Utilidades;
@@ -15,6 +17,7 @@ namespace PrototipoMyha.Player.Components.Impl
     {
         private MyhaPlayer MyhaPlayer;
         private SignalManager SignalManager = SignalManager.Instance;
+        private SoundManager SoundManager = SoundManager.Instance;
 
         public MakeSoundWhileWalkComponent(MyhaPlayer BasePlayer)
         {
@@ -27,19 +30,34 @@ namespace PrototipoMyha.Player.Components.Impl
         {
             this.MyhaPlayer.SoundAreaWalkingComponent.BodyEntered += OnBodyEntered;
             this.SignalManager.PlayerIsMoving += OnMyhaIsMoving;
+            this.SignalManager.PlayerHasChangedState += OnPlayerHasStateChanged;
+            this.SignalManager.PlayerSaveTheGame += OnPlayerSaveGame;
             this.SignalManager.PlayerStoped += OnMyhaStoped;
+        }
+
+        private void OnPlayerSaveGame()
+        {
+            SoundManager.Instance.PlaySound(this.MyhaPlayer.SaveAudioStreamPlayer2D, soundExtension: SoundExtension.wav);
+        }
+
+        private void OnPlayerHasStateChanged(string animationToPlay)
+        {
+            if(animationToPlay == EnumAnimations.jump_up.ToString())
+            {
+                SoundManager.Instance.PlaySound(this.MyhaPlayer.JumpAudioStreamPlayer2D, soundExtension: SoundExtension.wav);
+            }
+   
         }
 
         private void OnMyhaStoped()
         {
             this.MyhaPlayer.AlterRadiusCollisionSoundArea(0);
-            this.MyhaPlayer.WalkAudioStreamPlayer2D.Stop();
         }
 
         private void OnMyhaIsMoving(float NoiseValue)
         {
             this.MyhaPlayer.AlterRadiusCollisionSoundArea(NoiseValue);
-            this.MyhaPlayer.WalkAudioStreamPlayer2D.Play();
+            SoundManager.Instance.PlaySound(this.MyhaPlayer.WalkAudioStreamPlayer2D, soundExtension: SoundExtension.wav);
         }
 
         private void OnBodyEntered(Node2D area)

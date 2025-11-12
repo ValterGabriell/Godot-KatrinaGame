@@ -1,4 +1,5 @@
 using Godot;
+using KatMyha.Scripts.Managers;
 using KatrinaGame.Core;
 using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
 using PrototipoMyha.Scripts.Utils;
@@ -25,6 +26,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private SignalManager SignalManager;
         private bool hasEmittedKillSignal = false;
         private bool stopEnemy = false;
+        private SoundManager SoundManager = SoundManager.Instance;
 
         public EnemyStateChaseAlertedBase(Vector2 inTargetMovement)
         {
@@ -100,19 +102,17 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         private void ProcessKillOfPlayer(EnemyBase InEnemy)
         {
-            if(InEnemy.CatAudioStreamPlayer2D.Playing == false)
-            {
-                InEnemy.CatAudioStreamPlayer2D.Play();
-            }
             if (InEnemy.RayCast2DDetection != null)
             {
-                (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
+                (BasePlayer player, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
+
+
 
                 if (isColliding
                     && !hasEmittedKillSignal)
                 {
                     SignalManager.EmitSignal(nameof(SignalManager.EnemyKillMyha));
-
+                    SoundManager.PlaySound(player.DeathAudioStreamPlayer2D);
                     InEnemy.Velocity = Vector2.Zero;
                     hasEmittedKillSignal = true;
                     stopEnemy = true;

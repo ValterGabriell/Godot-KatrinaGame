@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cb10hg7he4wk5"]
+[gd_scene load_steps=18 format=4 uid="uid://cb10hg7he4wk5"]
 
 [ext_resource type="Texture2D" uid="uid://d2ivhrkguvk2u" path="res://Assets/Tilesets/World/PrototipoWorldTileset.png" id="1_i5gsn"]
 [ext_resource type="Script" uid="uid://p0tnlhwc8n4b" path="res://Scripts/Levels/LevelBase.cs" id="1_wf4vu"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dyb3c5aecsw5r" path="res://Scenes/Enemies/BaseGuard.tscn" id="10_5mjwn"]
 [ext_resource type="PackedScene" uid="uid://belhcxrdca17j" path="res://Scenes/Items/Itens/Bullet01.tscn" id="11_dube1"]
 [ext_resource type="PackedScene" uid="uid://tqq0jk3c6rek" path="res://Scenes/Items/Itens/KillLight.tscn" id="12_0f82d"]
+[ext_resource type="AudioStream" uid="uid://cntajrvgvm6ka" path="res://Assets/Sound/BaseMusic03.mp3" id="13_j1gya"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_twxkt"]
 texture = ExtResource("1_i5gsn")
@@ -52,7 +53,7 @@ tile_map_data = PackedByteArray("AAC4/wAAAAABAAUAAAC3/wAAAAABAAUAAAC2/wAAAAABAAU
 tile_set = SubResource("TileSet_efc0h")
 
 [node name="Myha" parent="." instance=ExtResource("2_twxkt")]
-position = Vector2(2150, -238)
+position = Vector2(2161, -249)
 
 [node name="MovePlataform" type="Node" parent="."]
 
@@ -124,7 +125,7 @@ scale = Vector2(1, 0.48)
 
 [node name="01" type="Node" parent="Enemies"]
 
-[node name="CharacterBody2D" parent="Enemies/01" node_paths=PackedStringArray("Marker_01", "Marker_02") instance=ExtResource("10_5mjwn")]
+[node name="CharacterBody2D" parent="Enemies/01" node_paths=PackedStringArray("Marker_01", "Marker_02") groups=["enemy"] instance=ExtResource("10_5mjwn")]
 position = Vector2(2446, -189)
 Marker_01 = NodePath("../Marker2D")
 Marker_02 = NodePath("../Marker2D2")
@@ -140,3 +141,9 @@ position = Vector2(2284, -177)
 
 [node name="KillLight" parent="DeathLight" instance=ExtResource("12_0f82d")]
 position = Vector2(2489, -331)
+
+[node name="MusicOfLevel" type="Node" parent="."]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="MusicOfLevel"]
+stream = ExtResource("13_j1gya")
+volume_db = 0.115

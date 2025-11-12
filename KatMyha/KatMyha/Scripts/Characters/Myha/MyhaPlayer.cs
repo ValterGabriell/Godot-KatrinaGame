@@ -24,6 +24,7 @@ namespace KatrinaGame.Players
         [Export] public Area2D SoundAreaWalkingComponent { get; set; }
         [Export] public AudioStreamPlayer2D WalkAudioStreamPlayer2D { get; set; }
         [Export] public AudioStreamPlayer2D JumpAudioStreamPlayer2D { get; set; }
+        [Export] public AudioStreamPlayer2D SaveAudioStreamPlayer2D { get; set; }
 
         private CircleShape2D SoundAreaWalkingColiisonComponent { get; set; }
 
