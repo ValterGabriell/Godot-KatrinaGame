@@ -32,7 +32,8 @@ namespace PrototipoMyha.Scripts.Managers
         public override void _Input(InputEvent @event)
         {
             // F5 para salvar
-            if (@event.IsActionPressed("save_game") && PlayerManager.GetPlayerGlobalInstance().PlayerCanSaveTheGame)
+            if (@event.IsActionPressed("save_game") 
+                && PlayerManager.GetPlayerGlobalInstance().PlayerCanSaveTheGame)
             {
                 SaveGame();
             }
@@ -146,6 +147,7 @@ namespace PrototipoMyha.Scripts.Managers
                 Enemies = this.CurrentLevelObjData.Enemies
             };
 
+            SignalManager.Instance.EmitSignal(nameof(SignalManager.Instance.PlayerSaveTheGame));
             SaveSystem.SaveSystemInstance.SaveGame(saveData);
         }
 

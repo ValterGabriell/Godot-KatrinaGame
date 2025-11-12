@@ -16,6 +16,7 @@ public partial class SignalManager : Node
     [Signal] public delegate void PlayerHasChangedStateEventHandler(string animationToPlay);
     [Signal] public delegate void PlayerStopedEventHandler();
     [Signal] public delegate void EnemyKillMyhaEventHandler();
+    [Signal] public delegate void PlayerSaveTheGameEventHandler();
 
     [Signal] public delegate void GameLoadedEventHandler(Vector2 position);
     

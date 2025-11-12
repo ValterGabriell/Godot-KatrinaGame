@@ -28,6 +28,9 @@ public abstract partial class EnemyBase : CharacterBody2D
     [Export] public Marker2D Marker_02 = null;
     [Export] public PackedScene BulletShoot;
 
+    [ExportGroup("Sound")]
+    [Export] public AudioStreamPlayer2D CatAudioStreamPlayer2D = null;
+
     public bool JustLoaded { get; set; } = false;
     protected Dictionary<string, IEnemyBaseComponents> Components = new();
 

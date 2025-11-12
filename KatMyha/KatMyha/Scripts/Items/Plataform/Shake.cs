@@ -1,7 +1,10 @@
 using Godot;
 using KatrinaGame.Core;
+using KatrinaGame.Players;
+using KatrinaGame.Scripts.Utils;
 using PrototipoMyha;
 using PrototipoMyha.Player.StateManager;
+using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
 using System;
 
@@ -11,6 +14,7 @@ public partial class Shake : StaticBody2D
     [Export] public CollisionShape2D CollisionRotatePlayer;
     private float RotationSpeed = 5.0f;
     private BasePlayer player;
+    private MyhaPlayer Myhaplayer;
     private bool isPlayerOnObject = false;
     private int direction = 1;
     private bool isPlayerFalling = false;
@@ -47,6 +51,8 @@ public partial class Shake : StaticBody2D
         player.UnblockMovement();
         player.BalanceZero -= OnPlayerBalanceZero;
         player.ResetBallance();
+        Myhaplayer = null;
+        player = null;
     }
 
     private static bool IsPlayerBody(Node2D body)
@@ -56,6 +62,7 @@ public partial class Shake : StaticBody2D
     private void SetPlayerOnObject(Node2D body)
     {
         player = body as BasePlayer;
+        Myhaplayer = player as MyhaPlayer;
         shouldResetRotation = false;
         isPlayerFalling = false;
         isPlayerOnObject = true;
@@ -79,9 +86,8 @@ public partial class Shake : StaticBody2D
 
         if (player != null)
         {
-            var currentPlayerMovement = player.GetCurrentPlayerMovement();
             if (isPlayerOnObject)
-                MoveObjectWithPlayerInput(delta, currentPlayerMovement);
+                MoveObjectWithPlayerInput(delta);
         }
 
     }
@@ -93,44 +99,57 @@ public partial class Shake : StaticBody2D
             RotationDegrees = 0;
     }
 
-    private void MoveObjectWithPlayerInput(double delta, PlayerState currentPlayerMovement)
+    private void MoveObjectWithPlayerInput(double delta)
     {
         float moveSpeed = 10f;
+
         if (Input.IsActionPressed("d"))
             ApplyRightMovement(delta, moveSpeed);
 
-        else if (Input.IsActionPressed("a"))
+        if (Input.IsActionPressed("a"))
             ApplyLeftMovement(delta, moveSpeed);
-        else if (Input.IsKeyPressed(Key.Space))
+
+        
+        if (Input.IsActionPressed("jump") || Input.IsKeyPressed(Key.Space))
         {
-            player.Velocity = new Vector2(player.Velocity.X, -300);
+            player.Velocity = new Vector2(player.Velocity.X, -150);
+            player.SetState(PlayerState.JUMPING);
+            SignalManager.Instance.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.jump_up.ToString());
         }
-        else
+
+        if (!Input.IsActionPressed("d") && !Input.IsActionPressed("a") && !Input.IsActionPressed("jump") && !Input.IsKeyPressed(Key.Space))
             player.DecreaseBallance((float)delta);
-
-
     }
 
     private void ApplyLeftMovement(double delta, float moveSpeed)
     {
         ApplyLeftRotation(delta);
-
+        SpriteUtils.FlipSprite(-1, this.player.AnimatedSprite2D);
+        RaycastUtils.FlipRaycast(-1, [this.Myhaplayer.AttackRaycast]);
         if (!isPlayerFalling)
         {
             this.Position -= new Vector2(moveSpeed * (float)delta, 0);
-            player.GlobalPosition = this.GlobalPosition + new Vector2(0, -30);
+            if (player.CurrentPlayerState != PlayerState.JUMPING && player.CurrentPlayerState != PlayerState.FALLING)
+                player.GlobalPosition = this.GlobalPosition + new Vector2(0, -30);
+            else
+                player.GlobalPosition = new Vector2(player.GlobalPosition.X, player.GlobalPosition.Y);
         }
 
     }
 
     private void ApplyRightMovement(double delta, float moveSpeed)
     {
-        ApplyRightRotation(delta);
 
+        ApplyRightRotation(delta);
+        SpriteUtils.FlipSprite(1, this.player.AnimatedSprite2D);
+        RaycastUtils.FlipRaycast(1, [this.Myhaplayer.AttackRaycast]);
         if (!isPlayerFalling)
         {
             this.Position += new Vector2(moveSpeed * (float)delta, 0);
-            player.GlobalPosition = this.GlobalPosition + new Vector2(0, -30);
+            if (player.CurrentPlayerState != PlayerState.JUMPING && player.CurrentPlayerState != PlayerState.FALLING)
+                player.GlobalPosition = this.GlobalPosition + new Vector2(0, -30);
+            else
+                player.GlobalPosition = new Vector2(player.GlobalPosition.X, player.GlobalPosition.Y);
         }
 
     }

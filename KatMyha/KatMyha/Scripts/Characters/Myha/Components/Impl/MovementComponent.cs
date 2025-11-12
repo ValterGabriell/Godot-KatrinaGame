@@ -108,7 +108,7 @@ namespace KatrinaGame.Components
                 
             }
 
-            if (IsMovingConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping))
+            if (IsMovingConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping) && !isPlayerJumping)
             {
                 var newState = CurrentSpeed == _player.Speed ? PlayerState.RUN : PlayerState.SNEAK;
                 var newRadiusSound = CurrentSpeed == _player.Speed ? PlayerManager.RunNoiseRadius : PlayerManager.SneakNoiseRadius;
@@ -202,6 +202,7 @@ namespace KatrinaGame.Components
                 return;
             }
 
+            
             ApplyJump();
         }
 

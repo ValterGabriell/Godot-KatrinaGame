@@ -100,11 +100,15 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
         private void ProcessKillOfPlayer(EnemyBase InEnemy)
         {
+            if(InEnemy.CatAudioStreamPlayer2D.Playing == false)
+            {
+                InEnemy.CatAudioStreamPlayer2D.Play();
+            }
             if (InEnemy.RayCast2DDetection != null)
             {
                 (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
 
-                if (isColliding 
+                if (isColliding
                     && !hasEmittedKillSignal)
                 {
                     SignalManager.EmitSignal(nameof(SignalManager.EnemyKillMyha));

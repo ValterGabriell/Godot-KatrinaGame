@@ -33,11 +33,13 @@ namespace PrototipoMyha.Player.Components.Impl
         private void OnMyhaStoped()
         {
             this.MyhaPlayer.AlterRadiusCollisionSoundArea(0);
+            this.MyhaPlayer.WalkAudioStreamPlayer2D.Stop();
         }
 
         private void OnMyhaIsMoving(float NoiseValue)
         {
             this.MyhaPlayer.AlterRadiusCollisionSoundArea(NoiseValue);
+            this.MyhaPlayer.WalkAudioStreamPlayer2D.Play();
         }
 
         private void OnBodyEntered(Node2D area)
