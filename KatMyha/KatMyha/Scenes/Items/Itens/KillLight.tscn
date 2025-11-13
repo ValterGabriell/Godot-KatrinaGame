@@ -34,8 +34,8 @@ texture = ExtResource("1_57all")
 shape = SubResource("CircleShape2D_5smk5")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(3.5, 177.99998)
-scale = Vector2(1.3515625, 1.3203124)
+position = Vector2(5.000002, 139)
+scale = Vector2(0.7499999, 1.015625)
 color = Color(2.6134334, 2.0976503, 0, 0.6156863)
 energy = 3.0
 shadow_enabled = true
@@ -46,9 +46,9 @@ texture_scale = 2.0
 position = Vector2(1.8295536, 0)
 scale = Vector2(1.1704545, 1)
 color = Color(0.1750724, 0.1750724, 0.1750724, 0.09411765)
-polygon = PackedVector2Array(-2, -1, -87, 195, 89, 193)
+polygon = PackedVector2Array(-2, -1, -51.970882, 193, 58.242714, 191)
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PackedVector2Array(0, 1, -101, 194, 103, 190)
+polygon = PackedVector2Array(0, 1, -62, 190, 72, 190)
