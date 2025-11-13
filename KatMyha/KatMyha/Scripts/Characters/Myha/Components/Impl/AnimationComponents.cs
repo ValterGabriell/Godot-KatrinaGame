@@ -40,6 +40,7 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
 
         private void OnPlayerHasChangedState(string animationToPlay)
         {
+
             this._player.AnimatedSprite2D.Play(animationToPlay);
             this._player.SoundAnimatedSprite2D.Play(animationToPlay);
 

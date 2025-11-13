@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dw4s248phtymn"]
+[gd_scene load_steps=43 format=3 uid="uid://dw4s248phtymn"]
 
 [ext_resource type="Script" uid="uid://dk8egln53p1ft" path="res://Scripts/Characters/Myha/MyhaPlayer.cs" id="1_gp1ay"]
 [ext_resource type="PackedScene" uid="uid://dkjhvr053vtls" path="res://Scenes/Items/Plataform/Gangorra/Gangorra.tscn" id="2_hntan"]
@@ -148,9 +148,9 @@ animations = [{
 atlas = ExtResource("7_c2xpc")
 region = Rect2(612, 0, 153, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pm13k"]
-atlas = ExtResource("7_c2xpc")
-region = Rect2(612, 0, 153, 96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_khs5b"]
+atlas = ExtResource("8_qemu2")
+region = Rect2(97, 0, 97, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oxiyw"]
 atlas = ExtResource("7_c2xpc")
@@ -180,10 +180,6 @@ region = Rect2(672, 0, 96, 96)
 atlas = ExtResource("8_qemu2")
 region = Rect2(0, 0, 97, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_khs5b"]
-atlas = ExtResource("8_qemu2")
-region = Rect2(97, 0, 97, 96)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_40thd"]
 atlas = ExtResource("8_qemu2")
 region = Rect2(194, 0, 97, 96)
@@ -212,7 +208,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pm13k")
+"texture": SubResource("AtlasTexture_khs5b")
 }],
 "loop": true,
 "name": &"jump_up",
@@ -274,7 +270,7 @@ size = Vector2(20, 14)
 [sub_resource type="CircleShape2D" id="CircleShape2D_3bx22"]
 radius = 25.298222
 
-[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "LeftRaycastWallSlide", "RightRaycastWallSlide", "SoundAreaWalkingComponent", "AimShootArea2D", "WalkAudioStreamPlayer2D", "JumpAudioStreamPlayer2D", "SaveAudioStreamPlayer2D", "TimeToFallWall", "AnimatedSprite2D", "SoundAnimatedSprite2D", "DeathAudioStreamPlayer2D") groups=["player"]]
+[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "LeftRaycastWallSlide", "RightRaycastWallSlide", "SoundAreaWalkingComponent", "WalkAudioStreamPlayer2D", "JumpAudioStreamPlayer2D", "SaveAudioStreamPlayer2D", "TimeToFallWall", "AnimatedSprite2D", "SoundAnimatedSprite2D", "DeathAudioStreamPlayer2D") groups=["player"]]
 collision_layer = 2
 collision_mask = 131109
 script = ExtResource("1_gp1ay")
@@ -283,7 +279,6 @@ LeftRaycastWallSlide = NodePath("RayLeft")
 RightRaycastWallSlide = NodePath("RayRight")
 BallScene = ExtResource("2_hntan")
 SoundAreaWalkingComponent = NodePath("SoundArea")
-AimShootArea2D = NodePath("")
 WalkAudioStreamPlayer2D = NodePath("Sounds/WalkSound")
 JumpAudioStreamPlayer2D = NodePath("Sounds/JumpSound")
 SaveAudioStreamPlayer2D = NodePath("Sounds/SaveSound")
@@ -303,9 +298,7 @@ texture_filter = 1
 position = Vector2(-0.9999943, 1.0000076)
 scale = Vector2(3.4732444, 3.3292644)
 sprite_frames = SubResource("SpriteFrames_xh3mw")
-animation = &"run"
-frame = 4
-frame_progress = 0.67147696
+animation = &"jump_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.5)

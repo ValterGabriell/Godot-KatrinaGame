@@ -19,7 +19,7 @@ fill_to = Vector2(0.508547, 0)
 
 [node name="KillLight" type="RigidBody2D" groups=["kill_light"]]
 collision_layer = 131072
-collision_mask = 4098
+collision_mask = 4096
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_5smk5")
 gravity_scale = 0.0
@@ -47,3 +47,8 @@ position = Vector2(1.8295536, 0)
 scale = Vector2(1.1704545, 1)
 color = Color(0.1750724, 0.1750724, 0.1750724, 0.09411765)
 polygon = PackedVector2Array(-2, -1, -87, 195, 89, 193)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(0, 1, -101, 194, 103, 190)

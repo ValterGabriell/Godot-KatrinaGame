@@ -19,6 +19,7 @@ public partial class SignalManager : Node
     [Signal] public delegate void PlayerSaveTheGameEventHandler();
     [Signal] public delegate void PlayerAimEventHandler();
     [Signal] public delegate void PlayerRemoveAimEventHandler();
+    [Signal] public delegate void PlayerShootEventHandler();
 
 
     [Signal] public delegate void GameLoadedEventHandler(Vector2 position);

@@ -111,7 +111,7 @@ namespace KatrinaGame.Components
                 
             }
 
-            if (IsMovingConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping) && !isPlayerJumping)
+            if (IsMovingConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping) && !isPlayerJumping && this._player.CurrentPlayerState != PlayerState.AIMING)
             {
                 var newState = CurrentSpeed == _player.Speed ? PlayerState.RUN : PlayerState.SNEAK;
                 var newRadiusSound = CurrentSpeed == _player.Speed ? PlayerManager.RunNoiseRadius : PlayerManager.SneakNoiseRadius;
@@ -123,8 +123,6 @@ namespace KatrinaGame.Components
 
             if (IsIdleConditionMet(isPlayerMoving, isPlayerOnFloor, isPlayerJumping, isPlayerWalLWalking))
             {
-                
-                this._player.SetState(PlayerState.IDLE);
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerStoped));
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.idle.ToString());
             }

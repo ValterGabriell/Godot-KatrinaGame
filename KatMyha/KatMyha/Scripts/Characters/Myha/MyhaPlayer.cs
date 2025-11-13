@@ -103,7 +103,7 @@ namespace KatrinaGame.Players
 
             if (this.CurrentPlayerState != PlayerState.WALL_SLIDING)
             {
-                if (Input.IsActionPressed("d") && this.IsMovementBlocked == false)
+                if (Input.IsActionPressed("d") && this.IsMovementBlocked == false && this.CurrentPlayerState != PlayerState.AIMING)
                 {
                     inputVector.X += 1;
                     FlipRaycast(direction: 1,
@@ -113,7 +113,7 @@ namespace KatrinaGame.Players
                     CurrentPlayerSpeed = Speed;
                 }
 
-                if (Input.IsActionPressed("a") && this.IsMovementBlocked == false)
+                if (Input.IsActionPressed("a") && this.IsMovementBlocked == false && this.CurrentPlayerState != PlayerState.AIMING)
                 {
                     inputVector.X -= 1;
                     FlipRaycast(direction: -1,
@@ -124,7 +124,7 @@ namespace KatrinaGame.Players
                 }
 
 
-                if (Input.IsKeyPressed(Key.Ctrl))
+                if (Input.IsKeyPressed(Key.Ctrl) && this.CurrentPlayerState != PlayerState.AIMING)
                 {
 
                     CurrentPlayerSpeed = SneakSpeed;
@@ -148,7 +148,7 @@ namespace KatrinaGame.Players
             }
 
 
-            if (Input.IsActionJustPressed("jump"))
+            if (Input.IsActionJustPressed("jump") && this.CurrentPlayerState != PlayerState.AIMING)
             {
                 inputVector.Y -= 1;
                 MovementComponent.Jump();

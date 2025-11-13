@@ -83,6 +83,11 @@ namespace KatrinaGame.Core
             CurrentPlayerState = newState;
         }
 
+        public PlayerState GetState()
+        {
+            return this.CurrentPlayerState;
+        }
+
         protected void FlipRaycast(float direction, List<RayCast2D> Rasycast)
         {
             foreach (var current in Rasycast)

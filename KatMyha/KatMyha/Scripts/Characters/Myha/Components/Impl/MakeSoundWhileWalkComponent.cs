@@ -5,6 +5,7 @@ using KatrinaGame.Players;
 using KatrinaGame.Scripts.Utils;
 using PrototipoMyha.Enemy;
 using PrototipoMyha.Player.Components.Interfaces;
+using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Utilidades;
 using System;
 
@@ -51,7 +52,12 @@ namespace PrototipoMyha.Player.Components.Impl
 
         private void OnMyhaStoped()
         {
-            this.MyhaPlayer.AlterRadiusCollisionSoundArea(0);
+            if(this.MyhaPlayer.CurrentPlayerState != PlayerState.AIMING)
+            {
+                this.MyhaPlayer.SetState(PlayerState.IDLE);
+                this.MyhaPlayer.AlterRadiusCollisionSoundArea(0);
+            }
+
         }
 
         private void OnMyhaIsMoving(float NoiseValue)
