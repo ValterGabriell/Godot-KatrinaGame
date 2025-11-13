@@ -17,5 +17,6 @@ public enum PlayerState
     JUMPING,
     JUMPING_WALL,
     WALL_SLIDING,
-    FALLING
+    FALLING,
+    AIMING
 }

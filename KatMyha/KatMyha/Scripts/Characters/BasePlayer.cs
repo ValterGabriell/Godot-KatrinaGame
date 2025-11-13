@@ -12,6 +12,7 @@ namespace KatrinaGame.Core
 {
     public abstract partial class BasePlayer : CharacterBody2D
     {
+        [ExportGroup("Player Settings")]
         [Export] public bool IsMovementBlocked { get; private set; } = false;
         [Export] public float Speed { get; set; } = 300f;
         [Export] public float WallWalkSpeed { get; set; } = 10f;

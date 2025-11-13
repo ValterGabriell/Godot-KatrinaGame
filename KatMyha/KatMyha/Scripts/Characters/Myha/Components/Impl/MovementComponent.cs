@@ -51,7 +51,10 @@ namespace KatrinaGame.Components
             UpdateCoyoteTimer(delta);
         }
 
-        public void HandleInput(double delta) { }
+        public void HandleInput(double delta) 
+        {
+           
+        }
         private void UpdateCoyoteTimer(double delta)
         {
             if (_player.IsOnFloor() && this._player.CurrentPlayerState != PlayerState.WALL_SLIDING)

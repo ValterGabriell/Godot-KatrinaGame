@@ -274,7 +274,7 @@ size = Vector2(20, 14)
 [sub_resource type="CircleShape2D" id="CircleShape2D_3bx22"]
 radius = 25.298222
 
-[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "LeftRaycastWallSlide", "RightRaycastWallSlide", "SoundAreaWalkingComponent", "WalkAudioStreamPlayer2D", "JumpAudioStreamPlayer2D", "SaveAudioStreamPlayer2D", "TimeToFallWall", "AnimatedSprite2D", "SoundAnimatedSprite2D", "DeathAudioStreamPlayer2D") groups=["player"]]
+[node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "LeftRaycastWallSlide", "RightRaycastWallSlide", "SoundAreaWalkingComponent", "AimShootArea2D", "WalkAudioStreamPlayer2D", "JumpAudioStreamPlayer2D", "SaveAudioStreamPlayer2D", "TimeToFallWall", "AnimatedSprite2D", "SoundAnimatedSprite2D", "DeathAudioStreamPlayer2D") groups=["player"]]
 collision_layer = 2
 collision_mask = 131109
 script = ExtResource("1_gp1ay")
@@ -283,6 +283,7 @@ LeftRaycastWallSlide = NodePath("RayLeft")
 RightRaycastWallSlide = NodePath("RayRight")
 BallScene = ExtResource("2_hntan")
 SoundAreaWalkingComponent = NodePath("SoundArea")
+AimShootArea2D = NodePath("")
 WalkAudioStreamPlayer2D = NodePath("Sounds/WalkSound")
 JumpAudioStreamPlayer2D = NodePath("Sounds/JumpSound")
 SaveAudioStreamPlayer2D = NodePath("Sounds/SaveSound")
@@ -317,6 +318,20 @@ zoom = Vector2(2, 2)
 target_position = Vector2(34, 0)
 collision_mask = 512
 
+[node name="TimerToFallWall" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="RayLeft" type="RayCast2D" parent="."]
+modulate = Color(0.25882354, 0, 1, 1)
+target_position = Vector2(25, 0)
+collision_mask = 32
+
+[node name="RayRight" type="RayCast2D" parent="."]
+modulate = Color(0.25882354, 0, 1, 1)
+target_position = Vector2(-25, 0)
+collision_mask = 32
+
 [node name="DeathCollision" type="Area2D" parent="."]
 collision_layer = 64
 collision_mask = 0
@@ -331,20 +346,6 @@ collision_mask = 4096
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SoundArea"]
 shape = SubResource("CircleShape2D_3bx22")
-
-[node name="TimerToFallWall" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-
-[node name="RayLeft" type="RayCast2D" parent="."]
-modulate = Color(0.25882354, 0, 1, 1)
-target_position = Vector2(25, 0)
-collision_mask = 32
-
-[node name="RayRight" type="RayCast2D" parent="."]
-modulate = Color(0.25882354, 0, 1, 1)
-target_position = Vector2(-25, 0)
-collision_mask = 32
 
 [node name="Sounds" type="Node" parent="."]
 

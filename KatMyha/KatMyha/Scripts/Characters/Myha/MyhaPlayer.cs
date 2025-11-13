@@ -1,4 +1,5 @@
 using Godot;
+using KatMyha.Scripts.Characters.Myha.Components.Impl;
 using KatrinaGame.Components;
 using KatrinaGame.Core;
 using KatrinaGame.Core.Interfaces;
@@ -16,16 +17,24 @@ namespace KatrinaGame.Players
 {
     public partial class MyhaPlayer : BasePlayer
     {
+        [ExportGroup("RayCasts")]
         [Export] public RayCast2D AttackRaycast { get; set; }
         [Export] public RayCast2D LeftRaycastWallSlide { get; set; }
         [Export] public RayCast2D RightRaycastWallSlide { get; set; }
- 
+        
+        [ExportGroup("Scenes")]
         [Export] public PackedScene BallScene { get; set; }
+
+        [ExportGroup("Areas2D")]
         [Export] public Area2D SoundAreaWalkingComponent { get; set; }
+
+
+        [ExportGroup("AudioStreams")]
         [Export] public AudioStreamPlayer2D WalkAudioStreamPlayer2D { get; set; }
         [Export] public AudioStreamPlayer2D JumpAudioStreamPlayer2D { get; set; }
         [Export] public AudioStreamPlayer2D SaveAudioStreamPlayer2D { get; set; }
 
+        [ExportGroup("CollisionShapes")]
         private CircleShape2D SoundAreaWalkingColiisonComponent { get; set; }
 
         private IMovementComponent MovementComponent;
@@ -41,6 +50,7 @@ namespace KatrinaGame.Players
             AddComponent<IMovementComponent>(new MovementComponent());
             AddComponent<IMakeSoundWhileWalkComponent>(new MakeSoundWhileWalkComponent(this));
             AddComponent<IAnimationComponents>(new AnimationComponents(this));
+            AddComponent<IShootAimComponent>(new ShootAimComponent());
 
 
             MovementComponent = GetComponent<IMovementComponent>();
