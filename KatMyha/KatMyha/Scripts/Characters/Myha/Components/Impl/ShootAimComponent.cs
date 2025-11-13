@@ -5,11 +5,8 @@ using PrototipoMyha;
 using PrototipoMyha.Player.Components.Interfaces;
 using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Utilidades;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KatMyha.Scripts.Characters.Myha.Components.Impl
 {
@@ -125,7 +122,7 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
                 this.allLightsOnRange.Remove(this.currentAimLight);
                 var timer = GetTree().CreateTimer(3.0);
                 timer.Timeout += () => this.lastAimLightShooted?.QueueFree();
-
+                this.lastAimLightShooted = null;
 
                 if (this.allLightsOnRange.Count > 0)
                 {
