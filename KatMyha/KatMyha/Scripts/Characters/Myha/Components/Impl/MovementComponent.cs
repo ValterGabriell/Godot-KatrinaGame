@@ -8,6 +8,7 @@ using PrototipoMyha.Player.StateManager;
 using PrototipoMyha.Scripts.Utils;
 using PrototipoMyha.Utilidades;
 using System;
+using System.Threading.Tasks;
 
 namespace KatrinaGame.Components
 {
@@ -41,7 +42,6 @@ namespace KatrinaGame.Components
         }
 
         public void Process(double delta) {
-            //GDLogger.PrintDebug_Red(this._player.TimeToFallWall.TimeLeft);
         }
 
         public void PhysicsProcess(double delta)
@@ -69,13 +69,25 @@ namespace KatrinaGame.Components
 
         private void ChangeStateWhenIsJumpingAndNotTouchingWall()
         {
+           
             if (this._player.CurrentPlayerState == PlayerState.JUMPING_WALL && !this._player.IsOnFloor())
             {
                 bool isLeftRayColliding = this._myhaPlayer.LeftRaycastWallSlide.IsColliding();
                 bool isRightRayColliding = this._myhaPlayer.RightRaycastWallSlide.IsColliding();
                 if (!isLeftRayColliding && !isRightRayColliding)
                 {
-                    this._player.SetState(PlayerState.JUMPING);
+                    GetTree().CreateTimer(0.1f).Timeout += () =>
+                    {
+                        if (!this._player.IsOnFloor())
+                        {
+                            if(this._player.CurrentPlayerState != PlayerState.JUMPING)
+                            {
+                                GDLogger.PrintDebug_Red("Changing state from JUMPING_WALL to JUMPING");
+                                this._player.SetState(PlayerState.JUMPING);
+                            }
+
+                        }
+                    };
                 }
             }
 
@@ -129,10 +141,20 @@ namespace KatrinaGame.Components
 
             var isLeftRayColliding = this._myhaPlayer.LeftRaycastWallSlide.IsColliding();
             var isRightRayColliding = this._myhaPlayer.RightRaycastWallSlide.IsColliding();
+
+            GDLogger.PrintGreen("IsWallRayContactDetected: " + IsWallRayContactDetected());
+            GDLogger.PrintGreen("isPlayerOnFloor: " + isPlayerOnFloor);
+            GDLogger.PrintGreen("this._player.Velocity.Y): " + this._player.Velocity.Y);
             if (IsWallContactDetected(isPlayerOnFloor) && this._player.Velocity.Y < 0)
             {
                 StartWallSlide(isLeftContact: isLeftRayColliding, isRightContact: isRightRayColliding);
             }
+              
+
+            if (!isPlayerOnFloor && !IsWallRayContactDetected() && this._myhaPlayer.CurrentPlayerState == PlayerState.WALL_SLIDING)
+                FallFromWall();
+
+
 
             ChangeStateWhenIsJumpingAndNotTouchingWall();
 
@@ -161,6 +183,7 @@ namespace KatrinaGame.Components
 
         private void StartWallSlide(bool isLeftContact, bool isRightContact)
         {
+            GDLogger.PrintDebug_Red("Current player state: "+ this._player.CurrentPlayerState);
             if (this._player.CurrentPlayerState == PlayerState.JUMPING)
             {
                 this._player.SetState(PlayerState.WALL_SLIDING);
@@ -180,7 +203,13 @@ namespace KatrinaGame.Components
 
         private bool IsWallContactDetected(bool isPlayerOnFloor)
         {
-            return !isPlayerOnFloor && (this._myhaPlayer.LeftRaycastWallSlide.IsColliding() || this._myhaPlayer.RightRaycastWallSlide.IsColliding());
+            return !isPlayerOnFloor && IsWallRayContactDetected();
+        }
+
+        private bool IsWallRayContactDetected()
+        {
+            return (this._myhaPlayer.LeftRaycastWallSlide.IsColliding() 
+                || this._myhaPlayer.RightRaycastWallSlide.IsColliding());
         }
 
         private bool IsPlayerRising()
@@ -193,8 +222,6 @@ namespace KatrinaGame.Components
             bool canJump = _player.IsOnFloor() 
                 || this._player.CurrentPlayerState == PlayerState.WALL_SLIDING || _coyoteTimer > 0f;
 
-           
-
             if (this._player.IsMovementBlocked || !canJump) return;
 
             if (this._player.CurrentPlayerState == PlayerState.WALL_SLIDING)
@@ -202,8 +229,6 @@ namespace KatrinaGame.Components
                 ApplyWallJump();
                 return;
             }
-
-            
             ApplyJump();
         }
 
@@ -221,8 +246,9 @@ namespace KatrinaGame.Components
         private void ApplyWallJump()
         {
             this._player.SetState(PlayerState.JUMPING_WALL);
+
             _player.Velocity = new Vector2(0, _player.JumpVelocity);
-            GDLogger.PrintObjects_Blue("Wall Jump Applied with velocity");
+
             SignalManager.EmitSignal(nameof(SignalManager.PlayerIsMoving), PlayerManager.JumpNoiseRadius);
             SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.jump_up.ToString());
         }

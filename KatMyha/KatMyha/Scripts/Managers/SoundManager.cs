@@ -50,7 +50,6 @@ namespace KatMyha.Scripts.Managers
                 _lastPlayTime[audio] = currentTime;
             }
             
-            GDLogger.PrintDebug_Red($"Playing sound: {audio.Name}");
             audio.Stream = ResourceLoader.Load<AudioStream>($"res://Assets/Sound/{audio.Name}.{soundExtension}");
             audio.Play();
         }
