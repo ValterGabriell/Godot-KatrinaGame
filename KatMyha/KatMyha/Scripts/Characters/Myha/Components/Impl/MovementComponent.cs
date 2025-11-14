@@ -67,31 +67,6 @@ namespace KatrinaGame.Components
             }
         }
 
-        private void ChangeStateWhenIsJumpingAndNotTouchingWall()
-        {
-           
-            if (this._player.CurrentPlayerState == PlayerState.JUMPING_WALL && !this._player.IsOnFloor())
-            {
-                bool isLeftRayColliding = this._myhaPlayer.LeftRaycastWallSlide.IsColliding();
-                bool isRightRayColliding = this._myhaPlayer.RightRaycastWallSlide.IsColliding();
-                if (!isLeftRayColliding && !isRightRayColliding)
-                {
-                    GetTree().CreateTimer(0.1f).Timeout += () =>
-                    {
-                        if (!this._player.IsOnFloor())
-                        {
-                            if(this._player.CurrentPlayerState != PlayerState.JUMPING)
-                            {
-                                GDLogger.PrintDebug_Red("Changing state from JUMPING_WALL to JUMPING");
-                                this._player.SetState(PlayerState.JUMPING);
-                            }
-
-                        }
-                    };
-                }
-            }
-
-        }
 
 
 
@@ -139,25 +114,14 @@ namespace KatrinaGame.Components
                 SignalManager.EmitSignal(nameof(SignalManager.PlayerHasChangedState), EnumAnimations.idle.ToString());
             }
 
-            var isLeftRayColliding = this._myhaPlayer.LeftRaycastWallSlide.IsColliding();
-            var isRightRayColliding = this._myhaPlayer.RightRaycastWallSlide.IsColliding();
 
-            GDLogger.PrintGreen("IsWallRayContactDetected: " + IsWallRayContactDetected());
-            GDLogger.PrintGreen("isPlayerOnFloor: " + isPlayerOnFloor);
-            GDLogger.PrintGreen("this._player.Velocity.Y): " + this._player.Velocity.Y);
             if (IsWallContactDetected(isPlayerOnFloor) && this._player.Velocity.Y < 0)
             {
-                StartWallSlide(isLeftContact: isLeftRayColliding, isRightContact: isRightRayColliding);
+                StartWallSlide();
             }
               
-
-            if (!isPlayerOnFloor && !IsWallRayContactDetected() && this._myhaPlayer.CurrentPlayerState == PlayerState.WALL_SLIDING)
+            if (!isPlayerOnFloor && !IsWallSliding() && this._myhaPlayer.CurrentPlayerState == PlayerState.WALL_SLIDING)
                 FallFromWall();
-
-
-
-            ChangeStateWhenIsJumpingAndNotTouchingWall();
-
 
             if (!isPlayerMoving)
             {
@@ -181,14 +145,12 @@ namespace KatrinaGame.Components
             CheckLanding();
         }
 
-        private void StartWallSlide(bool isLeftContact, bool isRightContact)
+        private void StartWallSlide()
         {
-            GDLogger.PrintDebug_Red("Current player state: "+ this._player.CurrentPlayerState);
-            if (this._player.CurrentPlayerState == PlayerState.JUMPING)
+            if (this._player.CurrentPlayerState == PlayerState.WALL_SLIDING)
             {
-                this._player.SetState(PlayerState.WALL_SLIDING);
-                this._player.Velocity = new Vector2(this._player.Velocity.X, Math.Min(this._player.Velocity.Y, this._player.WallWalkSpeed));
-                this.wallDir = isLeftContact ? -1 : isRightContact ? 1 : 0;
+                this._player.Velocity
+                    = new Vector2(this._player.Velocity.X, Math.Min(this._player.Velocity.Y, this._player.WallWalkSpeed));
             }
         }
 
@@ -203,13 +165,12 @@ namespace KatrinaGame.Components
 
         private bool IsWallContactDetected(bool isPlayerOnFloor)
         {
-            return !isPlayerOnFloor && IsWallRayContactDetected();
+            return !isPlayerOnFloor && IsWallSliding();
         }
 
-        private bool IsWallRayContactDetected()
+        private bool IsWallSliding()
         {
-            return (this._myhaPlayer.LeftRaycastWallSlide.IsColliding() 
-                || this._myhaPlayer.RightRaycastWallSlide.IsColliding());
+            return this._player.CurrentPlayerState == PlayerState.WALL_SLIDING;
         }
 
         private bool IsPlayerRising()

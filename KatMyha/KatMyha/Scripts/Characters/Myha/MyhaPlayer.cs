@@ -19,14 +19,13 @@ namespace KatrinaGame.Players
     {
         [ExportGroup("RayCasts")]
         [Export] public RayCast2D AttackRaycast { get; set; }
-        [Export] public RayCast2D LeftRaycastWallSlide { get; set; }
-        [Export] public RayCast2D RightRaycastWallSlide { get; set; }
         
         [ExportGroup("Scenes")]
         [Export] public PackedScene BallScene { get; set; }
 
         [ExportGroup("Areas2D")]
         [Export] public Area2D SoundAreaWalkingComponent { get; set; }
+        [Export] public Area2D WallJumpArea { get; set; }
 
 
         [ExportGroup("AudioStreams")]
@@ -68,14 +67,21 @@ namespace KatrinaGame.Players
 
         }
 
-        public RayCast2D GetLeftRayCastDirectionForWallSlide()
+
+        public void _on_wall_jump_area_body_entered(Node2D node2D)
         {
-            return this.LeftRaycastWallSlide;
+            if (node2D.IsInGroup("wall_vertical"))
+            {
+                this.SetState(PlayerState.WALL_SLIDING);
+            }
         }
 
-        public RayCast2D GetRightRayCastDirectionForWallSlide()
+        public void _on_wall_jump_area_body_exited(Node2D node2D)
         {
-            return this.RightRaycastWallSlide;
+            if (node2D.IsInGroup("wall_vertical") && this.CurrentPlayerState == PlayerState.WALL_SLIDING)
+            {
+                this.SetState(PlayerState.FALLING);
+            }
         }
 
         private void UpdatePlayerPosition(Vector2 position)
