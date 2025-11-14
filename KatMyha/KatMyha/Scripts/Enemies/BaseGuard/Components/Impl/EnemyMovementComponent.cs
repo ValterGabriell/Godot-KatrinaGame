@@ -4,6 +4,7 @@ using PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHandler
 using PrototipoMyha.Enemy.Components.Interfaces;
 using PrototipoMyha.Enemy.States;
 using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
+using PrototipoMyha.Utilidades;
 using System;
 
 namespace PrototipoMyha.Enemy.Components.Impl
@@ -20,12 +21,20 @@ namespace PrototipoMyha.Enemy.Components.Impl
         private EnemyState? LastEnemyState = null;
         private IEnemyStateHandler enemyStateHandler;
         private bool HasCollidedWithBounderie = false;
+        private SignalManager SignalManager = SignalManager.Instance;
 
 
         public EnemyMovementComponent(EnemyBase enemy)
         {
             this._Enemy = enemy;
             this._initialPosition = enemy.GlobalPosition;
+            SignalManager.PlayerIsOnLight += PlayerIsOnLight;
+        }
+
+        private void PlayerIsOnLight()
+        {
+            GDLogger.PrintObjects_Blue("EnemyMovementComponent - PlayerIsOnLight: Setting enemy to ALERTED state");
+            this._Enemy.SetState(EnemyState.Alerted);
         }
 
         public void Initialize()
@@ -59,6 +68,8 @@ namespace PrototipoMyha.Enemy.Components.Impl
             }
 
         }
+
+
 
         private bool HasEnemyStateChanged()
         {

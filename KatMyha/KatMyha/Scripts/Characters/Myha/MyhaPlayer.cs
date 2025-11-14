@@ -39,6 +39,7 @@ namespace KatrinaGame.Players
         private IMovementComponent MovementComponent;
         private float CurrentPlayerSpeed = 0f;
 
+
         /*WALL JUMP*/
         private int WallDirection { get; set; } = 0;
         [Export] public Vector2 WallJumpForce { get; set; } = new Vector2(250, -400);
@@ -81,6 +82,24 @@ namespace KatrinaGame.Players
             if (node2D.IsInGroup("wall_vertical") && this.CurrentPlayerState == PlayerState.WALL_SLIDING)
             {
                 this.SetState(PlayerState.FALLING);
+            }
+        }
+
+        public void _on_light_detection_area_entered(Area2D node)
+        {
+            if (node.IsInGroup("kill_light"))
+            {
+                this.SetStateHidden(HiddenState.NOT_HIDDEN);
+                SignalManager.Instance.EmitSignal(nameof(SignalManager.Instance.PlayerIsOnLight));
+            }
+        }
+
+        public void _on_light_detection_area_exited(Area2D node)
+        {
+            if (node.IsInGroup("kill_light"))
+            {
+                this.SetStateHidden(HiddenState.HIDDEN);
+  
             }
         }
 

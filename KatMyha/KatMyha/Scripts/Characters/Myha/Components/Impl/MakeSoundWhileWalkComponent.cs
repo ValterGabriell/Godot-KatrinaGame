@@ -62,6 +62,11 @@ namespace PrototipoMyha.Player.Components.Impl
 
         private void OnMyhaIsMoving(float NoiseValue)
         {
+            if(MyhaPlayer.CurrentPlayerState == PlayerState.SNEAK && MyhaPlayer.CurrentHiddenState == HiddenState.HIDDEN)
+            {
+                this.MyhaPlayer.AlterRadiusCollisionSoundArea(0);
+                return;
+            }
             this.MyhaPlayer.AlterRadiusCollisionSoundArea(NoiseValue);
             SoundManager.Instance.PlaySound(this.MyhaPlayer.WalkAudioStreamPlayer2D, soundExtension: SoundExtension.wav);
         }

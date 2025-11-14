@@ -20,6 +20,7 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
         private bool _hasShooted = false;
         private AnimatedSprite2D _currentAlertSprite;
         private Timer _currentAlertTimer;
+        private bool hasEmittedAlert = false;
         public EnemyAnimationComponent(EnemyBase enemy)
         {
             _Enemy = enemy;
@@ -81,36 +82,57 @@ namespace PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl
                 return;
 
             _alertShown = true;
+
+            // Limpa o sprite anterior se existir
+            if (IsInstanceValid(_currentAlertSprite))
+            {
+                _currentAlertSprite.QueueFree();
+            }
+
+            // Limpa o timer anterior se existir
+            if (IsInstanceValid(_currentAlertTimer))
+            {
+                _currentAlertTimer.Stop();
+                _currentAlertTimer.QueueFree();
+            }
+
             AnimatedSprite2D sprite = (AnimatedSprite2D)spriteScene.Instantiate();
             sprite.Position = positionToShowAlert;
             sprite.AddToGroup(EnumGroups.AlertSprite.ToString());
             AddChild(sprite);
 
+            _currentAlertSprite = sprite;
+
             if (!sprite.IsPlaying())
                 sprite.Play("default");
 
+            // Usa Timer ao invés de GetTree().CreateTimer()
+            _currentAlertTimer = new Timer();
+            _currentAlertTimer.WaitTime = 2f;
+            _currentAlertTimer.OneShot = true;
+            AddChild(_currentAlertTimer);
 
-            Timer timer = new Timer();
-            timer.WaitTime = 2f;
-            timer.OneShot = true;
-            AddChild(timer);
-
-            timer.Timeout += () =>
+            _currentAlertTimer.Timeout += () =>
             {
                 if (IsInstanceValid(sprite))
                 {
                     sprite.QueueFree();
-
                 }
-                timer.QueueFree();
+
+                if (IsInstanceValid(_currentAlertTimer))
+                {
+                    _currentAlertTimer.QueueFree();
+                }
+
+                _currentAlertSprite = null;
+                _currentAlertTimer = null;
                 _alertShown = false;
             };
 
-            timer.Start();
-
+            _currentAlertTimer.Start();
         }
 
-       
+
 
         public void PhysicsProcess(double delta)
         {

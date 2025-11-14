@@ -21,3 +21,9 @@ public enum PlayerState
     AIMING,
     SHOOTING
 }
+
+public enum HiddenState
+{
+    HIDDEN,
+    NOT_HIDDEN,
+}

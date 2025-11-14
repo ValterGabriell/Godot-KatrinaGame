@@ -1,6 +1,7 @@
 using Godot;
 using KatrinaGame.Core;
 using KatrinaGame.Core.Interfaces;
+using KatrinaGame.Players;
 using KatrinaGame.Scripts.Utils;
 using PrototipoMyha.Player.Components.Interfaces;
 using PrototipoMyha.Player.StateManager;
@@ -19,11 +20,13 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
     public partial class AnimationComponents : Node, IAnimationComponents
     {
         private BasePlayer _player;
+        private MyhaPlayer MyhaPlayer;
         SignalManager SignalManager;
 
         public AnimationComponents(BasePlayer player)
         {
             _player = player;
+            MyhaPlayer = player as MyhaPlayer;
         }
 
         public void HandleInput(double delta)
@@ -42,6 +45,10 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
         {
 
             this._player.AnimatedSprite2D.Play(animationToPlay);
+            if (MyhaPlayer.CurrentPlayerState == PlayerState.SNEAK && MyhaPlayer.CurrentHiddenState == HiddenState.HIDDEN)
+            {
+                return;
+            }
             this._player.SoundAnimatedSprite2D.Play(animationToPlay);
 
         }

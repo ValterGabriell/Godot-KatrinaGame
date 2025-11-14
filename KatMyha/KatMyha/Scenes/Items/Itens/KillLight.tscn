@@ -48,7 +48,9 @@ scale = Vector2(1.1704545, 1)
 color = Color(0.1750724, 0.1750724, 0.1750724, 0.09411765)
 polygon = PackedVector2Array(-2, -1, -51.970882, 193, 58.242714, 191)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["kill_light"]]
+collision_layer = 131072
+collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PackedVector2Array(0, 1, -62, 190, 72, 190)
+polygon = PackedVector2Array(-1, -2, -45, 188, 51, 186)

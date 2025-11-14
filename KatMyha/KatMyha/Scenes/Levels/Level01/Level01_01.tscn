@@ -103,7 +103,7 @@ tile_map_data = PackedByteArray("AAC4/wAAAAABAAUAAAC3/wAAAAABAAUAAAC2/wAAAAABAAU
 tile_set = SubResource("TileSet_efc0h")
 
 [node name="Myha" parent="." instance=ExtResource("2_twxkt")]
-position = Vector2(1868, -58)
+position = Vector2(2384, -185)
 
 [node name="MovePlataform" type="Node" parent="."]
 
@@ -184,7 +184,7 @@ scale = Vector2(1, 0.48)
 [node name="01" type="Node" parent="Enemies"]
 
 [node name="CharacterBody2D" parent="Enemies/01" node_paths=PackedStringArray("Marker_01", "Marker_02") groups=["enemy"] instance=ExtResource("10_5mjwn")]
-position = Vector2(2446, -189)
+position = Vector2(2622, -190)
 Marker_01 = NodePath("../Marker2D")
 Marker_02 = NodePath("../Marker2D2")
 BulletShoot = ExtResource("11_dube1")
@@ -198,10 +198,10 @@ position = Vector2(2284, -177)
 [node name="DeathLight" type="Node" parent="."]
 
 [node name="KillLight" parent="DeathLight" instance=ExtResource("12_0f82d")]
-position = Vector2(2438, -333)
+position = Vector2(2438, -332)
 
 [node name="KillLight2" parent="DeathLight" instance=ExtResource("12_0f82d")]
-position = Vector2(2539, -334)
+position = Vector2(2554, -338)
 
 [node name="MusicOfLevel" type="Node" parent="."]
 

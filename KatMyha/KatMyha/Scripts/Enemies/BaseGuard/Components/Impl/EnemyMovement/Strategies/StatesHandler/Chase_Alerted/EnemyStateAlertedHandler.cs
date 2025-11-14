@@ -9,7 +9,7 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
         private float alertWaitDuration = 2.0f;
         private SignalManager SignalManager;
         private Vector2 lastKnownPlayerPosition;
-        
+        private bool hasEmittedAlert = false; 
         public EnemyStateAlertedHandler(Vector2 lastKnownPlayerPosition) : base(lastKnownPlayerPosition)
         {
             SignalManager = SignalManager.Instance;
@@ -23,7 +23,12 @@ namespace PrototipoMyha.Enemy.Components.Impl.EnemyMovement.Strategies.StatesHan
 
 
             InEnemy.SetPolygonAlertedColor();
-            SignalManager.EmitSignal(nameof(SignalManager.EnemySpottedPlayerShowAlert), lastKnownPlayerPosition);
+            if (!hasEmittedAlert)
+            {
+                SignalManager.EmitSignal(nameof(SignalManager.EnemySpottedPlayerShowAlert), lastKnownPlayerPosition);
+                hasEmittedAlert = true;
+            }
+         
 
             (BasePlayer _, bool isColliding) = RaycastUtils.IsColliding<BasePlayer>(InEnemy.RayCast2DDetection);
             if (isColliding)

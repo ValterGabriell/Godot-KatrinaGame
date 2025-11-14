@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dw4s248phtymn"]
+[gd_scene load_steps=45 format=3 uid="uid://dw4s248phtymn"]
 
 [ext_resource type="Script" uid="uid://dk8egln53p1ft" path="res://Scripts/Characters/Myha/MyhaPlayer.cs" id="1_gp1ay"]
 [ext_resource type="PackedScene" uid="uid://dkjhvr053vtls" path="res://Scenes/Items/Plataform/Gangorra/Gangorra.tscn" id="2_hntan"]
@@ -273,6 +273,9 @@ radius = 25.298222
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qemu2"]
 size = Vector2(26, 7)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_qemu2"]
+radius = 5.0990195
+
 [node name="Myha" type="CharacterBody2D" node_paths=PackedStringArray("AttackRaycast", "SoundAreaWalkingComponent", "WalkAudioStreamPlayer2D", "JumpAudioStreamPlayer2D", "SaveAudioStreamPlayer2D", "TimeToFallWall", "AnimatedSprite2D", "SoundAnimatedSprite2D", "DeathAudioStreamPlayer2D") groups=["player"]]
 collision_layer = 2
 collision_mask = 131109
@@ -332,15 +335,25 @@ collision_mask = 4096
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SoundArea"]
 shape = SubResource("CircleShape2D_3bx22")
+debug_color = Color(0.7529412, 0.45882353, 0, 0.047058824)
 
 [node name="WallJumpArea" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallJumpArea"]
-position = Vector2(2, 0)
+position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_qemu2")
-debug_color = Color(0.85490197, 0, 1, 0.41960785)
+debug_color = Color(0.12513667, 0.6734381, 0, 0.07058824)
+
+[node name="LightDetection" type="Area2D" parent="."]
+collision_layer = 5242882
+collision_mask = 131072
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightDetection"]
+position = Vector2(5, 0)
+shape = SubResource("CircleShape2D_qemu2")
+debug_color = Color(0.68509746, 0.48840737, 0.31903717, 0.41960785)
 
 [node name="Sounds" type="Node" parent="."]
 
@@ -360,3 +373,5 @@ max_distance = 4096.0
 [connection signal="body_entered" from="DeathCollision" to="." method="_on_death_collision_body_entered"]
 [connection signal="body_entered" from="WallJumpArea" to="." method="_on_wall_jump_area_body_entered"]
 [connection signal="body_exited" from="WallJumpArea" to="." method="_on_wall_jump_area_body_exited"]
+[connection signal="area_entered" from="LightDetection" to="." method="_on_light_detection_area_entered"]
+[connection signal="area_exited" from="LightDetection" to="." method="_on_light_detection_area_exited"]

@@ -21,6 +21,7 @@ namespace KatrinaGame.Core
         [Export] public float Gravity { get; set; } = 700f;
         [Export] public Timer TimeToFallWall { get; set; }
         public PlayerState CurrentPlayerState { get; private set; } = PlayerState.IDLE;
+        public HiddenState CurrentHiddenState { get; private set; } = HiddenState.HIDDEN;
 
         protected Dictionary<string, IPlayerBaseComponent> Components = new();
         [Export] public AnimatedSprite2D AnimatedSprite2D { get; set; }
@@ -82,6 +83,12 @@ namespace KatrinaGame.Core
         {
             CurrentPlayerState = newState;
         }
+
+        public void SetStateHidden(HiddenState newState)
+        {
+            CurrentHiddenState = newState;
+        }
+
 
         public PlayerState GetState()
         {
