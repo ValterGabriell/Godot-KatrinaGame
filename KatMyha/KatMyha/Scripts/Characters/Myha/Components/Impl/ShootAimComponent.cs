@@ -18,9 +18,9 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
         private MyhaPlayer _player;
         public SignalManager SignalManager { get; private set; } = SignalManager.Instance;
 
-        private RigidBody2D currentAimLight = null;
+        private RigidBody2D currentTargetAimed = null;
         private RigidBody2D lastAimLightShooted = null;
-        private List<RigidBody2D> allLightsOnRange = [];
+        private List<RigidBody2D> allTargetsOnRange = [];
         public void HandleInput(double delta)
         {
             if (Input.IsActionJustPressed("aim")) SignalManager.EmitSignal(nameof(SignalManager.PlayerAim));
@@ -35,13 +35,13 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
             {
                 if (mouseEvent.ButtonIndex == MouseButton.WheelUp 
                     && mouseEvent.Pressed 
-                    && this.currentAimLight != null)
+                    && this.currentTargetAimed != null)
                 {
                     SwitchToNextLight();
                 }
                 else if (mouseEvent.ButtonIndex == MouseButton.WheelDown 
                     && mouseEvent.Pressed 
-                    && this.currentAimLight != null)
+                    && this.currentTargetAimed != null)
                 {
                     SwitchToNextLight();
                 }
@@ -50,12 +50,12 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
 
         private void ChangeAimLightToAim()
         {
-            this.currentAimLight = this.allLightsOnRange[
-                   (this.allLightsOnRange.IndexOf(this.currentAimLight) + 1) % this.allLightsOnRange.Count
+            this.currentTargetAimed = this.allTargetsOnRange[
+                   (this.allTargetsOnRange.IndexOf(this.currentTargetAimed) + 1) % this.allTargetsOnRange.Count
                ];
-            if (this.currentAimLight != null)
+            if (this.currentTargetAimed != null)
             {
-                this.currentAimLight.GetNode<Sprite2D>("Sprite2D").Texture = 
+                this.currentTargetAimed.GetNode<Sprite2D>("Sprite2D").Texture = 
                     GD.Load<Texture2D>("res://Assets/Sprites/Itens/LampadaMirada.png");
             }
         }
@@ -64,7 +64,7 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
 
         private void SwitchToNextLight()
         {
-            if (this.allLightsOnRange.Count > 0)
+            if (this.allTargetsOnRange.Count > 0)
             {
                 ChangeAimLightToAim();
                 ResetOtherLightsTexture();
@@ -73,7 +73,7 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
 
         private void ResetOtherLightsTexture()
         {
-            this.allLightsOnRange.Where(e => e.Name != this.currentAimLight.Name).Select(e =>
+            this.allTargetsOnRange.Where(e => e.Name != this.currentTargetAimed.Name).Select(e =>
             {
                 e.GetNode<Sprite2D>("Sprite2D").Texture =
                     GD.Load<Texture2D>("res://Assets/Sprites/Itens/Lampada.png");
@@ -83,12 +83,12 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
 
         private void BackToPreviusLight()
         {
-            if (this.allLightsOnRange.Count > 0)
+            if (this.allTargetsOnRange.Count > 0)
             {
-                this.currentAimLight = this.allLightsOnRange[
-                    (this.allLightsOnRange.IndexOf(this.currentAimLight) + 1) % this.allLightsOnRange.Count
+                this.currentTargetAimed = this.allTargetsOnRange[
+                    (this.allTargetsOnRange.IndexOf(this.currentTargetAimed) + 1) % this.allTargetsOnRange.Count
                 ];
-                this.allLightsOnRange.Where(e => e.Name != this.currentAimLight.Name).Select(e =>
+                this.allTargetsOnRange.Where(e => e.Name != this.currentTargetAimed.Name).Select(e =>
                 {
                     e.GetNode<Sprite2D>("Sprite2D").Texture =
                         GD.Load<Texture2D>("res://Assets/Sprites/Itens/Lampada.png");
@@ -114,24 +114,24 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
             if (this._player.CurrentPlayerState == PlayerState.AIMING)
             {
                 this._player.SetState(PlayerState.SHOOTING);
-                this.currentAimLight.GetNode<Sprite2D>("Sprite2D").Texture =
+                this.currentTargetAimed.GetNode<Sprite2D>("Sprite2D").Texture =
                     GD.Load<Texture2D>("res://Assets/Sprites/Itens/LampadaQuebrada.png");
-                this.currentAimLight.GravityScale = 1;
+                this.currentTargetAimed.GravityScale = 1;
 
-                this.lastAimLightShooted = this.currentAimLight;
-                this.allLightsOnRange.Remove(this.currentAimLight);
+                this.lastAimLightShooted = this.currentTargetAimed;
+                this.allTargetsOnRange.Remove(this.currentTargetAimed);
                 var timer = GetTree().CreateTimer(3.0);
                 timer.Timeout += () => this.lastAimLightShooted?.QueueFree();
                 this.lastAimLightShooted = null;
 
-                if (this.allLightsOnRange.Count > 0)
+                if (this.allTargetsOnRange.Count > 0)
                 {
                     this._player.SetState(PlayerState.AIMING);
                     BackToPreviusLight();
                 }
                 else
                 {
-                    this.currentAimLight = null;
+                    this.currentTargetAimed = null;
                     this._player.SetState(PlayerState.IDLE);
                 }
             }
@@ -140,13 +140,13 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
       
         private void OnPlayerRemoveAim()
         {
-            this.allLightsOnRange.Select(e =>
+            this.allTargetsOnRange.Select(e =>
             {
                 e.GetNode<Sprite2D>("Sprite2D").Texture =
                     GD.Load<Texture2D>("res://Assets/Sprites/Itens/Lampada.png");
                 return e;
             }).ToList();
-            this.currentAimLight = null;
+            this.currentTargetAimed = null;
             this._player.SetState(PlayerState.IDLE);
 
         }
@@ -167,13 +167,13 @@ namespace KatMyha.Scripts.Characters.Myha.Components.Impl
                 float dist = light.GlobalPosition.DistanceTo(playerPos);
                 if (dist < nearestDist)
                 {
-                    this.allLightsOnRange.Add(light);
+                    this.allTargetsOnRange.Add(light);
                 }
             }
 
-            if (this.allLightsOnRange.Count > 0)
+            if (this.allTargetsOnRange.Count > 0)
             {
-                this.currentAimLight = this.allLightsOnRange[0];
+                this.currentTargetAimed = this.allTargetsOnRange[0];
                 ChangeAimLightToAim();
             }
         }
