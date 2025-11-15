@@ -51,6 +51,7 @@ namespace KatrinaGame.Players
             AddComponent<IMakeSoundWhileWalkComponent>(new MakeSoundWhileWalkComponent(this));
             AddComponent<IAnimationComponents>(new AnimationComponents(this));
             AddComponent<IShootAimComponent>(new ShootAimComponent());
+            AddComponent<IToogleLightComponent>(new ToogleLightComponent());
 
 
             MovementComponent = GetComponent<IMovementComponent>();

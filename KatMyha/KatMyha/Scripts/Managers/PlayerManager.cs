@@ -4,6 +4,12 @@ using KatrinaGame.Players;
 using PrototipoMyha.Utilidades;
 using System;
 
+public enum PlayerSwitchLightState
+{
+    CAN_TURN_ON_LIGHT,
+    CAN_TURN_OFF_LIGHT,
+    CANT_TOGGLE_LIGHT
+}
 public partial class PlayerManager : Node
 {
     private Vector2 CurrentPlayerPosition { get; set; }
@@ -15,6 +21,7 @@ public partial class PlayerManager : Node
     public static float SneakNoiseRadius { get; private set; } = 50f;
     public static float JumpNoiseRadius { get; private set; } = 50f;
     public bool PlayerCanSaveTheGame { get; set; } = false;
+    public PlayerSwitchLightState PlayerCanTurnOfTheLight { get; set; } = PlayerSwitchLightState.CANT_TOGGLE_LIGHT;
     
     public override void _Ready()
     {

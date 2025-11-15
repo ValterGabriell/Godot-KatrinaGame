@@ -10,7 +10,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_5smk5"]
 radius = 12.0
 
-[node name="KillLight" type="RigidBody2D" groups=["kill_light"]]
+[node name="KillLight" type="RigidBody2D" node_paths=PackedStringArray("PointLight2D", "LightSprite", "Area2D") groups=["kill_light"]]
 collision_layer = 131072
 collision_mask = 4096
 mass = 10.0
@@ -19,6 +19,9 @@ gravity_scale = 0.0
 can_sleep = false
 freeze_mode = 1
 script = ExtResource("1_wm56c")
+PointLight2D = NodePath("Sprite2D/PointLight2D")
+LightSprite = NodePath("Sprite2D/Sprite2D")
+Area2D = NodePath("Area2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5smk5")
@@ -28,7 +31,6 @@ collision_layer = 131072
 collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-visible = false
 position = Vector2(-8, 36)
 scale = Vector2(1.6936064, 1.5833334)
 polygon = PackedVector2Array(5.438387, -25.052639, 4.847931, -17.473694, -30.703709, 111.78947, 41.922375, 114.947365)
@@ -37,13 +39,13 @@ polygon = PackedVector2Array(5.438387, -25.052639, 4.847931, -17.473694, -30.703
 texture_filter = 1
 texture = ExtResource("3_eydi3")
 
-[node name="PointLight2D" type="PointLight2D" parent="Sprite2D"]
-position = Vector2(12, 118)
-texture = ExtResource("2_wm56c")
-
 [node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
 z_index = 2
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(2, 101)
 texture = ExtResource("4_cv5x0")
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite2D"]
+position = Vector2(12, 118)
+texture = ExtResource("2_wm56c")

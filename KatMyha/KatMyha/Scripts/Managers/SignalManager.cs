@@ -21,6 +21,7 @@ public partial class SignalManager : Node
     [Signal] public delegate void PlayerRemoveAimEventHandler();
     [Signal] public delegate void PlayerShootEventHandler();
     [Signal] public delegate void PlayerIsOnLightEventHandler();
+    [Signal] public delegate void PlayerHasAlterStateOfLightEventHandler(string playerSwitchLightState);
 
 
     [Signal] public delegate void GameLoadedEventHandler(Vector2 position);
