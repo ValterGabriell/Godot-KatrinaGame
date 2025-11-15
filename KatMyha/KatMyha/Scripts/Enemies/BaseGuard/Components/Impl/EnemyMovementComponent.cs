@@ -6,6 +6,7 @@ using PrototipoMyha.Enemy.States;
 using PrototipoMyha.Scripts.Enemies.BaseGuard.Components.Impl.EnemyMovement.Strategies.Interfaces;
 using PrototipoMyha.Utilidades;
 using System;
+using System.Linq;
 
 namespace PrototipoMyha.Enemy.Components.Impl
 {
@@ -33,8 +34,15 @@ namespace PrototipoMyha.Enemy.Components.Impl
 
         private void PlayerIsOnLight()
         {
-            GDLogger.PrintObjects_Blue("EnemyMovementComponent - PlayerIsOnLight: Setting enemy to ALERTED state");
-            this._Enemy.SetState(EnemyState.Alerted);
+            var playerPosition = PlayerManager.GetPlayerGlobalInstance().GetPlayerPosition();
+            foreach (EnemyBase enemy in GetTree().GetNodesInGroup("enemy").OfType<EnemyBase>())
+            {
+                float distanceToPlayer = enemy.GlobalPosition.DistanceTo(playerPosition);
+                if (distanceToPlayer < 200f && enemy.CurrentEnemyState == EnemyState.Roaming)
+                {
+                    enemy.SetState(EnemyState.Alerted);
+                }
+            }
         }
 
         public void Initialize()

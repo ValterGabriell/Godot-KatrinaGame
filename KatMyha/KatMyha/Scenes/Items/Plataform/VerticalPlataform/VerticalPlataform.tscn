@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cur6241ewq0d6"]
+[gd_scene load_steps=4 format=3 uid="uid://cur6241ewq0d6"]
 
 [ext_resource type="Texture2D" uid="uid://dxnyx4uplvrlb" path="res://Assets/Sprites/Itens/VerticalPlataform-sheet.png" id="1_r0pkm"]
+[ext_resource type="Texture2D" uid="uid://cj0su0kjlx6ua" path="res://Assets/Sprites/Itens/light (1).png" id="2_w3em3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0pkm"]
 size = Vector2(20, 111)
@@ -15,3 +16,7 @@ texture = ExtResource("1_r0pkm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_r0pkm")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.2
+texture = ExtResource("2_w3em3")

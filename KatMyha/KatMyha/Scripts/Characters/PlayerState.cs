@@ -22,7 +22,7 @@ public enum PlayerState
     SHOOTING
 }
 
-public enum HiddenState
+public enum LightHiddenState
 {
     HIDDEN,
     NOT_HIDDEN,

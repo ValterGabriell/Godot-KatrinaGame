@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c551nssba7gch"]
+[gd_scene load_steps=9 format=3 uid="uid://c551nssba7gch"]
 
 [ext_resource type="Script" uid="uid://dddajnkljvrqb" path="res://Scripts/Items/Plataform/MovePlataform.cs" id="1_fqw61"]
 [ext_resource type="Texture2D" uid="uid://dwitjiapvgqit" path="res://Assets/Sprites/Itens/VerticalPlataform.png" id="2_lprgv"]
 [ext_resource type="Texture2D" uid="uid://c46eihrkmfugu" path="res://Assets/Sprites/Itens/VerticalPlataformBack.png" id="3_hiljd"]
+[ext_resource type="Texture2D" uid="uid://cj0su0kjlx6ua" path="res://Assets/Sprites/Itens/light (1).png" id="4_hiljd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hufhh"]
 size = Vector2(76, 17)
@@ -86,3 +87,7 @@ texture = ExtResource("3_hiljd")
 libraries = {
 &"": SubResource("AnimationLibrary_120v5")
 }
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.5
+texture = ExtResource("4_hiljd")

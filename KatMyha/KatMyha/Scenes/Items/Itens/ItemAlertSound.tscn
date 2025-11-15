@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://5lfhmqc7a40i"]
+[gd_scene load_steps=13 format=3 uid="uid://5lfhmqc7a40i"]
 
 [ext_resource type="Texture2D" uid="uid://csg86nrvj22bx" path="res://Assets/Sprites/Itens/AlertItem.png" id="1_0lmq6"]
+[ext_resource type="Texture2D" uid="uid://cj0su0kjlx6ua" path="res://Assets/Sprites/Itens/light (1).png" id="2_iehpl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iehpl"]
 atlas = ExtResource("1_0lmq6")
@@ -100,3 +101,7 @@ animations = [{
 [node name="ItemAlertSound" type="AnimatedSprite2D"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_csko4")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.5
+texture = ExtResource("2_iehpl")

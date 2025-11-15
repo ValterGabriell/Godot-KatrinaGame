@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8xryd28twoay"]
+
+[ext_resource type="Texture2D" uid="uid://dh3h4l7mlr5im" path="res://Assets/Sprites/Itens/Esconderijo.png" id="1_erhph"]
+[ext_resource type="Script" uid="uid://dremr7evq8kat" path="res://Scripts/Items/HiddenPlace/HiddenPlace.cs" id="1_flamd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_erhph"]
+size = Vector2(25, 25)
+
+[node name="HiddenPlace" type="Area2D" groups=["hidden_place"]]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_flamd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_erhph")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_erhph")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

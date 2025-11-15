@@ -62,7 +62,7 @@ namespace PrototipoMyha.Player.Components.Impl
 
         private void OnMyhaIsMoving(float NoiseValue)
         {
-            if(MyhaPlayer.CurrentPlayerState == PlayerState.SNEAK && MyhaPlayer.CurrentHiddenState == HiddenState.HIDDEN)
+            if(MyhaPlayer.CurrentPlayerState == PlayerState.SNEAK && MyhaPlayer.CurrentHiddenState == LightHiddenState.HIDDEN)
             {
                 this.MyhaPlayer.AlterRadiusCollisionSoundArea(0);
                 return;

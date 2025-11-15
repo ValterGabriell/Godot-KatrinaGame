@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://doux7cxdy7auk"]
+[gd_scene load_steps=24 format=3 uid="uid://doux7cxdy7auk"]
 
 [ext_resource type="Script" uid="uid://bv23twc71v3um" path="res://Scripts/Items/Terminal/Terminal.cs" id="1_7m6kx"]
 [ext_resource type="Texture2D" uid="uid://b6n6xy0gajgbt" path="res://Assets/Sprites/Itens/TerminalIdle.png" id="2_7m6kx"]
 [ext_resource type="Texture2D" uid="uid://bsvni3aclgkb4" path="res://Assets/Sprites/Itens/TerminalSavingLoop.png" id="3_05xyc"]
 [ext_resource type="Texture2D" uid="uid://dbvilx2njweh" path="res://Assets/Sprites/Itens/TerminalSaved.png" id="3_6fnev"]
+[ext_resource type="Texture2D" uid="uid://cj0su0kjlx6ua" path="res://Assets/Sprites/Itens/light (1).png" id="5_5gusk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_05xyc"]
 atlas = ExtResource("2_7m6kx")
@@ -153,6 +154,10 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SaveArea"]
 shape = SubResource("RectangleShape2D_nxn26")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.5
+texture = ExtResource("5_5gusk")
 
 [connection signal="animation_finished" from="Sprite2D" to="." method="_on_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="SaveArea" to="." method="_on_save_area_body_entered"]

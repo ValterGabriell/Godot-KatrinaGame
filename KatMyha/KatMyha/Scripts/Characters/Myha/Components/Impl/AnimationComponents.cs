@@ -45,7 +45,7 @@ namespace PrototipoMyha.Scripts.Characters.Myha.Components.Impl
         {
 
             this._player.AnimatedSprite2D.Play(animationToPlay);
-            if (MyhaPlayer.CurrentPlayerState == PlayerState.SNEAK && MyhaPlayer.CurrentHiddenState == HiddenState.HIDDEN)
+            if (MyhaPlayer.CurrentPlayerState == PlayerState.SNEAK && MyhaPlayer.CurrentHiddenState == LightHiddenState.HIDDEN)
             {
                 return;
             }

@@ -36,6 +36,7 @@ enemy=""
 terrain=""
 wall_vertical=""
 kill_light=""
+hidden_place=""
 
 [input]
 
@@ -110,6 +111,7 @@ shoot={
 2d_physics/layer_1="floor"
 2d_physics/layer_2="player"
 2d_physics/layer_3="plataform_horizontal"
+2d_physics/layer_4="hidden_place"
 2d_physics/layer_6="wall"
 2d_physics/layer_12="shadowArea"
 2d_physics/layer_13="enemy"

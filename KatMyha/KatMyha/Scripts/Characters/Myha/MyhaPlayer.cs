@@ -89,7 +89,7 @@ namespace KatrinaGame.Players
         {
             if (node.IsInGroup("kill_light"))
             {
-                this.SetStateHidden(HiddenState.NOT_HIDDEN);
+                this.SetStateHidden(LightHiddenState.NOT_HIDDEN);
                 SignalManager.Instance.EmitSignal(nameof(SignalManager.Instance.PlayerIsOnLight));
             }
         }
@@ -98,7 +98,7 @@ namespace KatrinaGame.Players
         {
             if (node.IsInGroup("kill_light"))
             {
-                this.SetStateHidden(HiddenState.HIDDEN);
+                this.SetStateHidden(LightHiddenState.HIDDEN);
   
             }
         }
@@ -179,10 +179,23 @@ namespace KatrinaGame.Players
                 MovementComponent.Jump();
             }
 
+            if(Input.IsKeyPressed(Key.Enter) && this.CurrentPlayerState == PlayerState.HIDDEN)
+            {
+                this.UnblockMovement();
+                this.SetState(PlayerState.IDLE);
+                this.Velocity = new Vector2(this.Velocity.X + 250, 0);
+            }
+
             MovementComponent.Move(inputVector, CurrentPlayerSpeed);
 
             base.HandleInput(delta);
         }
 
+        internal void EnterHiddenPlace()
+        {
+            GDLogger.PrintObjects_Blue("Entering Hidden Place");
+            this.SetState(PlayerState.HIDDEN);
+            this.BlockMovement();
+        }
     }
 }
